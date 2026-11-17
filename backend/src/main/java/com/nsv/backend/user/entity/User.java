@@ -1,22 +1,10 @@
 package com.nsv.backend.user.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "users")
@@ -31,42 +19,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "phone", nullable = false, unique = true, length = 15)
+    private String phone;
+
+    @Column(name = "password_hash", nullable = false, length = 255)
+    private String passwordHash;
+
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
-    @Column(length = 254)
-    private String email;
+    @Column(name = "role", nullable = false, length = 20)
+    private String role; // FARMER | BUYER | ADMIN
 
-    @Column(length = 20)
-    private String phone;
-
-    @Column(name = "password_hash", nullable = false, length = 100)
-    private String passwordHash;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private Role role;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "status", nullable = false, length = 20)
     @Builder.Default
-    private UserStatus status = UserStatus.ACTIVE;
+    private String status = "ACTIVE"; // PENDING | ACTIVE | LOCKED
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
-
-    @PrePersist
-    void onCreate() {
-        Instant now = Instant.now();
-        createdAt = now;
-        updatedAt = now;
-    }
-
-    @PreUpdate
-    void onUpdate() {
-        updatedAt = Instant.now();
-    }
+    private OffsetDateTime createdAt;
 }
