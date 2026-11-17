@@ -14,5 +14,7 @@ public record OrderResponse(
     BigDecimal totalAmount,
     OrderAddressResponse shippingAddress,
     List<OrderItemResponse> items,
-    OffsetDateTime createdAt
+    OffsetDateTime deliveredAt,
+    OffsetDateTime createdAt,
+    OffsetDateTime updatedAt
 ) {}

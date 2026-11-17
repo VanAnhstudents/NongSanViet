@@ -3,10 +3,7 @@ package com.nsv.backend.order.service;
 import com.nsv.backend.common.exception.BusinessException;
 import com.nsv.backend.inventory.entity.Batch;
 import com.nsv.backend.inventory.repository.BatchRepository;
-import com.nsv.backend.order.dto.CheckoutRequest;
-import com.nsv.backend.order.dto.OrderAddressResponse;
-import com.nsv.backend.order.dto.OrderItemResponse;
-import com.nsv.backend.order.dto.OrderResponse;
+import com.nsv.backend.order.dto.*;
 import com.nsv.backend.order.entity.CartItem;
 import com.nsv.backend.order.entity.Order;
 import com.nsv.backend.order.entity.OrderAddress;
@@ -23,18 +20,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.OffsetDateTime;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+
+    private static final Map<String, String> FARMER_ALLOWED_TRANSITIONS = Map.of(
+        "PENDING", "CONFIRMED",    // Chờ xác nhận -> Đang xử lý
+        "CONFIRMED", "SHIPPING",   // Đang xử lý -> Đang giao
+        "SHIPPING", "DELIVERED"    // Đang giao -> Đã giao
+    );
+
+    private static final Set<String> VALID_ORDER_STATUSES = Set.of(
+        "PENDING", "CONFIRMED", "SHIPPING", "DELIVERED", "COMPLETED", "CANCELLED"
+    );
 
     private final CartItemRepository cartItemRepository;
     private final OrderRepository orderRepository;
@@ -46,7 +53,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderResponse checkoutFromCart(Long buyerId, CheckoutRequest request) {
-        // 1. Lấy các sản phẩm từ giỏ hàng
         List<CartItem> targetItems = (request.cartItemIds() == null || request.cartItemIds().isEmpty())
             ? cartItemRepository.findAllByUserIdOrderByIdAsc(buyerId)
             : cartItemRepository.findAllByUserIdAndIdInOrderByIdAsc(buyerId, request.cartItemIds());
@@ -59,13 +65,11 @@ public class OrderServiceImpl implements OrderService {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "INVALID_CART_ITEMS", "Một số sản phẩm trong giỏ hàng không hợp lệ");
         }
 
-        // 2. Xác thực sổ địa chỉ và lấy tên tỉnh/thành phố để chụp snapshot
         Address address = addressRepository.findByIdAndUserId(request.addressId(), buyerId)
             .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "ADDRESS_NOT_FOUND", "Không tìm thấy địa chỉ nhận hàng"));
 
         String provinceName = resolveProvinceName(address.getProvinceId());
 
-        // 3. Khóa bi quan (SELECT ... FOR UPDATE theo thứ tự id tăng dần tránh deadlock) để kiểm tra & trừ tồn kho
         List<Long> sortedBatchIds = targetItems.stream()
             .map(CartItem::getBatchId)
             .distinct()
@@ -79,7 +83,6 @@ public class OrderServiceImpl implements OrderService {
             throw new BusinessException(HttpStatus.NOT_FOUND, "BATCH_NOT_FOUND", "Một số lô sản phẩm không còn tồn tại");
         }
 
-        // 4. Khởi tạo đơn hàng và snapshot địa chỉ
         BigDecimal shippingFee = (request.shippingFee() != null ? request.shippingFee() : BigDecimal.ZERO)
             .setScale(2, RoundingMode.HALF_UP);
 
@@ -99,7 +102,6 @@ public class OrderServiceImpl implements OrderService {
             .build();
         order.attachAddress(snapshotAddress);
 
-        // 5. Trừ tồn kho từng lô và tạo chi tiết đơn hàng
         for (CartItem cartItem : targetItems) {
             Batch batch = lockedBatchMap.get(cartItem.getBatchId());
 
@@ -134,8 +136,6 @@ public class OrderServiceImpl implements OrderService {
 
         batchRepository.saveAll(lockedBatchMap.values());
         Order savedOrder = orderRepository.save(order);
-
-        // 6. Xóa các mục đã đặt khỏi giỏ hàng
         cartItemRepository.deleteAll(targetItems);
 
         return toOrderResponse(savedOrder, lockedBatchMap);
@@ -147,11 +147,110 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findWithDetailsByIdAndBuyerId(orderId, buyerId)
             .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "ORDER_NOT_FOUND", "Không tìm thấy đơn hàng"));
 
-        Set<Long> batchIds = order.getItems().stream().map(OrderItem::getBatchId).collect(Collectors.toSet());
-        Map<Long, Batch> batchMap = batchRepository.findAllByIdIn(batchIds).stream()
-            .collect(Collectors.toMap(Batch::getId, Function.identity()));
+        return mapSingleOrder(order);
+    }
 
-        return toOrderResponse(order, batchMap);
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getBuyerOrders(Long buyerId) {
+        List<Order> orders = orderRepository.findAllByBuyerIdOrderByCreatedAtDesc(buyerId);
+        return mapOrderList(orders);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getFarmerOrders(Long farmerId, String statusFilter) {
+        String normalizedStatus = null;
+        if (StringUtils.hasText(statusFilter)) {
+            normalizedStatus = statusFilter.trim().toUpperCase();
+            if (!VALID_ORDER_STATUSES.contains(normalizedStatus)) {
+                throw new BusinessException(HttpStatus.BAD_REQUEST, "INVALID_STATUS_FILTER", "Trạng thái lọc không hợp lệ");
+            }
+        }
+
+        List<Order> orders = orderRepository.findAllByFarmerIdAndOptionalStatus(farmerId, normalizedStatus);
+        return mapOrderList(orders);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OrderResponse getFarmerOrderDetail(Long farmerId, Long orderId) {
+        Order order = findAndVerifyFarmerOrder(farmerId, orderId);
+        return mapSingleOrder(order);
+    }
+
+    @Override
+    @Transactional
+    public OrderResponse updateOrderStatusByFarmer(Long farmerId, Long orderId, UpdateOrderStatusRequest request) {
+        Order order = findAndVerifyFarmerOrder(farmerId, orderId);
+
+        String currentStatus = order.getStatus();
+        String targetStatus = request.status().trim().toUpperCase();
+
+        String expectedNextStatus = FARMER_ALLOWED_TRANSITIONS.get(currentStatus);
+        if (expectedNextStatus == null || !expectedNextStatus.equals(targetStatus)) {
+            String hint = expectedNextStatus != null
+                ? "Trạng thái hợp lệ tiếp theo phải là " + expectedNextStatus
+                : "Đơn hàng ở trạng thái " + currentStatus + " không thể cập nhật thêm";
+
+            throw new BusinessException(
+                HttpStatus.BAD_REQUEST,
+                "INVALID_STATUS_TRANSITION",
+                "Không thể chuyển trạng thái đơn hàng từ " + currentStatus + " sang " + targetStatus + ". " + hint
+            );
+        }
+
+        order.setStatus(targetStatus);
+        if ("DELIVERED".equals(targetStatus)) {
+            order.setDeliveredAt(OffsetDateTime.now());
+        }
+
+        Order savedOrder = orderRepository.save(order);
+
+        notifyBuyerOrderStatusChanged(savedOrder);
+        recordAuditLog(farmerId, "UPDATE_ORDER_STATUS", "orders", savedOrder.getId());
+
+        return mapSingleOrder(savedOrder);
+    }
+
+    private Order findAndVerifyFarmerOrder(Long farmerId, Long orderId) {
+        Order order = orderRepository.findWithDetailsById(orderId)
+            .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "ORDER_NOT_FOUND", "Không tìm thấy đơn hàng"));
+
+        if (!orderRepository.existsOrderForFarmer(orderId, farmerId)) {
+            throw new BusinessException(
+                HttpStatus.FORBIDDEN,
+                "ORDER_ACCESS_DENIED",
+                "Bạn không có quyền thao tác trên đơn hàng này"
+            );
+        }
+        return order;
+    }
+
+    private void notifyBuyerOrderStatusChanged(Order order) {
+        String statusLabel = switch (order.getStatus()) {
+            case "CONFIRMED" -> "Đang xử lý (Đã xác nhận)";
+            case "SHIPPING" -> "Đang giao hàng";
+            case "DELIVERED" -> "Đã giao hàng thành công";
+            default -> order.getStatus();
+        };
+        String content = String.format("Đơn hàng #%d của bạn đã chuyển sang trạng thái: %s.", order.getId(), statusLabel);
+
+        jdbcTemplate.update(
+            "INSERT INTO notifications (user_id, content, is_read) VALUES (?, ?, FALSE)",
+            order.getBuyerId(),
+            content
+        );
+    }
+
+    private void recordAuditLog(Long actorId, String action, String entityType, Long entityId) {
+        jdbcTemplate.update(
+            "INSERT INTO audit_logs (actor_id, action, entity_type, entity_id) VALUES (?, ?, ?, ?)",
+            actorId,
+            action,
+            entityType,
+            entityId
+        );
     }
 
     private String resolveProvinceName(Long provinceId) {
@@ -166,6 +265,38 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    private OrderResponse mapSingleOrder(Order order) {
+        Set<Long> batchIds = order.getItems().stream()
+            .map(OrderItem::getBatchId)
+            .collect(Collectors.toSet());
+
+        Map<Long, Batch> batchMap = batchIds.isEmpty()
+            ? Map.of()
+            : batchRepository.findAllByIdIn(batchIds).stream()
+                .collect(Collectors.toMap(Batch::getId, Function.identity()));
+
+        return toOrderResponse(order, batchMap);
+    }
+
+    private List<OrderResponse> mapOrderList(List<Order> orders) {
+        if (orders.isEmpty()) {
+            return List.of();
+        }
+        Set<Long> allBatchIds = orders.stream()
+            .flatMap(o -> o.getItems().stream())
+            .map(OrderItem::getBatchId)
+            .collect(Collectors.toSet());
+
+        Map<Long, Batch> batchMap = allBatchIds.isEmpty()
+            ? Map.of()
+            : batchRepository.findAllByIdIn(allBatchIds).stream()
+                .collect(Collectors.toMap(Batch::getId, Function.identity()));
+
+        return orders.stream()
+            .map(order -> toOrderResponse(order, batchMap))
+            .toList();
+    }
+
     private OrderResponse toOrderResponse(Order order, Map<Long, Batch> batchMap) {
         Set<Long> productIds = batchMap.values().stream()
             .map(Batch::getProductId)
@@ -177,7 +308,7 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toMap(Product::getId, Function.identity()));
 
         BigDecimal itemsSubtotal = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
-        List<OrderItemResponse> itemResponses = new java.util.ArrayList<>(order.getItems().size());
+        List<OrderItemResponse> itemResponses = new ArrayList<>(order.getItems().size());
 
         for (OrderItem item : order.getItems()) {
             Batch batch = batchMap.get(item.getBatchId());
@@ -222,7 +353,9 @@ public class OrderServiceImpl implements OrderService {
             totalAmount,
             addressResponse,
             itemResponses,
-            order.getCreatedAt()
+            order.getDeliveredAt(),
+            order.getCreatedAt(),
+            order.getUpdatedAt()
         );
     }
 }
