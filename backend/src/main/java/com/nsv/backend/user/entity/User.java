@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
 
 /** Ánh xạ bảng users (xem tài liệu CSDL mục 1). */
 @Entity
@@ -44,11 +44,11 @@ public class User {
     @Column(nullable = false, length = 20)
     private Role role;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "status", nullable = false, length = 20)
     @Builder.Default
-    private UserStatus status = UserStatus.ACTIVE;
+    private String status = "ACTIVE"; // PENDING | ACTIVE | LOCKED
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
