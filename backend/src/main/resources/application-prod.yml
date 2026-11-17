@@ -1,7 +1,12 @@
-# Production: bắt buộc cấp JWT_SECRET, DB_URL, DB_USERNAME, DB_PASSWORD qua biến môi trường.
+server:
+  forward-headers-strategy: native
+  servlet:
+    session:
+      cookie:
+        secure: true
+        http-only: true
+        same-site: strict
+
 app:
-  jwt:
-    secret: ${JWT_SECRET}
-logging:
-  level:
-    root: INFO
+  security:
+    require-https: true

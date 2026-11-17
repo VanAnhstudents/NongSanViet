@@ -1,35 +1,40 @@
 package com.nsv.backend.product.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-/**
- * Ánh xạ tối thiểu (chỉ đọc) của bảng products, đủ cho PBI-04.
- * Nếu PBI-03 đã có entity Product thì XÓA file này và dùng bản của PBI-03
- * (cần có id, farmerId, name, unit).
- * Giả định products.farmer_id tham chiếu users.id.
- */
+import java.time.OffsetDateTime;
+
 @Entity
 @Table(name = "products")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Product {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "farmer_id", nullable = false)
     private Long farmerId;
 
-    @Column(nullable = false, length = 150)
+    @Column(name = "category_id", nullable = false)
+    private Long categoryId;
+
+    @Column(name = "name", nullable = false, length = 150)
     private String name;
 
-    @Column(nullable = false, length = 20)
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "unit", nullable = false, length = 20)
     private String unit;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
 }
