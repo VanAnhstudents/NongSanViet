@@ -3,8 +3,8 @@ package com.nsv.backend.complaint;
 import com.nsv.backend.admin.service.AuditLogService;
 import com.nsv.backend.common.exception.ApiException;
 import com.nsv.backend.complaint.dto.ComplaintSlaResponse;
-import com.nsv.backend.complaint.entity.Complaint;
-import com.nsv.backend.complaint.repository.ComplaintRepository;
+import com.nsv.backend.dispute.entity.Complaint;
+import com.nsv.backend.complaint.repository.PbiComplaintRepository;
 import com.nsv.backend.complaint.service.ComplaintService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,9 @@ import org.mockito.quality.Strictness;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,10 +38,11 @@ import static org.mockito.Mockito.when;
 class ComplaintServiceTest {
 
     private static final Instant NOW = Instant.parse("2026-11-17T03:00:00Z");
+    private static final OffsetDateTime NOW_ODT = OffsetDateTime.ofInstant(NOW, ZoneOffset.UTC);
     private static final long FARMER_ID = 10L;
 
     @Mock
-    private ComplaintRepository complaintRepository;
+    private PbiComplaintRepository complaintRepository;
 
     @Mock
     private AuditLogService auditLogService;
@@ -55,8 +58,16 @@ class ComplaintServiceTest {
     }
 
     private Complaint complaintCreatedHoursAgo(long hours) {
-        return Complaint.builder().id(1L).orderId(100L).reason("Cà chua bị dập").status("PENDING")
-                .createdAt(NOW.minusSeconds(hours * 3600)).build();
+        return Complaint.builder()
+                .id(1L)
+                .orderId(100L)
+                .buyerId(99L)
+                .reason("Cà chua bị dập")
+                .description("Mô tả chi tiết")
+                .status("OPEN")
+                .createdAt(NOW_ODT.minusHours(hours))
+                .updatedAt(NOW_ODT.minusHours(hours))
+                .build();
     }
 
     @Test
@@ -87,8 +98,12 @@ class ComplaintServiceTest {
     @Test
     @DisplayName("TC-COMPLAIN-02: Quá 24h không phản hồi -> hệ thống chuyển cấp lên Admin")
     void tc02_escalatesOverdueComplaint() {
+        // Service dùng clock Asia/Ho_Chi_Minh (+07:00), NOW=2026-11-17T03:00:00Z = 2026-11-17T10:00:00+07:00
+        // limit = NOW - 24h = 2026-11-16T10:00:00+07:00
+        OffsetDateTime deadline = NOW_ODT.atZoneSameInstant(ZoneId.of("Asia/Ho_Chi_Minh"))
+                .toOffsetDateTime().minusHours(24);
         when(complaintRepository.findByFarmerResponseIsNullAndAdminDecisionIsNullAndCreatedAtLessThanEqual(
-                eq(Instant.parse("2026-11-16T03:00:00Z")))).thenReturn(List.of(complaintCreatedHoursAgo(25)));
+                eq(deadline))).thenReturn(List.of(complaintCreatedHoursAgo(25)));
         when(auditLogService.exists("COMPLAINT_ESCALATED", "COMPLAINT", 1L)).thenReturn(false);
 
         int escalated = service.escalateOverdue();
