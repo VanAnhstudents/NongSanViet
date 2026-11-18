@@ -12,6 +12,34 @@
 </head>
 <body>
 
+    <!-- =========================================================
+         GLOBAL NAVIGATION SHELL — Drawer + Stage Bar
+         Các phần tử này được app.js tham chiếu trực tiếp.
+    ========================================================= -->
+
+    <!-- Nút mở drawer & thanh điều hướng màn hình -->
+    <div class="stage-bar">
+        <button type="button" class="stage-btn" id="btnPrevScreen" title="Màn hình trước">‹</button>
+        <span class="stage-label" id="stageCurrentLabel">01 · Đăng nhập</span>
+        <button type="button" class="stage-btn" id="btnNextScreen" title="Màn hình tiếp">›</button>
+        <button type="button" class="stage-btn stage-btn-menu" id="btnOpenDrawer" title="Danh sách màn hình" data-open-drawer>☰</button>
+    </div>
+
+    <!-- Overlay backdrop -->
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <!-- Drawer panel -->
+    <nav class="nav-drawer" id="navDrawer" aria-label="Danh sách màn hình">
+        <div class="drawer-header">
+            <strong>Nông Sản Việt</strong>
+            <button type="button" class="icon-close" id="btnCloseDrawer" title="Đóng">✕</button>
+        </div>
+        <div class="drawer-search-wrap">
+            <input type="search" class="input-field" id="drawerSearch" placeholder="Tìm màn hình..." />
+        </div>
+        <div class="drawer-body" id="drawerList"></div>
+    </nav>
+
     <main class="app-viewport">
         <div class="app-shell" id="appShell">
 
