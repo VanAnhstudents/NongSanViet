@@ -27,13 +27,28 @@ public class ComplaintEvidence {
     private Long uploadedBy;
 
     @Column(name = "uploader_role", nullable = false, length = 20)
-    private String uploaderRole; // BUYER | FARMER
+    private String uploaderRole; // BUYER | FARMER | ADMIN
 
     @Column(name = "media_type", nullable = false, length = 20)
     private String mediaType; // IMAGE | VIDEO
 
     @Column(name = "media_url", nullable = false, length = 500)
     private String mediaUrl;
+
+    @Column(name = "storage_key", unique = true, length = 255)
+    private String storageKey;
+
+    @Column(name = "original_filename", length = 255)
+    private String originalFilename;
+
+    @Column(name = "content_type", length = 100)
+    private String contentType;
+
+    @Column(name = "file_size")
+    private Long fileSize;
+
+    @Column(name = "checksum_sha256", length = 64)
+    private String checksumSha256;
 
     @Column(name = "caption", length = 255)
     private String caption;
