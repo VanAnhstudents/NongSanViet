@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng bán · Bước 3/3 · Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/post-product.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../index.html">
+      <img src="../../assets/images/logo.png" alt="" width="36" height="36" onerror="this.style.display='none'">
+      <span>Nông Sản Việt</span>
+    </a>
+    <span class="topbar__channel">Kênh nông dân</span>
+    <span class="topbar__user" id="farmStatus">Vườn An · Đã xác minh</span>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <p class="sidebar__farm" id="sidebarFarm">Vườn An</p>
+      <nav class="nav" aria-label="Menu nông dân">
+        <a href="#">Tổng quan</a>
+        <a href="#">Hồ sơ trang trại</a>
+        <a href="#">Sản phẩm và tồn kho</a>
+        <a href="post-product-step1.html" aria-current="page">Đăng bán sản phẩm</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Nhật ký trồng trọt</a>
+        <a href="#">Khiếu nại</a>
+      </nav>
+      <p class="sidebar__foot">Nông Sản Việt</p>
+    </aside>
+
+    <main class="content">
+      <p class="eyebrow">Đăng bán · Bước 3 / 3</p>
+      <h1>Kiểm tra trước khi đăng</h1>
+
+      <ol class="stepper" aria-label="Các bước đăng bán">
+        <li class="stepper__item is-done"><span class="stepper__bar"></span>1. Thông tin</li>
+        <li class="stepper__item is-done"><span class="stepper__bar"></span>2. Mùa vụ</li>
+        <li class="stepper__item is-active" aria-current="step"><span class="stepper__bar"></span>3. Xác nhận</li>
+      </ol>
+
+      <div class="review">
+        <section class="card" aria-labelledby="cardProductTitle">
+          <h2 id="cardProductTitle" data-bind="name"></h2>
+          <p class="muted" data-bind="categoryPrice"></p>
+          <p class="muted" data-bind="location"></p>
+        </section>
+
+        <section class="card" aria-labelledby="cardOriginTitle">
+          <h2 id="cardOriginTitle">Nguồn gốc và chất lượng</h2>
+          <p class="muted" data-bind="quality"></p>
+          <p class="muted">Mã truy xuất được tạo khi đăng.</p>
+        </section>
+
+        <section class="card card--tint" aria-labelledby="cardPreorderTitle">
+          <h2 id="cardPreorderTitle">Đặt trước theo mùa vụ</h2>
+          <p class="muted" data-bind="preorder1"></p>
+          <p class="muted" data-bind="harvest"></p>
+          <p class="muted" data-bind="cutoff"></p>
+        </section>
+
+        <div class="actions">
+          <label class="check">
+            <input type="checkbox" id="confirmCheck">
+            <span>Tôi xác nhận thông tin đúng thực tế.</span>
+          </label>
+          <p class="error" id="formError" role="alert" hidden></p>
+          <button type="button" class="btn btn--primary" id="publishBtn" disabled>Đăng bán sản phẩm</button>
+          <a class="btn btn--secondary" id="backBtn" href="post-product-step2.html">Quay lại chỉnh sửa</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/api/productApi.js"></script>
+  <script src="../../js/pages/post-product-review.js"></script>
+</body>
+</html>
