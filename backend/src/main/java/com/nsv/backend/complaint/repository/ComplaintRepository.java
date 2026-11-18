@@ -1,11 +1,11 @@
 package com.nsv.backend.complaint.repository;
 
-import com.nsv.backend.complaint.entity.Complaint;
+import com.nsv.backend.dispute.entity.Complaint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
@@ -24,5 +24,5 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
     List<Complaint> findAllOfFarmer(@Param("farmerId") Long farmerId);
 
     /** Khiếu nại chưa có phản hồi của Farmer, chưa có quyết định của Admin, tạo từ thời điểm deadline trở về trước. */
-    List<Complaint> findByFarmerResponseIsNullAndAdminDecisionIsNullAndCreatedAtLessThanEqual(Instant deadline);
+    List<Complaint> findByFarmerResponseIsNullAndAdminDecisionIsNullAndCreatedAtLessThanEqual(OffsetDateTime deadline);
 }

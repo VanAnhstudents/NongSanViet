@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng bán · Bước 1/3 · Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/post-product.css">
+  <link rel="stylesheet" href="../../css/post-product.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../index.html">
+      <img src="../../assets/images/logo.png" alt="" width="36" height="36" onerror="this.style.display='none'">
+      <span>Nông Sản Việt</span>
+    </a>
+    <span class="topbar__channel">Kênh nông dân</span>
+    <span class="topbar__user">Vườn An · Đã xác minh</span>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <p class="sidebar__farm">Vườn An</p>
+      <nav class="nav" aria-label="Menu nông dân">
+        <a href="#">Tổng quan</a>
+        <a href="#">Hồ sơ trang trại</a>
+        <a href="#">Sản phẩm và tồn kho</a>
+        <a href="post-product-step1.html" aria-current="page">Đăng bán sản phẩm</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Nhật ký trồng trọt</a>
+        <a href="#">Khiếu nại</a>
+      </nav>
+      <p class="sidebar__foot">Nông Sản Việt</p>
+    </aside>
+
+    <main class="content">
+      <p class="eyebrow">Đăng bán · Bước 1 / 3</p>
+      <h1>Thông tin nông sản</h1>
+
+      <ol class="stepper" aria-label="Các bước đăng bán">
+        <li class="stepper__item is-active" aria-current="step"><span class="stepper__bar"></span>1. Thông tin</li>
+        <li class="stepper__item"><span class="stepper__bar"></span>2. Mùa vụ</li>
+        <li class="stepper__item"><span class="stepper__bar"></span>3. Xác nhận</li>
+      </ol>
+
+      <form id="stepForm" novalidate>
+        <div class="review">
+          <section class="card card--form" aria-labelledby="t1">
+            <h2 id="t1">Thông tin sản phẩm</h2>
+
+            <div class="field">
+              <label for="name">Tên sản phẩm</label>
+              <input id="name" type="text" maxlength="100" placeholder="Ví dụ: Cà chua bi Đà Lạt" autocomplete="off">
+              <p class="field__error" id="name-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="category">Nhóm sản phẩm</label>
+              <select id="category">
+                <option value="">Chọn nhóm sản phẩm</option>
+                <option>Rau củ quả</option>
+                <option>Trái cây</option>
+                <option>Gạo và ngũ cốc</option>
+                <option>Hạt và gia vị</option>
+                <option>Khác</option>
+              </select>
+              <p class="field__error" id="category-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="price">Giá bán (đồng)</label>
+              <div class="field__row">
+                <input id="price" type="number" min="1" step="1000" inputmode="numeric" placeholder="40000">
+                <select id="unit" aria-label="Đơn vị tính">
+                  <option>kg</option>
+                  <option>bó</option>
+                  <option>túi</option>
+                  <option>hộp</option>
+                </select>
+              </div>
+              <p class="field__error" id="price-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <span class="field__label" id="imageLabel">Ảnh sản phẩm</span>
+              <div class="upload" id="imageBox">
+                <img class="upload__thumb" id="imagePreview" alt="Ảnh sản phẩm đã chọn" hidden>
+                <div class="upload__placeholder" id="imagePlaceholder">Chưa có ảnh</div>
+                <div class="upload__actions">
+                  <button type="button" class="btn btn--small btn--outline" id="imageBtn">Chọn ảnh</button>
+                  <button type="button" class="btn btn--small btn--ghost" id="imageRemoveBtn" hidden>Xóa ảnh</button>
+                </div>
+              </div>
+              <input id="image" class="sr-only" type="file" accept="image/jpeg,image/png,image/webp" tabindex="-1" aria-labelledby="imageLabel">
+              <p class="field__hint">JPG, PNG hoặc WebP, tối đa 5 MB.</p>
+              <p class="field__error" id="image-error" hidden></p>
+            </div>
+          </section>
+
+          <section class="card card--form" aria-labelledby="t2">
+            <h2 id="t2">Nguồn gốc và chất lượng</h2>
+
+            <div class="field">
+              <label for="farmName">Tên trang trại</label>
+              <input id="farmName" type="text" maxlength="100" value="Vườn An">
+              <p class="field__error" id="farmName-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="district">Nơi trồng</label>
+              <div class="field__row field__row--even">
+                <input id="district" type="text" maxlength="60" placeholder="Huyện, quận" aria-label="Quận, huyện">
+                <input id="province" type="text" maxlength="60" placeholder="Tỉnh, thành phố" aria-label="Tỉnh, thành phố">
+              </div>
+              <p class="field__error" id="district-error" hidden></p>
+              <p class="field__error" id="province-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="certification">Chứng nhận chất lượng</label>
+              <select id="certification">
+                <option value="">Chọn chứng nhận</option>
+                <option>VietGAP</option>
+                <option>GlobalGAP</option>
+                <option>Hữu cơ</option>
+                <option>Chưa có chứng nhận</option>
+              </select>
+              <p class="field__error" id="certification-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="batchCode">Mã lô thu hoạch <span class="opt">(không bắt buộc)</span></label>
+              <input id="batchCode" type="text" maxlength="30" placeholder="Ví dụ: AN-181126" autocomplete="off">
+              <p class="field__hint">Dùng để gắn sản phẩm với nhật ký trồng trọt. Mã truy xuất được tạo khi đăng.</p>
+              <p class="field__error" id="batchCode-error" hidden></p>
+            </div>
+          </section>
+        </div>
+
+        <div class="form-actions">
+          <a class="btn btn--secondary" href="../../index.html">Hủy</a>
+          <button class="btn btn--primary" type="submit">Tiếp tục: Mùa vụ</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script src="../../js/core/postProductDraft.js"></script>
+  <script src="../../js/pages/post-product-step1.js"></script>
+</body>
+</html>
