@@ -8,7 +8,11 @@ import org.springframework.data.repository.query.Param;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
+/**
+ * Repository của module complaint (PBI-30: phản hồi khiếu nại trong SLA + leo thang).
+ * Đổi tên interface để tránh trùng bean "complaintRepository" với dispute.repository.ComplaintRepository.
+ */
+public interface PbiComplaintRepository extends JpaRepository<Complaint, Long> {
 
     /** Đơn hàng có ít nhất một sản phẩm của Farmer này (Farmer là bên bị khiếu nại). */
     @Query(value = "select exists (select 1 from order_items oi "

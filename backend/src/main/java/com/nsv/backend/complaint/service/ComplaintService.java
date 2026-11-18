@@ -6,7 +6,7 @@ import com.nsv.backend.complaint.dto.ComplaintSlaResponse;
 import com.nsv.backend.complaint.dto.EscalatedComplaintItem;
 import com.nsv.backend.complaint.dto.FarmerComplaintItem;
 import com.nsv.backend.dispute.entity.Complaint;
-import com.nsv.backend.complaint.repository.ComplaintRepository;
+import com.nsv.backend.complaint.repository.PbiComplaintRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,12 +34,12 @@ public class ComplaintService {
     public static final String ACTION_RESPONDED = "COMPLAINT_RESPONDED";
     public static final String ACTION_ESCALATED = "COMPLAINT_ESCALATED";
 
-    private final ComplaintRepository complaintRepository;
+    private final PbiComplaintRepository complaintRepository;
     private final AuditLogService auditLogService;
     private final Clock clock;
     private final Duration sla;
 
-    public ComplaintService(ComplaintRepository complaintRepository, AuditLogService auditLogService, Clock clock,
+    public ComplaintService(PbiComplaintRepository complaintRepository, AuditLogService auditLogService, Clock clock,
             @Value("${app.complaint.sla-hours:24}") long slaHours) {
         this.complaintRepository = complaintRepository;
         this.auditLogService = auditLogService;
