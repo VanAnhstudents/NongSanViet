@@ -1,0 +1,95 @@
+/* =================================================================
+   1. GLOBAL RESET & BOX-SIZING (Mobile-First Foundation)
+   ================================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Triệt tiêu hoàn toàn thanh cuộn ngang ngoài ý muốn */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333333;
+  background-color: #f9fafb;
+}
+
+/* =================================================================
+   2. MEDIA & CONTENT ADAPTATION (Chống phình to trên màn hình nhỏ 320px)
+   ================================================================ */
+img, video, canvas, svg, picture {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tự động ngắt từ, chống tràn chữ dài (mã đơn hàng, tên sản phẩm) */
+p, span, a, h1, h2, h3, h4, h5, h6, label, th, td {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* =================================================================
+   3. FORM & TOUCH TARGET OPTIMIZATION (Tối ưu cho thao tác chạm di động)
+   ================================================================ */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 100%;
+  max-width: 100%;
+}
+
+/* Đảm bảo vùng chạm (touch target) tối thiểu 48x48px trên mobile */
+button, 
+input[type="submit"], 
+input[type="button"], 
+.btn {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0.75rem 1rem;
+  touch-action: manipulation;
+}
+
+/* =================================================================
+   4. RESPONSIVE UTILITIES & TABLES
+   ================================================================ */
+/* Khung chứa bảng dữ liệu giúp cuộn ngang riêng biệt trên màn hình hẹp */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+/* Container chung cho các trang (tránh sát mép màn hình 320px) */
+.container {
+  width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Breakpoint từ màn hình Tablet (768px trở lên) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Breakpoint từ màn hình Desktop (1024px trở lên) */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
+}
