@@ -19,6 +19,16 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
 
     List<Batch> findAllByIdIn(Collection<Long> ids);
 
+    Optional<Batch> findFirstByProductIdAndStatusInOrderByCreatedAtDesc(
+        Long productId,
+        Collection<String> statuses
+    );
+
+    List<Batch> findAllByProductIdInAndStatusInOrderByCreatedAtDesc(
+        Collection<Long> productIds,
+        Collection<String> statuses
+    );
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT b FROM Batch b WHERE b.id IN :ids ORDER BY b.id ASC")
     List<Batch> findAllByIdInOrderByIdAscForUpdate(@Param("ids") Collection<Long> ids);
