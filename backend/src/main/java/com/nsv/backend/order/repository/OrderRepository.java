@@ -13,6 +13,7 @@ import java.util.Optional;
 /** Bản tối thiểu cho PBI-18. Nếu PBI đặt hàng đã có OrderRepository thì gộp vào bản đó. */
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    Optional<Order> findByIdAndBuyerId(Long id, Long buyerId);
     @EntityGraph(attributePaths = {"items", "orderAddress"})
     Optional<Order> findWithDetailsById(Long id);
 
@@ -52,4 +53,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         @Param("orderId") Long orderId,
         @Param("farmerId") Long farmerId
     );
+
+    @Query("""
+        SELECT DISTINCT p.farmerId FROM OrderItem oi
+        JOIN Batch b ON oi.batchId = b.id
+        JOIN Product p ON b.productId = p.id
+        WHERE oi.order.id = :orderId
+        """)
+    List<Long> findDistinctFarmerIdsByOrderId(@Param("orderId") Long orderId);
 }
