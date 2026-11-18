@@ -2,6 +2,9 @@ package com.nsv.backend.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "farms")
@@ -28,13 +31,20 @@ public class Farm {
     @Column(name = "farm_name", nullable = false, length = 150)
     private String farmName;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
     @Column(name = "address_line", nullable = false, length = 255)
     private String addressLine;
+
+    @Column(name = "certificate_status", nullable = false, length = 20)
+    @Builder.Default
+    private String certificateStatus = "NONE"; // NONE | PENDING | VERIFIED | REJECTED
 
     @Column(name = "certificate_url", length = 500)
     private String certificateUrl;
 
-    @Column(name = "certificate_status", nullable = false, length = 20)
-    @Builder.Default
-    private String certificateStatus = "NONE";
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
 }
