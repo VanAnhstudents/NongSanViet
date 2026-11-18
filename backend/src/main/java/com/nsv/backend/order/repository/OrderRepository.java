@@ -1,8 +1,10 @@
 package com.nsv.backend.order.repository;
 
 import com.nsv.backend.order.entity.Order;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,6 +15,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @EntityGraph(attributePaths = {"items", "orderAddress"})
     Optional<Order> findWithDetailsById(Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT o FROM Order o WHERE o.id = :id")
+    Optional<Order> findByIdForUpdate(@Param("id") Long id);
 
     @EntityGraph(attributePaths = {"items", "orderAddress"})
     Optional<Order> findWithDetailsByIdAndBuyerId(Long id, Long buyerId);
