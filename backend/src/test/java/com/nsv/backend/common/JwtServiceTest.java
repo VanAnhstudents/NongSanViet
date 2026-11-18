@@ -1,6 +1,5 @@
 package com.nsv.backend.common;
 
-import com.nsv.backend.common.config.JwtProperties;
 import com.nsv.backend.common.security.AuthenticatedUser;
 import com.nsv.backend.common.security.JwtService;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ class JwtServiceTest {
 
     private static final String SECRET = "unit-test-secret-key-with-at-least-32-bytes!!";
 
-    private final JwtService jwtService = new JwtService(new JwtProperties(SECRET, 60));
+    private final JwtService jwtService = new JwtService(SECRET, 60_000L);
 
     @Test
     void generateThenParse_returnsSameUserAndRole() {
@@ -31,14 +30,14 @@ class JwtServiceTest {
 
     @Test
     void parse_tokenSignedWithOtherSecret_returnsEmpty() {
-        JwtService other = new JwtService(new JwtProperties("another-secret-key-with-at-least-32-bytes!!", 60));
+        JwtService other = new JwtService("another-secret-key-with-at-least-32-bytes!!", 60_000L);
 
         assertThat(jwtService.parse(other.generateToken(1L, "ADMIN"))).isEmpty();
     }
 
     @Test
     void parse_expiredToken_returnsEmpty() {
-        JwtService expired = new JwtService(new JwtProperties(SECRET, -1));
+        JwtService expired = new JwtService(SECRET, -1L);
 
         assertThat(jwtService.parse(expired.generateToken(1L, "BUYER"))).isEmpty();
     }
@@ -50,7 +49,7 @@ class JwtServiceTest {
 
     @Test
     void constructor_shortSecret_isRejected() {
-        assertThatThrownBy(() -> new JwtService(new JwtProperties("short", 60)))
+        assertThatThrownBy(() -> new JwtService("short", 60_000L))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

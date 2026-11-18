@@ -4,7 +4,6 @@ import com.nsv.backend.common.exception.ApiException;
 import com.nsv.backend.order.dto.PaymentResponse;
 import com.nsv.backend.order.dto.SimulatedOutcome;
 import com.nsv.backend.order.entity.Order;
-import com.nsv.backend.order.entity.OrderStatus;
 import com.nsv.backend.order.entity.Payment;
 import com.nsv.backend.order.entity.PaymentMethod;
 import com.nsv.backend.order.entity.PaymentStatus;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,7 +40,7 @@ public class PaymentService {
     @Transactional
     public PaymentResponse choosePaymentMethod(Long buyerId, Long orderId, PaymentMethod method) {
         Order order = findOwnedOrder(buyerId, orderId);
-        if (order.getStatus() != OrderStatus.PENDING) {
+        if (!"PENDING".equals(order.getStatus())) {
             throw invalidState("Chỉ chọn được hình thức thanh toán khi đơn hàng đang chờ xử lý (PENDING)");
         }
         Optional<Payment> latest = paymentRepository.findFirstByOrderIdOrderByIdDesc(orderId);
@@ -52,8 +52,8 @@ public class PaymentService {
             throw invalidState("Đơn hàng không có giá trị cần thanh toán");
         }
 
-        order.setPaymentMethod(method);
-        order.setUpdatedAt(Instant.now(clock));
+        order.setPaymentMethod(method.name());
+        order.setUpdatedAt(OffsetDateTime.now(clock));
         orderRepository.save(order);
 
         Payment payment = Payment.builder()
@@ -72,7 +72,7 @@ public class PaymentService {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> ApiException.notFound("Không tìm thấy giao dịch thanh toán"));
         Order order = findOwnedOrder(buyerId, payment.getOrderId());
-        if (order.getPaymentMethod() != PaymentMethod.ONLINE) {
+        if (!"ONLINE".equals(order.getPaymentMethod())) {
             throw invalidState("Chỉ giao dịch thanh toán trực tuyến mới cần hoàn tất mô phỏng");
         }
         if (payment.getStatus() != PaymentStatus.PENDING) {
@@ -107,7 +107,10 @@ public class PaymentService {
     }
 
     private PaymentResponse toResponse(Payment p, Order order) {
-        return new PaymentResponse(p.getId(), p.getOrderId(), order.getPaymentMethod(), p.getPaymentType(),
+        PaymentMethod paymentMethod = order.getPaymentMethod() == null
+                ? null
+                : PaymentMethod.valueOf(order.getPaymentMethod());
+        return new PaymentResponse(p.getId(), p.getOrderId(), paymentMethod, p.getPaymentType(),
                 p.getAmount(), p.getStatus(), p.getProviderRef(), p.getCreatedAt());
     }
 }

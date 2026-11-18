@@ -1,5 +1,6 @@
 package com.nsv.backend.inventory.entity;
 
+import com.nsv.backend.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,6 +25,11 @@ public class Batch {
 
     @Column(name = "product_id", nullable = false)
     private Long productId;
+
+    /** Quan hệ chỉ đọc phục vụ truy vấn/response; ghi dữ liệu qua productId. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Product product;
 
     @Column(name = "traceability_code", nullable = false, unique = true)
     private UUID traceabilityCode;

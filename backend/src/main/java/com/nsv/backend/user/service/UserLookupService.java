@@ -20,6 +20,6 @@ public class UserLookupService {
     public Optional<UserDto> findActiveById(Long id) {
         return userRepository.findById(id)
                 .filter(u -> u.getStatus() == UserStatus.ACTIVE)
-                .map(u -> new UserDto(u.getId(), u.getFullName(), u.getPhone(), u.getRole()));
+                .map(u -> new UserDto(u.getId(), u.getFullName(), u.getEmail(), u.getPhone(), u.getRole()));
     }
 }

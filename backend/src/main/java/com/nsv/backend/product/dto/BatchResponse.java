@@ -1,7 +1,5 @@
 package com.nsv.backend.product.dto;
 
-import com.nsv.backend.product.entity.BatchStatus;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -16,6 +14,6 @@ public record BatchResponse(
         LocalDate harvestDate,
         BigDecimal unitPrice,
         BigDecimal totalQuantity,
-        BatchStatus status,
+        String status,
         Instant createdAt) {
 }

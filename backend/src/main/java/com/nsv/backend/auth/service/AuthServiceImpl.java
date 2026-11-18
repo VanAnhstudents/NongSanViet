@@ -2,7 +2,9 @@ package com.nsv.backend.auth.service;
 
 import com.nsv.backend.common.exception.BusinessException;
 import com.nsv.backend.common.security.JwtTokenProvider;
+import com.nsv.backend.user.entity.Role;
 import com.nsv.backend.user.entity.User;
+import com.nsv.backend.user.entity.UserStatus;
 import com.nsv.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,8 +36,8 @@ public class AuthServiceImpl {
             .phone(phone.trim())
             .passwordHash(hashedPassword)
             .fullName(fullName.trim())
-            .role(role.toUpperCase())
-            .status("ACTIVE")
+            .role(Role.valueOf(role.toUpperCase()))
+            .status(UserStatus.ACTIVE)
             .build();
 
         return userRepository.save(user);
@@ -46,7 +48,7 @@ public class AuthServiceImpl {
         User user = userRepository.findByPhone(phone.trim())
             .orElseThrow(() -> new BusinessException(HttpStatus.UNAUTHORIZED, "INVALID_CREDENTIALS", "Sai số điện thoại hoặc mật khẩu"));
 
-        if ("LOCKED".equals(user.getStatus())) {
+        if (user.getStatus() == UserStatus.LOCKED) {
             throw new BusinessException(HttpStatus.FORBIDDEN, "ACCOUNT_LOCKED", "Tài khoản đã bị khóa");
         }
 
@@ -54,6 +56,6 @@ public class AuthServiceImpl {
             throw new BusinessException(HttpStatus.UNAUTHORIZED, "INVALID_CREDENTIALS", "Sai số điện thoại hoặc mật khẩu");
         }
 
-        return jwtTokenProvider.generateToken(user.getId(), user.getRole());
+        return jwtTokenProvider.generateToken(user.getId(), user.getRole().name());
     }
 }

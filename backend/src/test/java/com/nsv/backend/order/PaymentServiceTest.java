@@ -3,7 +3,6 @@ package com.nsv.backend.order;
 import com.nsv.backend.order.dto.PaymentResponse;
 import com.nsv.backend.order.dto.SimulatedOutcome;
 import com.nsv.backend.order.entity.Order;
-import com.nsv.backend.order.entity.OrderStatus;
 import com.nsv.backend.order.entity.Payment;
 import com.nsv.backend.order.entity.PaymentMethod;
 import com.nsv.backend.order.entity.PaymentStatus;
@@ -59,7 +58,7 @@ class PaymentServiceTest {
         order = new Order();
         order.setId(ORDER_ID);
         order.setBuyerId(BUYER_ID);
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus("PENDING");
         order.setShippingFee(new BigDecimal("20000"));
 
         when(orderRepository.findByIdAndBuyerId(ORDER_ID, BUYER_ID)).thenReturn(Optional.of(order));
@@ -90,7 +89,7 @@ class PaymentServiceTest {
         assertThat(result.paymentType()).isEqualTo(PaymentType.FULL);
         assertThat(result.status()).isEqualTo(PaymentStatus.PENDING);
         assertThat(result.amount()).isEqualByComparingTo("170000");
-        assertThat(order.getPaymentMethod()).isEqualTo(PaymentMethod.COD);
+        assertThat(order.getPaymentMethod()).isEqualTo("COD");
     }
 
     @Test
@@ -100,13 +99,13 @@ class PaymentServiceTest {
 
         assertThat(result.paymentMethod()).isEqualTo(PaymentMethod.ONLINE);
         assertThat(result.status()).isEqualTo(PaymentStatus.PENDING);
-        assertThat(order.getPaymentMethod()).isEqualTo(PaymentMethod.ONLINE);
+        assertThat(order.getPaymentMethod()).isEqualTo("ONLINE");
     }
 
     @Test
     @DisplayName("TC-PAY-01: Giao dịch mô phỏng thành công -> trạng thái PAID, có mã giao dịch")
     void tc01_simulateSuccessIsPaid() {
-        order.setPaymentMethod(PaymentMethod.ONLINE);
+        order.setPaymentMethod("ONLINE");
         Payment payment = pendingPayment();
         when(paymentRepository.findById(1L)).thenReturn(Optional.of(payment));
 
@@ -120,7 +119,7 @@ class PaymentServiceTest {
     @Test
     @DisplayName("TC-PAY-01: Giao dịch mô phỏng thất bại -> trạng thái FAILED (chưa thanh toán)")
     void tc01_simulateFailureIsFailed() {
-        order.setPaymentMethod(PaymentMethod.ONLINE);
+        order.setPaymentMethod("ONLINE");
         when(paymentRepository.findById(1L)).thenReturn(Optional.of(pendingPayment()));
 
         PaymentResponse result = service.simulateOnlinePayment(BUYER_ID, 1L, SimulatedOutcome.FAILED);
