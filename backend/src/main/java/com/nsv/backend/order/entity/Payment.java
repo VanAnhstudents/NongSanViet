@@ -1,29 +1,19 @@
 package com.nsv.backend.order.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "payments")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Payment {
 
     @Id
@@ -33,20 +23,20 @@ public class Payment {
     @Column(name = "order_id", nullable = false)
     private Long orderId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "payment_type", nullable = false, length = 20)
-    private PaymentType paymentType;
+    private String paymentType; // FULL | DEPOSIT | REMAINING
 
-    @Column(nullable = false, precision = 15, scale = 2)
+    @Column(name = "amount", nullable = false, precision = 15, scale = 2)
     private BigDecimal amount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PaymentStatus status;
+    @Column(name = "status", nullable = false, length = 20)
+    @Builder.Default
+    private String status = "PENDING"; // PENDING | PAID | FAILED | REFUNDED
 
     @Column(name = "provider_ref", length = 100)
     private String providerRef;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
+    private OffsetDateTime createdAt;
 }
