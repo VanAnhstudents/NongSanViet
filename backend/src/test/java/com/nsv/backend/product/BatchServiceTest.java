@@ -1,13 +1,12 @@
 package com.nsv.backend.product;
 
 import com.nsv.backend.common.exception.ApiException;
+import com.nsv.backend.inventory.entity.Batch;
+import com.nsv.backend.inventory.repository.BatchRepository;
 import com.nsv.backend.product.dto.BatchCreateRequest;
 import com.nsv.backend.product.dto.BatchResponse;
 import com.nsv.backend.product.dto.BatchUpdateRequest;
-import com.nsv.backend.product.entity.Batch;
-import com.nsv.backend.product.entity.BatchStatus;
 import com.nsv.backend.product.entity.Product;
-import com.nsv.backend.product.repository.BatchRepository;
 import com.nsv.backend.product.repository.ProductRepository;
 import com.nsv.backend.product.service.BatchService;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +46,8 @@ class BatchServiceTest {
     private ProductRepository productRepository;
 
     private BatchService service;
-    private final Product product = new Product(1L, FARMER_ID, "Cà chua bi", "kg");
+    private final Product product = Product.builder()
+            .id(1L).farmerId(FARMER_ID).name("Cà chua bi").unit("kg").build();
 
     @BeforeEach
     void setUp() {
@@ -63,7 +63,7 @@ class BatchServiceTest {
         return new BatchUpdateRequest(new BigDecimal("200"), new BigDecimal("18000"), date);
     }
 
-    private Batch batch(long id, BatchStatus status) {
+    private Batch batch(long id, String status) {
         return Batch.builder().id(id).product(product).traceabilityCode(UUID.randomUUID())
                 .harvestDate(TODAY.plusDays(7)).unitPrice(new BigDecimal("15000"))
                 .totalQuantity(new BigDecimal("120.50")).status(status).build();
@@ -88,7 +88,7 @@ class BatchServiceTest {
         ArgumentCaptor<Batch> captor = ArgumentCaptor.forClass(Batch.class);
         verify(batchRepository).save(captor.capture());
         Batch saved = captor.getValue();
-        assertThat(saved.getStatus()).isEqualTo(BatchStatus.PRE_ORDER);
+        assertThat(saved.getStatus()).isEqualTo("PRE_ORDER");
         assertThat(saved.getTraceabilityCode()).isNotNull();
         assertThat(saved.getHarvestDate()).isEqualTo(TODAY.plusDays(7));
         assertThat(saved.getTotalQuantity()).isEqualByComparingTo("120.50");
@@ -144,7 +144,7 @@ class BatchServiceTest {
     @Test
     void list_all_usesFarmerOnly() {
         when(batchRepository.findAllByFarmer(FARMER_ID))
-                .thenReturn(List.of(batch(1, BatchStatus.PRE_ORDER), batch(2, BatchStatus.AVAILABLE)));
+                .thenReturn(List.of(batch(1, "PRE_ORDER"), batch(2, "AVAILABLE")));
 
         assertThat(service.list(FARMER_ID, false)).hasSize(2);
     }
@@ -152,7 +152,7 @@ class BatchServiceTest {
     @Test
     void list_upcomingOnly_filtersFromToday() {
         when(batchRepository.findUpcomingByFarmer(FARMER_ID, TODAY))
-                .thenReturn(List.of(batch(3, BatchStatus.PRE_ORDER)));
+                .thenReturn(List.of(batch(3, "PRE_ORDER")));
 
         assertThat(service.list(FARMER_ID, true)).extracting("id").containsExactly(3L);
     }
@@ -170,7 +170,7 @@ class BatchServiceTest {
 
     @Test
     void update_preOrderBatch_changesFields() {
-        when(batchRepository.findByIdAndFarmer(5L, FARMER_ID)).thenReturn(Optional.of(batch(5, BatchStatus.PRE_ORDER)));
+        when(batchRepository.findByIdAndFarmer(5L, FARMER_ID)).thenReturn(Optional.of(batch(5, "PRE_ORDER")));
         when(batchRepository.save(any(Batch.class))).thenAnswer(inv -> inv.getArgument(0));
 
         BatchResponse res = service.update(FARMER_ID, 5L, updateReq(TODAY.plusDays(30)));
@@ -182,7 +182,7 @@ class BatchServiceTest {
 
     @Test
     void update_pastDate_isRejectedAndNothingSaved() {
-        when(batchRepository.findByIdAndFarmer(5L, FARMER_ID)).thenReturn(Optional.of(batch(5, BatchStatus.PRE_ORDER)));
+        when(batchRepository.findByIdAndFarmer(5L, FARMER_ID)).thenReturn(Optional.of(batch(5, "PRE_ORDER")));
 
         assertThatThrownBy(() -> service.update(FARMER_ID, 5L, updateReq(TODAY.minusDays(3))))
                 .isInstanceOfSatisfying(ApiException.class,
@@ -192,7 +192,7 @@ class BatchServiceTest {
 
     @Test
     void update_batchNotInPreOrder_isRejectedWithConflict() {
-        when(batchRepository.findByIdAndFarmer(5L, FARMER_ID)).thenReturn(Optional.of(batch(5, BatchStatus.AVAILABLE)));
+        when(batchRepository.findByIdAndFarmer(5L, FARMER_ID)).thenReturn(Optional.of(batch(5, "AVAILABLE")));
 
         assertThatThrownBy(() -> service.update(FARMER_ID, 5L, updateReq(TODAY.plusDays(10))))
                 .isInstanceOfSatisfying(ApiException.class, ex -> {

@@ -2,13 +2,12 @@ package com.nsv.backend.product.service;
 
 import com.nsv.backend.common.exception.ApiException;
 import com.nsv.backend.common.exception.FieldErrorDetail;
+import com.nsv.backend.inventory.entity.Batch;
+import com.nsv.backend.inventory.repository.BatchRepository;
 import com.nsv.backend.product.dto.BatchCreateRequest;
 import com.nsv.backend.product.dto.BatchResponse;
 import com.nsv.backend.product.dto.BatchUpdateRequest;
-import com.nsv.backend.product.entity.Batch;
-import com.nsv.backend.product.entity.BatchStatus;
 import com.nsv.backend.product.entity.Product;
-import com.nsv.backend.product.repository.BatchRepository;
 import com.nsv.backend.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,12 +38,14 @@ public class BatchService {
                 .orElseThrow(() -> ApiException.notFound("Không tìm thấy sản phẩm của bạn"));
 
         Batch batch = Batch.builder()
+                .productId(product.getId())
                 .product(product)
                 .traceabilityCode(UUID.randomUUID())
                 .harvestDate(request.harvestDate())
                 .unitPrice(request.unitPrice())
                 .totalQuantity(request.totalQuantity())
-                .status(BatchStatus.PRE_ORDER)
+                .remainingQuantity(request.totalQuantity())
+                .status("PRE_ORDER")
                 .build();
         return toResponse(batchRepository.save(batch));
     }
@@ -65,7 +66,7 @@ public class BatchService {
     @Transactional
     public BatchResponse update(Long farmerId, Long id, BatchUpdateRequest request) {
         Batch batch = findOwned(farmerId, id);
-        if (batch.getStatus() != BatchStatus.PRE_ORDER) {
+        if (!"PRE_ORDER".equals(batch.getStatus())) {
             throw new ApiException(HttpStatus.CONFLICT, "INVALID_STATE",
                     "Chỉ được sửa lô hàng đang ở trạng thái đặt trước (PRE_ORDER)", null);
         }
@@ -96,7 +97,11 @@ public class BatchService {
 
     private BatchResponse toResponse(Batch b) {
         Product p = b.getProduct();
-        return new BatchResponse(b.getId(), p.getId(), p.getName(), p.getUnit(), b.getTraceabilityCode(),
-                b.getHarvestDate(), b.getUnitPrice(), b.getTotalQuantity(), b.getStatus(), b.getCreatedAt());
+        Long productId = p != null ? p.getId() : b.getProductId();
+        return new BatchResponse(b.getId(), productId,
+                p != null ? p.getName() : null,
+                p != null ? p.getUnit() : null,
+                b.getTraceabilityCode(), b.getHarvestDate(), b.getUnitPrice(), b.getTotalQuantity(),
+                b.getStatus(), b.getCreatedAt() != null ? b.getCreatedAt().toInstant() : null);
     }
 }

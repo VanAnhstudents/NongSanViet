@@ -51,7 +51,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints
                 .requestMatchers("/api/v1/auth/**", "/actuator/health").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/products/**", "/api/v1/batches/trace/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/products/**", "/api/v1/combos/**", "/api/v1/trace/**", "/api/v1/batches/*/trace").permitAll()
 
                 // Phân quyền rõ ràng theo 3 vai trò (ADMIN, FARMER, BUYER)
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")

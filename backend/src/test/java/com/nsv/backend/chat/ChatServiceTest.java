@@ -52,9 +52,9 @@ class ChatServiceTest {
         Clock clock = Clock.fixed(Instant.parse("2026-11-17T03:00:00Z"), ZoneId.of("Asia/Ho_Chi_Minh"));
         service = new ChatService(messageRepository, userLookupService, clock);
         when(userLookupService.findActiveById(FARMER_ID))
-                .thenReturn(Optional.of(new UserDto(FARMER_ID, "Bác Ba", "0912345678", Role.FARMER)));
+                .thenReturn(Optional.of(new UserDto(FARMER_ID, "Bác Ba", "bacba@example.com", "0912345678", Role.FARMER)));
         when(userLookupService.findActiveById(BUYER_ID))
-                .thenReturn(Optional.of(new UserDto(BUYER_ID, "Cô Lan", "0988888888", Role.BUYER)));
+                .thenReturn(Optional.of(new UserDto(BUYER_ID, "Cô Lan", "colan@example.com", "0988888888", Role.BUYER)));
         when(messageRepository.save(any(Message.class))).thenAnswer(inv -> {
             Message m = inv.getArgument(0);
             m.setId(1L);
@@ -122,7 +122,7 @@ class ChatServiceTest {
         assertThatThrownBy(() -> service.send(BUYER_ID, "BUYER", new SendMessageRequest(BUYER_ID, "alo")))
                 .isInstanceOf(ApiException.class);
         when(userLookupService.findActiveById(9L))
-                .thenReturn(Optional.of(new UserDto(9L, "Admin", "0900000000", Role.ADMIN)));
+                .thenReturn(Optional.of(new UserDto(9L, "Admin", "admin@example.com", "0900000000", Role.ADMIN)));
         assertThatThrownBy(() -> service.send(BUYER_ID, "BUYER", new SendMessageRequest(9L, "alo")))
                 .isInstanceOf(ApiException.class);
 
