@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nông Sản Việt — Từ nông trại đến bàn ăn</title>
+    <link rel="icon" type="image/png" href="logocnpm 1.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <main class="app-viewport">
+        <div class="app-shell" id="appShell">
+
+            <!-- =========================================================
+                 01 · ĐĂNG NHẬP
+            ========================================================= -->
+            <section class="screen active" id="screen-01">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">TỪ NÔNG TRẠI ĐẾN BÀN ĂN</p>
+                    <h1 class="screen-title">Chào bạn trở lại</h1>
+                    <p class="screen-subtitle">Mua tươi từ gốc. An tâm mỗi ngày.</p>
+
+                    <div class="pill-switch role-switch-3" data-role-switch="login">
+                        <button type="button" class="pill-opt active" data-role="buyer">Người mua</button>
+                        <button type="button" class="pill-opt" data-role="farmer">Người bán</button>
+                        <button type="button" class="pill-opt" data-role="admin">Quản trị</button>
+                    </div>
+
+                    <form class="form-stack" id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="tel" class="input-field" id="loginPhone" placeholder="Nhập số điện thoại" value="0912 345 678" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" class="input-field" placeholder="Nhập mật khẩu" value="••••••••" />
+                        </div>
+                        <div class="form-row-end">
+                            <button type="button" class="text-link" data-go="35">Quên mật khẩu?</button>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                        <button type="button" class="btn btn-soft" data-go="02">Tạo tài khoản mới</button>
+                    </form>
+
+                    <div class="divider-note mt-16">
+                        <button type="button" class="text-link" data-go="30">Mở liên kết xác nhận giao hàng & đồng kiểm →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 02 · ĐĂNG KÝ
+            ========================================================= -->
+            <section class="screen" id="screen-02">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">BẮT ĐẦU CÙNG NÔNG NHÀ</p>
+                    <h1 class="screen-title">Tạo tài khoản</h1>
+
+                    <div class="pill-switch" data-role-switch="register">
+                        <button type="button" class="pill-opt active" data-role="buyer">Mua nông sản</button>
+                        <button type="button" class="pill-opt" data-role="farmer">Bán nông sản</button>
+                    </div>
+
+                    <div class="form-stack">
+                        <div class="form-group">
+                            <label class="form-label">Họ và tên</label>
+                            <input type="text" class="input-field" value="Nguyễn Mai Anh" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="tel" class="input-field" value="0912 345 678" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mật khẩu</label>
+                            <input type="password" class="input-field" placeholder="Tối thiểu 8 ký tự" value="••••••••" />
+                        </div>
+                        <label class="checkbox-row">
+                            <input type="checkbox" checked />
+                            <span>Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo vệ dữ liệu cá nhân.</span>
+                        </label>
+                        <button type="button" class="btn btn-primary" data-go="34">Đăng ký tài khoản</button>
+                        <p class="center-caption">Đã có tài khoản? <button type="button" class="text-link" data-go="01">Đăng nhập</button></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 03 · KHÁM PHÁ
+            ========================================================= -->
+            <section class="screen has-tabbar" id="screen-03">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                    <div class="topbar-actions">
+                        <button type="button" class="icon-badge-btn" data-go="06" title="Giỏ hàng">🛒<span class="mini-dot" id="cartBadgeCount">4</span></button>
+                        <button type="button" class="icon-badge-btn" data-go="13" title="Thông báo">🔔<span class="mini-dot">3</span></button>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">GIAO ĐẾN · HÀ NỘI ▾</p>
+                    <h1 class="screen-title">Tươi từ vườn nhà</h1>
+
+                    <div class="search-bar-box" data-go="04">
+                        <span>🔍</span>
+                        <span class="search-placeholder">Tìm rau củ, trái cây, trang trại...</span>
+                    </div>
+
+                    <div class="hero-season-card" data-go="05">
+                        <div class="hero-season-copy">
+                            <span class="hero-kicker">MÙA NÀO, THỨC NẤY</span>
+                            <h3>Từ vườn xanh đến bữa lành.</h3>
+                            <span class="hero-cta">Đặt trước thu hoạch →</span>
+                        </div>
+                        <img class="hero-season-img" src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=300&q=80" alt="Rau củ tươi từ vườn" />
+                    </div>
+
+                    <div class="chip-row" id="exploreCatChips">
+                        <button type="button" class="chip active" data-cat="all">Tất cả</button>
+                        <button type="button" class="chip" data-cat="rau">Rau củ</button>
+                        <button type="button" class="chip" data-cat="traicay">Trái cây</button>
+                    </div>
+
+                    <div class="section-head">
+                        <h2>Đang vào mùa</h2>
+                        <button type="button" class="text-link" data-go="04">Xem tất cả</button>
+                    </div>
+
+                    <div class="product-grid" id="exploreProductGrid">
+                        <article class="product-card" data-cat="traicay" data-go="05">
+                            <div class="product-thumb-wrap">
+                                <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80" alt="Cà chua bi" />
+                                <span class="badge-pill badge-green">Đặt trước</span>
+                            </div>
+                            <div class="product-card-info">
+                                <h3>Cà chua bi</h3>
+                                <p>Vườn An · Lâm Đồng</p>
+                                <strong class="price-text">40.000đ / kg</strong>
+                            </div>
+                        </article>
+
+                        <article class="product-card" data-cat="rau" data-go="06">
+                            <div class="product-thumb-wrap">
+                                <img src="https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&w=400&q=80" alt="Rau cải thìa" />
+                                <span class="badge-pill badge-soft">Có sẵn</span>
+                            </div>
+                            <div class="product-card-info">
+                                <h3>Rau cải thìa</h3>
+                                <p>Vườn An · Lâm Đồng</p>
+                                <strong class="price-text">25.000đ / kg</strong>
+                            </div>
+                        </article>
+
+                        <article class="product-card" data-cat="traicay" data-go="06">
+                            <div class="product-thumb-wrap">
+                                <img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=400&q=80" alt="Cam vàng" />
+                                <span class="badge-pill badge-soft">Có sẵn</span>
+                            </div>
+                            <div class="product-card-info">
+                                <h3>Cam vàng</h3>
+                                <p>Vườn An · Lâm Đồng</p>
+                                <strong class="price-text">45.000đ / kg</strong>
+                            </div>
+                        </article>
+
+                        <article class="product-card" data-cat="rau" data-go="05">
+                            <div class="product-thumb-wrap">
+                                <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=400&q=80" alt="Khoai tây bi" />
+                                <span class="badge-pill badge-green">VietGAP</span>
+                            </div>
+                            <div class="product-card-info">
+                                <h3>Khoai tây bi</h3>
+                                <p>Vườn An · Lâm Đồng</p>
+                                <strong class="price-text">32.000đ / kg</strong>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <nav class="bottom-tabbar">
+                    <button type="button" class="tab-item active" data-go="03"><span>🏠</span><small>Khám phá</small></button>
+                    <button type="button" class="tab-item" data-go="09"><span>🧾</span><small>Đơn hàng</small></button>
+                    <button type="button" class="tab-item" data-go="14"><span>💬</span><small>Tin nhắn</small></button>
+                    <button type="button" class="tab-item" data-go="01"><span>👤</span><small>Tài khoản</small></button>
+                </nav>
+            </section>
+
+            <!-- =========================================================
+                 04 · TÌM KIẾM VÀ BỘ LỌC
+            ========================================================= -->
+            <section class="screen has-tabbar" id="screen-04">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="03">‹ KHÁM PHÁ / TÌM KIẾM</button>
+                    <h1 class="screen-title">Tìm nông sản</h1>
+
+                    <div class="form-group">
+                        <label class="form-label">Từ khóa</label>
+                        <input type="text" class="input-field" id="searchKeywordInput" value="Cà chua" placeholder="Nhập tên nông sản..." />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Bộ lọc</label>
+                        <div class="filter-grid-2" id="searchFilterChips">
+                            <button type="button" class="filter-pill active" data-filter="lamdong">Lâm Đồng</button>
+                            <button type="button" class="filter-pill active" data-filter="vietgap">VietGAP</button>
+                            <button type="button" class="filter-pill" data-filter="cosan">Có sẵn</button>
+                            <button type="button" class="filter-pill active" data-filter="dattruoc">Đặt trước</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Khoảng giá / kg</label>
+                        <input type="text" class="input-field" value="20.000đ — 60.000đ" />
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btnApplyFilter">Áp dụng bộ lọc</button>
+
+                    <div class="section-head mt-16">
+                        <h2 id="searchResultCount">2 sản phẩm phù hợp</h2>
+                    </div>
+
+                    <div class="stack-list" id="searchResultList">
+                        <div class="list-item-card clickable" data-go="05">
+                            <img class="thumb-sm" src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=200&q=80" alt="Cà chua bi Đà Lạt" />
+                            <div class="list-item-meta">
+                                <strong>Cà chua bi Đà Lạt</strong>
+                                <span>Vườn An · Đặt trước</span>
+                                <strong class="price-text">40.000đ / kg</strong>
+                            </div>
+                        </div>
+                        <div class="list-item-card clickable" data-go="06">
+                            <img class="thumb-sm" src="https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&w=200&q=80" alt="Rau cải thìa" />
+                            <div class="list-item-meta">
+                                <strong>Rau cải thìa hữu cơ</strong>
+                                <span>Vườn An · Có sẵn</span>
+                                <strong class="price-text">25.000đ / kg</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="bottom-tabbar">
+                    <button type="button" class="tab-item active" data-go="03"><span>🏠</span><small>Khám phá</small></button>
+                    <button type="button" class="tab-item" data-go="09"><span>🧾</span><small>Đơn hàng</small></button>
+                    <button type="button" class="tab-item" data-go="14"><span>💬</span><small>Tin nhắn</small></button>
+                    <button type="button" class="tab-item" data-go="01"><span>👤</span><small>Tài khoản</small></button>
+                </nav>
+            </section>
+
+            <!-- =========================================================
+                 05 · CHI TIẾT NÔNG SẢN
+            ========================================================= -->
+            <section class="screen" id="screen-05">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="03">‹ NÔNG SẢN / CHI TIẾT</button>
+
+                    <div class="detail-hero">
+                        <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=700&q=80" alt="Cà chua bi Đà Lạt" />
+                        <span class="badge-pill badge-green floating-tl">Đặt trước</span>
+                    </div>
+
+                    <h1 class="screen-title mt-12">Cà chua bi Đà Lạt</h1>
+                    <p class="detail-price">40.000đ / kg</p>
+                    <p class="meta-line">Vườn An · Lâm Đồng <span class="verified-tag">✓ Đã xác minh</span></p>
+                    <p class="meta-line">★ 4,9 (128 đánh giá) · Trồng theo VietGAP</p>
+
+                    <div class="card-tint mt-14">
+                        <p><strong>Thu hoạch dự kiến:</strong> 18/11/2026</p>
+                        <p><strong>Còn nhận đặt trước:</strong> 120 kg</p>
+                        <p><strong>Cọc 30%</strong> · Hạn chốt: 17/11, 08:00</p>
+                    </div>
+
+                    <button type="button" class="text-link block-link mt-12" data-go="10">Xem trang trại và nguồn gốc →</button>
+
+                    <div class="btn-stack mt-16">
+                        <button type="button" class="btn btn-primary" data-go="08">Đặt trước thu hoạch</button>
+                        <button type="button" class="btn btn-soft" data-go="14">Nhắn tin cho nông dân</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 06 · GIỎ HÀNG
+            ========================================================= -->
+            <section class="screen" id="screen-06">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="03">‹ MUA HÀNG · 1 / 3</button>
+                    <h1 class="screen-title">Giỏ hàng của bạn</h1>
+
+                    <label class="checkbox-row bold-check">
+                        <input type="checkbox" checked />
+                        <span>Vườn An · Lâm Đồng</span>
+                    </label>
+
+                    <div class="stack-list" id="cartItemsContainer">
+                        <div class="cart-card" data-price="25000" data-qty="2">
+                            <img class="thumb-sm" src="https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&w=200&q=80" alt="Rau cải thìa" />
+                            <div class="cart-card-info">
+                                <strong>Rau cải thìa</strong>
+                                <span>25.000đ / kg · Có sẵn</span>
+                                <div class="stepper-row">
+                                    <button type="button" class="step-btn" data-step="-1">−</button>
+                                    <strong class="step-val">2 kg</strong>
+                                    <button type="button" class="step-btn" data-step="1">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-card" data-price="45000" data-qty="2">
+                            <img class="thumb-sm" src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=200&q=80" alt="Cam vàng" />
+                            <div class="cart-card-info">
+                                <strong>Cam vàng</strong>
+                                <span>45.000đ / kg · Có sẵn</span>
+                                <div class="stepper-row">
+                                    <button type="button" class="step-btn" data-step="-1">−</button>
+                                    <strong class="step-val">2 kg</strong>
+                                    <button type="button" class="step-btn" data-step="1">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-white summary-box mt-14">
+                        <div class="sum-row"><span>Tiền hàng</span><strong id="cartSubtotal">140.000đ</strong></div>
+                        <div class="sum-row"><span>Phí giao dự kiến</span><strong>20.000đ</strong></div>
+                        <div class="sum-divider"></div>
+                        <div class="sum-row total"><span>Tổng dự kiến</span><strong class="price-text" id="cartTotal">160.000đ</strong></div>
+                    </div>
+
+                    <p class="helper-note">Phí giao cuối cùng theo địa chỉ nhận hàng.</p>
+
+                    <button type="button" class="btn btn-primary mt-12" data-go="07">Tiếp tục đặt hàng</button>
+                    <button type="button" class="text-link center-btn mt-10" data-go="03">Tiếp tục mua sắm</button>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 07 · THANH TOÁN COD
+            ========================================================= -->
+            <section class="screen" id="screen-07">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="06">‹ MUA HÀNG · 2 / 3</button>
+                    <h1 class="screen-title">Xác nhận đặt hàng</h1>
+
+                    <div class="card-white">
+                        <div class="card-row-between">
+                            <strong>Địa chỉ nhận hàng</strong>
+                            <button type="button" class="text-link" data-toast="Đã mở chọn địa chỉ giao hàng">Thay đổi</button>
+                        </div>
+                        <p class="muted-p">Mai Anh · 0912 345 678</p>
+                        <p class="muted-p">24 Định Công, Hà Nội</p>
+                    </div>
+
+                    <div class="card-white mt-10">
+                        <strong>Giao từ Vườn An</strong>
+                        <p class="muted-p">Giao dự kiến: 12/11/2026</p>
+                        <p class="muted-p">Phí vận chuyển theo khu vực: 20.000đ</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-14">Phương thức thanh toán</h3>
+                    <div class="radio-stack">
+                        <label class="radio-row">
+                            <input type="radio" name="codPayMethod" checked />
+                            <span>Tiền mặt khi nhận hàng (COD)</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="codPayMethod" />
+                            <span>VNPay / MoMo · Mô phỏng</span>
+                        </label>
+                    </div>
+
+                    <label class="checkbox-row mt-10">
+                        <input type="checkbox" checked />
+                        <span>Yêu cầu đồng kiểm trước khi trả tiền</span>
+                    </label>
+
+                    <div class="card-tint summary-box mt-12">
+                        <div class="sum-row"><span>Tiền hàng</span><strong id="codSubtotal">140.000đ</strong></div>
+                        <div class="sum-row total"><span>Tổng gồm phí giao</span><strong class="price-text" id="codTotal">160.000đ</strong></div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary mt-14" id="btnPlaceCodOrder" data-go="09">Đặt hàng · 160.000đ</button>
+                    <p class="helper-note center-text">Không yêu cầu đặt cọc cho hàng có sẵn.</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 08 · ĐẶT TRƯỚC VÀ ĐẶT CỌC
+            ========================================================= -->
+            <section class="screen" id="screen-08">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="05">‹ ĐẶT TRƯỚC · 2 / 3</button>
+                    <h1 class="screen-title">Đặt trước thu hoạch</h1>
+
+                    <div class="card-white">
+                        <div class="card-row-between">
+                            <strong>Cà chua bi · Vườn An</strong>
+                            <div class="stepper-row compact">
+                                <button type="button" class="step-btn" id="preorderMinus">−</button>
+                                <strong id="preorderKgLabel">5 kg</strong>
+                                <button type="button" class="step-btn" id="preorderPlus">+</button>
+                            </div>
+                        </div>
+                        <p class="muted-p" id="preorderLineCalc">5 kg × 40.000đ = 200.000đ</p>
+                        <p class="muted-p">Thu hoạch: 18/11 · Giao: 19/11/2026</p>
+                    </div>
+
+                    <div class="card-white mt-10">
+                        <div class="card-row-between">
+                            <strong>Địa chỉ nhận hàng</strong>
+                            <button type="button" class="text-link" data-toast="Đã cập nhật địa chỉ mặc định">Thay đổi</button>
+                        </div>
+                        <p class="muted-p">Mai Anh · 0912 345 678</p>
+                        <p class="muted-p">24 Định Công, Hà Nội</p>
+                    </div>
+
+                    <div class="card-tint summary-box mt-12">
+                        <div class="sum-row"><span>Tiền nông sản</span><strong id="preGoodsAmount">200.000đ</strong></div>
+                        <div class="sum-row"><span>Phí giao hàng</span><strong>20.000đ</strong></div>
+                        <div class="sum-divider"></div>
+                        <div class="sum-row total"><span>Đặt cọc 30% tiền hàng</span><strong class="price-text" id="preDepositAmount">60.000đ</strong></div>
+                    </div>
+
+                    <p class="bold-caption mt-10">Còn lại khi nhận hàng: <span id="preRemainingAmount">160.000đ</span></p>
+
+                    <label class="checkbox-row mt-8">
+                        <input type="checkbox" checked />
+                        <span>Hoàn 100% cọc nếu hủy trước 08:00, 17/11. Sau hạn chốt: mất cọc.</span>
+                    </label>
+
+                    <button type="button" class="btn btn-primary mt-14" id="btnPayDeposit" data-go="33">Thanh toán cọc · 60.000đ</button>
+                    <p class="helper-note center-text">VNPay / MoMo · Thanh toán mô phỏng</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 09 · THEO DÕI ĐƠN HÀNG
+            ========================================================= -->
+            <section class="screen" id="screen-09">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="03">‹ ĐƠN HÀNG / CHI TIẾT</button>
+                    <h1 class="screen-title">Đơn hàng #NN1024</h1>
+
+                    <div class="card-tint" id="orderStatusBanner">
+                        <strong>Đặt hàng thành công</strong>
+                        <p class="muted-p">Đã thu cọc 60.000đ qua VNPay mô phỏng.</p>
+                        <p class="muted-p">Còn thanh toán khi nhận: 160.000đ</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-14">Dự kiến nhận ngày 19/11/2026</h3>
+
+                    <ul class="timeline-list">
+                        <li class="done">
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Đã đặt cọc</strong>
+                                <p>11/11 · 09:41</p>
+                            </div>
+                        </li>
+                        <li class="done">
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Nông dân đã xác nhận</strong>
+                                <p>11/11 · 10:15</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Chờ thu hoạch</strong>
+                                <p>Dự kiến 18/11</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Đang giao → Đã giao</strong>
+                                <p>Cập nhật thủ công bởi người giao</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <p class="muted-p mt-12">Cà chua bi · 5 kg · Vườn An</p>
+
+                    <div class="btn-stack mt-12">
+                        <button type="button" class="btn btn-primary" data-go="14">Nhắn tin cho nông dân</button>
+                        <button type="button" class="btn btn-soft" id="btnCancelPreorder">Hủy trước hạn · Hoàn 100% cọc</button>
+                    </div>
+
+                    <div class="dual-btn-row mt-10">
+                        <button type="button" class="btn btn-soft btn-sm" data-go="11">Gửi khiếu nại</button>
+                        <button type="button" class="btn btn-soft btn-sm" data-go="12">Đánh giá đơn</button>
+                    </div>
+                    <button type="button" class="text-link center-btn mt-10" data-go="15">Xem thông báo thiếu hàng & hoàn cọc →</button>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 10 · TRUY XUẤT NGUỒN GỐC
+            ========================================================= -->
+            <section class="screen" id="screen-10">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="05">‹ TRUY XUẤT NGUỒN GỐC</button>
+                    <h1 class="screen-title">Hành trình từ nông trại</h1>
+
+                    <div class="card-tint">
+                        <strong>Cà chua bi Đà Lạt</strong>
+                        <p class="muted-p">Lô AN-181126 · Vườn An</p>
+                        <p class="muted-p">Đơn Dương, Lâm Đồng</p>
+                    </div>
+
+                    <p class="helper-note mt-12">Thông tin do nông dân cung cấp</p>
+
+                    <ul class="timeline-list mt-8" id="traceabilityTimeline">
+                        <li class="done">
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Gieo trồng</strong>
+                                <p>05/09/2026 · Giống cà chua bi đỏ</p>
+                            </div>
+                        </li>
+                        <li class="done">
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Chăm sóc</strong>
+                                <p>20/10/2026 · Bón phân hữu cơ</p>
+                            </div>
+                        </li>
+                        <li class="done">
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Kiểm tra vườn</strong>
+                                <p>10/11/2026 · Ghi nhận sinh trưởng</p>
+                            </div>
+                        </li>
+                        <li class="done">
+                            <span class="tl-dot"></span>
+                            <div>
+                                <strong>Thu hoạch dự kiến</strong>
+                                <p>18/11/2026 · Lô 200 kg</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <button type="button" class="btn btn-primary mt-14" id="btnOpenQrModal">⊞ Quét QR hoặc nhập mã lô</button>
+                    <p class="helper-note">Nhật ký giữ nguyên các phiên bản đã công khai. Mã truy xuất luôn gắn với đúng lô hàng.</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 11 · GỬI KHIẾU NẠI
+            ========================================================= -->
+            <section class="screen" id="screen-11">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="09">‹ ĐƠN HÀNG #NN1018 · BƯỚC 1 / 3</button>
+                    <h1 class="screen-title">Gửi yêu cầu hỗ trợ</h1>
+
+                    <div class="card-amber">
+                        <strong>Còn 18 giờ để gửi khiếu nại</strong>
+                        <p>Đã giao lúc 08:00, 11/11/2026.</p>
+                        <p>Thời hạn gửi: 08:00, 12/11/2026.</p>
+                    </div>
+
+                    <div class="form-stack mt-12">
+                        <div class="form-group">
+                            <label class="form-label">Vấn đề bạn gặp phải</label>
+                            <select class="input-field" id="complaintIssueSelect">
+                                <option>Hỏng bên trong sản phẩm</option>
+                                <option>Thiếu khối lượng so với đơn đặt</option>
+                                <option>Giao sai loại nông sản</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Mô tả tình trạng</label>
+                            <textarea class="input-field" rows="3" id="complaintDescInput">Cam bị hỏng bên trong sau khi bổ. Tôi muốn được hoàn tiền phần bị hỏng.</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Minh chứng ảnh / video</label>
+                            <button type="button" class="upload-box" id="btnAttachEvidence">+ Thêm ảnh hoặc video</button>
+                            <p class="helper-note" id="evidenceStatusNote">Ảnh ≤ 2 MB · Video ≤ 30 giây / 25 MB</p>
+                        </div>
+
+                        <button type="button" class="btn btn-primary" data-go="31">Tiếp tục · Chọn phương án xử lý</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 12 · ĐÁNH GIÁ SAU MUA
+            ========================================================= -->
+            <section class="screen" id="screen-12">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="09">‹ ĐÁNH GIÁ SAU MUA</button>
+                    <h1 class="screen-title">Đánh giá sản phẩm</h1>
+
+                    <div class="card-white">
+                        <strong>Rau cải thìa · Vườn An</strong>
+                        <p class="muted-p">Đơn #NN1016 · Đã giao ngày 10/11</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-14">Chất lượng sản phẩm</h3>
+                    <div class="star-row" id="starRatingRow">
+                        <button type="button" class="star-btn active" data-star="1">★</button>
+                        <button type="button" class="star-btn active" data-star="2">★</button>
+                        <button type="button" class="star-btn active" data-star="3">★</button>
+                        <button type="button" class="star-btn active" data-star="4">★</button>
+                        <button type="button" class="star-btn active" data-star="5">★</button>
+                    </div>
+                    <p class="rating-label" id="starRatingText">Rất hài lòng</p>
+
+                    <textarea class="input-field mt-10" rows="4">Rau tươi, đóng gói cẩn thận. Nông dân trả lời nhanh và giao đúng hẹn. Tôi sẽ tiếp tục ủng hộ!</textarea>
+                    <p class="helper-note mt-8">Chỉ khách đã mua hàng mới được đánh giá.</p>
+
+                    <div class="btn-stack mt-14">
+                        <button type="button" class="btn btn-primary" id="btnSubmitReview" data-go="03">Gửi đánh giá</button>
+                        <button type="button" class="btn btn-soft" data-go="09">Quay lại đơn hàng</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 13 · THÔNG BÁO
+            ========================================================= -->
+            <section class="screen" id="screen-13">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="03">‹ CẬP NHẬT TỪ NÔNG NHÀ</button>
+                    <h1 class="screen-title">Thông báo</h1>
+
+                    <div class="tab-underline-row" id="notifFilterTabs">
+                        <button type="button" class="u-tab active" data-notif="all">Tất cả</button>
+                        <button type="button" class="u-tab" data-notif="unread">Chưa đọc (3)</button>
+                    </div>
+
+                    <div class="stack-list mt-12" id="notifList">
+                        <div class="card-tint clickable" data-unread="true" data-go="09">
+                            <strong>Đã nhận tiền cọc</strong>
+                            <p class="muted-p">Đơn #NN1024 · Đã nhận cọc 60.000đ.</p>
+                            <span class="time-stamp">Hôm nay · 09:41</span>
+                        </div>
+
+                        <div class="card-tint clickable" data-unread="true" data-go="09">
+                            <strong>Nông dân đã xác nhận đơn</strong>
+                            <p class="muted-p">Cà chua bi đang chờ thu hoạch ngày 18/11.</p>
+                            <span class="time-stamp">Hôm nay · 10:15</span>
+                        </div>
+
+                        <div class="card-tint clickable" data-unread="true" data-go="32">
+                            <strong>Khiếu nại đã được tiếp nhận</strong>
+                            <p class="muted-p">Hồ sơ #KN008 · Chờ người bán phản hồi. Còn 22 giờ trong hạn phản hồi.</p>
+                        </div>
+
+                        <div class="card-white clickable" data-unread="false" data-go="12">
+                            <strong>Đơn #NN1016 đã giao</strong>
+                            <p class="muted-p">Bạn có thể đánh giá trải nghiệm mua hàng.</p>
+                            <span class="time-stamp">Hôm qua · 16:30</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 14 · TIN NHẮN
+            ========================================================= -->
+            <section class="screen" id="screen-14">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body chat-layout">
+                    <div>
+                        <button type="button" class="back-eyebrow" data-go="03">‹ TIN NHẮN / TRAO ĐỔI TRỰC TIẾP</button>
+                        <h1 class="screen-title">Vườn An</h1>
+
+                        <div class="card-tint compact clickable" data-go="05">
+                            <strong>Cà chua bi Đà Lạt</strong>
+                            <p class="muted-p">40.000đ / kg · Thu hoạch ngày 18/11</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-feed" id="chatFeed">
+                        <p class="chat-time">Hôm nay · 10:20</p>
+                        <div class="bubble bubble-me">Chào anh, cà chua thu hoạch ngày 18/11 đúng không ạ?</div>
+                        <div class="bubble bubble-them">Đúng rồi bạn nhé. Mình hái và đóng gói trong ngày, dự kiến bạn nhận hàng ngày 19/11.</div>
+                        <div class="bubble bubble-me">Cảm ơn anh, em đặt 5 kg!</div>
+                    </div>
+
+                    <form class="chat-composer" id="chatForm">
+                        <input type="text" class="input-field" id="chatInput" placeholder="Nhập tin nhắn..." autocomplete="off" />
+                        <button type="submit" class="send-circle-btn" aria-label="Gửi">↑</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 15 · THIẾU HÀNG VÀ HOÀN CỌC
+            ========================================================= -->
+            <section class="screen" id="screen-15">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="09">‹ BẢO VỆ TIỀN CỌC / #NN1024</button>
+                    <h1 class="screen-title">Hoàn cọc đặt trước</h1>
+
+                    <div class="card-amber">
+                        <strong>Vườn An báo không đủ hàng</strong>
+                        <p>Mưa lớn ảnh hưởng sản lượng thu hoạch. Đơn 5 kg cà chua bi không thể giao đủ.</p>
+                    </div>
+
+                    <div class="card-tint mt-12">
+                        <strong>Hoàn 100% tiền đã đặt cọc</strong>
+                        <p class="big-green-num">60.000đ</p>
+                        <p class="muted-p">Đang xử lý về VNPay · Mô phỏng</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-14">Bạn cũng có thể chọn</h3>
+                    <div class="radio-stack">
+                        <label class="radio-row">
+                            <input type="radio" name="shortageChoice" />
+                            <span>Nhận phần có sẵn, hoàn phần thiếu</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="shortageChoice" />
+                            <span>Đổi sản phẩm tương đương</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="shortageChoice" />
+                            <span>Chờ đợt thu hoạch tiếp theo</span>
+                        </label>
+                    </div>
+
+                    <p class="helper-note mt-10">Phương án thay thế cần bạn xác nhận. Mặc định hệ thống hoàn toàn bộ cọc.</p>
+                    <button type="button" class="btn btn-primary mt-12" data-toast="Đã xác nhận giữ phương án hoàn 100% cọc 60.000đ" data-go="09">Giữ phương án hoàn cọc</button>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 16 · TỔNG QUAN NÔNG TRẠI
+            ========================================================= -->
+            <section class="screen has-tabbar" id="screen-16">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                    <button type="button" class="text-link" data-go="01">Đăng xuất</button>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">KÊNH NÔNG DÂN · VƯỜN AN</p>
+                    <h1 class="screen-title">Chào buổi sáng, chú An</h1>
+                    <p class="screen-subtitle">Hôm nay · 11/11/2026</p>
+
+                    <div class="revenue-hero-card">
+                        <span class="rev-kicker">DOANH THU THÁNG 11</span>
+                        <strong class="rev-amount">8.450.000đ</strong>
+                        <span class="rev-sub">Dữ liệu minh họa · 24 đơn hoàn tất</span>
+                    </div>
+
+                    <div class="kpi-pair mt-12">
+                        <div class="card-tint clickable" data-go="22">
+                            <strong class="kpi-green">08 đơn</strong>
+                            <p class="muted-p">Chờ xác nhận</p>
+                        </div>
+                        <div class="card-tint clickable" data-go="18">
+                            <strong class="kpi-green">120 kg</strong>
+                            <p class="muted-p">Đặt trước</p>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary mt-12" data-go="19">+ Đăng bán sản phẩm</button>
+
+                    <h3 class="sub-heading mt-16">Việc cần làm hôm nay</h3>
+                    <div class="stack-list mt-8">
+                        <div class="card-white clickable" data-go="22">
+                            <strong>8 đơn hàng mới cần xác nhận</strong>
+                            <p class="muted-p">Xem danh sách đơn hàng →</p>
+                        </div>
+                        <div class="card-white clickable" data-go="24">
+                            <strong>1 khiếu nại cần phản hồi</strong>
+                            <p class="muted-p">Còn 22 giờ · Xem yêu cầu →</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="bottom-tabbar">
+                    <button type="button" class="tab-item active" data-go="16"><span>🏠</span><small>Tổng quan</small></button>
+                    <button type="button" class="tab-item" data-go="18"><span>📦</span><small>Sản phẩm</small></button>
+                    <button type="button" class="tab-item" data-go="22"><span>🧾</span><small>Đơn hàng</small></button>
+                    <button type="button" class="tab-item" data-go="17"><span>👤</span><small>Gian hàng</small></button>
+                </nav>
+            </section>
+
+            <!-- =========================================================
+                 17 · HỒ SƠ TRANG TRẠI
+            ========================================================= -->
+            <section class="screen has-tabbar" id="screen-17">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                    <button type="button" class="text-link" data-go="01">Đăng xuất</button>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">KÊNH NÔNG DÂN · VƯỜN AN</p>
+                    <h1 class="screen-title">Hồ sơ trang trại</h1>
+
+                    <div class="card-tint">
+                        <strong>Vườn An <span class="verified-tag">✓ Đã xác minh</span></strong>
+                        <p class="muted-p">Nông dân cá thể · Lâm Đồng</p>
+                        <p class="muted-p">★ 4,9 · 128 đánh giá</p>
+                    </div>
+
+                    <div class="form-stack mt-12">
+                        <div class="form-group">
+                            <label class="form-label">Tên trang trại</label>
+                            <input type="text" class="input-field" value="Vườn An" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Địa chỉ vùng trồng</label>
+                            <input type="text" class="input-field" value="Đơn Dương, Lâm Đồng" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Số điện thoại liên hệ</label>
+                            <input type="tel" class="input-field" value="0918 234 567" />
+                        </div>
+                        <div class="card-white">
+                            <strong>Chứng nhận chất lượng</strong>
+                            <p class="muted-p">VietGAP · Đã được quản trị xác minh</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" data-toast="Đã lưu thông tin hồ sơ trang trại">Lưu thông tin trang trại</button>
+                    </div>
+                </div>
+
+                <nav class="bottom-tabbar">
+                    <button type="button" class="tab-item" data-go="16"><span>🏠</span><small>Tổng quan</small></button>
+                    <button type="button" class="tab-item" data-go="18"><span>📦</span><small>Sản phẩm</small></button>
+                    <button type="button" class="tab-item" data-go="22"><span>🧾</span><small>Đơn hàng</small></button>
+                    <button type="button" class="tab-item active" data-go="17"><span>👤</span><small>Gian hàng</small></button>
+                </nav>
+            </section>
+
+            <!-- =========================================================
+                 18 · SẢN PHẨM VÀ TỒN KHO
+            ========================================================= -->
+            <section class="screen has-tabbar" id="screen-18">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">KÊNH NÔNG DÂN · VƯỜN AN</p>
+                    <h1 class="screen-title">Sản phẩm của tôi</h1>
+
+                    <button type="button" class="btn btn-primary" data-go="19">+ Đăng sản phẩm mới</button>
+
+                    <div class="tab-underline-row mt-12">
+                        <button type="button" class="u-tab active">Tất cả (12)</button>
+                        <button type="button" class="u-tab">Có sẵn</button>
+                        <button type="button" class="u-tab">Đặt trước</button>
+                    </div>
+
+                    <div class="stack-list mt-12" id="farmerProductList">
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Cà chua bi Đà Lạt</strong>
+                                <button type="button" class="text-link" data-go="23">Nhật ký →</button>
+                            </div>
+                            <p class="muted-p">40.000đ / kg · Đặt trước</p>
+                            <p class="muted-p">Còn nhận đặt: 120 kg · 18/11</p>
+                        </div>
+
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Rau cải thìa</strong>
+                                <button type="button" class="text-link" data-go="19">Sửa →</button>
+                            </div>
+                            <p class="muted-p">25.000đ / kg · Có sẵn</p>
+                            <p class="muted-p">Tồn kho: 45 kg</p>
+                        </div>
+
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Cam vàng</strong>
+                                <button type="button" class="text-link" data-go="19">Sửa →</button>
+                            </div>
+                            <p class="muted-p">45.000đ / kg · Có sẵn</p>
+                            <p class="muted-p">Tồn kho: 68 kg</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="bottom-tabbar">
+                    <button type="button" class="tab-item" data-go="16"><span>🏠</span><small>Tổng quan</small></button>
+                    <button type="button" class="tab-item active" data-go="18"><span>📦</span><small>Sản phẩm</small></button>
+                    <button type="button" class="tab-item" data-go="22"><span>🧾</span><small>Đơn hàng</small></button>
+                    <button type="button" class="tab-item" data-go="17"><span>👤</span><small>Gian hàng</small></button>
+                </nav>
+            </section>
+
+            <!-- =========================================================
+                 19 · ĐĂNG BÁN · BƯỚC 1
+            ========================================================= -->
+            <section class="screen" id="screen-19">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="18">‹ ĐĂNG BÁN · BƯỚC 1 / 3</button>
+                    <h1 class="screen-title">Thông tin sản phẩm</h1>
+
+                    <div class="step-progress">
+                        <span class="active">1. Thông tin</span>
+                        <span>2. Mùa vụ</span>
+                        <span>3. Xác nhận</span>
+                    </div>
+
+                    <div class="photo-upload-grid mt-12">
+                        <img class="photo-slot-img" src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80" alt="Ảnh sản phẩm" />
+                        <button type="button" class="photo-slot-add" data-toast="Đã chọn ảnh nông sản mới">＋<small>Thêm ảnh</small></button>
+                    </div>
+
+                    <div class="form-stack mt-12">
+                        <div class="form-group">
+                            <label class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="input-field" id="pubNameInput" value="Cà chua bi Đà Lạt" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Danh mục</label>
+                            <select class="input-field" id="pubCatInput">
+                                <option>Rau củ quả</option>
+                                <option>Trái cây</option>
+                                <option>Đặc sản vùng miền</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Giá bán / kg</label>
+                            <input type="text" class="input-field" id="pubPriceInput" value="40.000đ" />
+                        </div>
+                        <p class="helper-note">Ảnh tự động nén ≤ 2 MB. Nháp được lưu để tiếp tục khi kết nối mạng trở lại.</p>
+                        <button type="button" class="btn btn-primary" data-go="20">Tiếp tục · Mùa vụ và số lượng</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 20 · ĐĂNG BÁN · BƯỚC 2
+            ========================================================= -->
+            <section class="screen" id="screen-20">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="19">‹ ĐĂNG BÁN · BƯỚC 2 / 3</button>
+                    <h1 class="screen-title">Mùa vụ và số lượng</h1>
+
+                    <div class="step-progress">
+                        <span class="done">1. Thông tin</span>
+                        <span class="active">2. Mùa vụ</span>
+                        <span>3. Xác nhận</span>
+                    </div>
+
+                    <div class="pill-switch mt-12" id="pubModeSwitch">
+                        <button type="button" class="pill-opt" data-mode="Có sẵn">Có sẵn</button>
+                        <button type="button" class="pill-opt active" data-mode="Đặt trước">Đặt trước</button>
+                    </div>
+
+                    <div class="form-stack">
+                        <div class="form-group">
+                            <label class="form-label">Sản lượng dự kiến (kg)</label>
+                            <input type="number" class="input-field" id="pubQtyInput" value="200" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ngày thu hoạch dự kiến</label>
+                            <input type="text" class="input-field" id="pubHarvestInput" value="18/11/2026" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Hạn chốt đơn</label>
+                            <input type="text" class="input-field" id="pubCutoffInput" value="17/11/2026 · 08:00" />
+                        </div>
+                        <div class="card-tint">
+                            <strong>Mức cọc cố định: 30%</strong>
+                            <p class="muted-p">Đặt trước dành cho nông dân cá thể. Hạn chốt mặc định trước thu hoạch 24 giờ.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btnToPublishStep3" data-go="21">Tiếp tục · Kiểm tra và đăng</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 21 · ĐĂNG BÁN · BƯỚC 3
+            ========================================================= -->
+            <section class="screen" id="screen-21">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="20">‹ ĐĂNG BÁN · BƯỚC 3 / 3</button>
+                    <h1 class="screen-title">Kiểm tra trước khi đăng</h1>
+
+                    <div class="step-progress">
+                        <span class="done">1. Thông tin</span>
+                        <span class="done">2. Mùa vụ</span>
+                        <span class="active">3. Xác nhận</span>
+                    </div>
+
+                    <div class="card-white mt-12">
+                        <strong id="reviewPubName">Cà chua bi Đà Lạt</strong>
+                        <p class="muted-p" id="reviewPubMeta">Rau củ quả · 40.000đ / kg</p>
+                        <p class="muted-p">Vườn An · Đơn Dương, Lâm Đồng</p>
+                    </div>
+
+                    <div class="card-tint mt-10">
+                        <strong>Đặt trước theo mùa vụ</strong>
+                        <p class="muted-p" id="reviewPubHarvest">Sản lượng: 200 kg · Cọc: 30%</p>
+                        <p class="muted-p" id="reviewPubDates">Thu hoạch dự kiến: 18/11/2026 · Chốt đơn: 08:00, 17/11/2026</p>
+                    </div>
+
+                    <div class="card-white mt-10">
+                        <strong>Nguồn gốc và chất lượng</strong>
+                        <p class="muted-p">VietGAP · Gắn với lô AN-181126</p>
+                        <p class="muted-p">Mã truy xuất được tạo khi đăng.</p>
+                    </div>
+
+                    <label class="checkbox-row mt-12">
+                        <input type="checkbox" checked />
+                        <span>Tôi xác nhận thông tin đúng thực tế.</span>
+                    </label>
+
+                    <div class="btn-stack mt-12">
+                        <button type="button" class="btn btn-primary" id="btnPublishProduct" data-go="18">Đăng bán sản phẩm</button>
+                        <button type="button" class="btn btn-soft" data-go="19">Quay lại chỉnh sửa</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 22 · ĐƠN HÀNG CỦA NÔNG DÂN
+            ========================================================= -->
+            <section class="screen has-tabbar" id="screen-22">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="16">‹ KÊNH NÔNG DÂN · VƯỜN AN</button>
+                    <h1 class="screen-title">Đơn hàng mới</h1>
+
+                    <div class="tab-underline-row">
+                        <button type="button" class="u-tab active">Chờ xác nhận (8)</button>
+                        <button type="button" class="u-tab">Đang xử lý</button>
+                    </div>
+
+                    <div class="stack-list mt-12">
+                        <div class="card-white" data-order-card>
+                            <strong>#NN1024 · Mai Anh</strong>
+                            <p class="muted-p">Cà chua bi · 5 kg</p>
+                            <p class="muted-p">Đặt trước · Giao 19/11/2026</p>
+                            <p class="muted-p">Đã cọc: 60.000đ / Tổng: 220.000đ</p>
+                            <div class="dual-btn-row mt-10">
+                                <button type="button" class="btn btn-soft btn-sm" data-order-action="reject">Từ chối</button>
+                                <button type="button" class="btn btn-primary btn-sm" data-order-action="accept">Xác nhận</button>
+                            </div>
+                        </div>
+
+                        <div class="card-white" data-order-card>
+                            <strong>#NN1025 · Hoàng Nam</strong>
+                            <p class="muted-p">Rau cải thìa · 2 kg</p>
+                            <p class="muted-p">Có sẵn · COD 70.000đ</p>
+                            <p class="muted-p">Khách yêu cầu đồng kiểm</p>
+                            <div class="dual-btn-row mt-10">
+                                <button type="button" class="btn btn-soft btn-sm" data-order-action="reject">Từ chối</button>
+                                <button type="button" class="btn btn-primary btn-sm" data-order-action="accept">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="helper-note mt-12">Trạng thái giao hàng được cập nhật thủ công.</p>
+                </div>
+
+                <nav class="bottom-tabbar">
+                    <button type="button" class="tab-item" data-go="16"><span>🏠</span><small>Tổng quan</small></button>
+                    <button type="button" class="tab-item" data-go="18"><span>📦</span><small>Sản phẩm</small></button>
+                    <button type="button" class="tab-item active" data-go="22"><span>🧾</span><small>Đơn hàng</small></button>
+                    <button type="button" class="tab-item" data-go="17"><span>👤</span><small>Gian hàng</small></button>
+                </nav>
+            </section>
+
+            <!-- =========================================================
+                 23 · NHẬT KÝ TRỒNG TRỌT
+            ========================================================= -->
+            <section class="screen" id="screen-23">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="18">‹ KÊNH NÔNG DÂN · VƯỜN AN</button>
+                    <h1 class="screen-title">Nhật ký trồng trọt</h1>
+
+                    <div class="card-tint">
+                        <strong>Lô AN-181126 · Cà chua bi</strong>
+                        <p class="muted-p">Thu hoạch dự kiến 18/11 · 200 kg</p>
+                        <p class="muted-p">Mã truy xuất gắn cố định với lô.</p>
+                    </div>
+
+                    <div class="form-stack mt-12">
+                        <div class="form-group">
+                            <label class="form-label">Ngày ghi nhận</label>
+                            <input type="text" class="input-field" id="logDateInput" value="11/11/2026" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Hoạt động</label>
+                            <input type="text" class="input-field" id="logActivityInput" value="Kiểm tra vườn và tưới nước" />
+                        </div>
+                        <div class="form-group">
+                            <textarea class="input-field" rows="3" id="logNoteInput">Cây phát triển tốt, tưới nước buổi sáng. Chưa thu hoạch, dự kiến đúng lịch.</textarea>
+                        </div>
+                        <button type="button" class="btn btn-soft" data-toast="Đã đính kèm ảnh chụp vườn sáng nay">+ Đính kèm ảnh vườn</button>
+                        <button type="button" class="btn btn-primary" id="btnSaveFarmLog">Lưu bản ghi mới</button>
+                        <p class="helper-note">Lịch sử phiên bản được giữ nguyên; không ghi đè nhật ký đã công khai.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 24 · PHẢN HỒI KHIẾU NẠI
+            ========================================================= -->
+            <section class="screen" id="screen-24">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="16">‹ KÊNH NÔNG DÂN · VƯỜN AN</button>
+                    <h1 class="screen-title">Phản hồi khiếu nại</h1>
+
+                    <div class="card-amber">
+                        <strong>#KN008 · Đơn #NN1018</strong>
+                        <p>Còn 22 giờ để phản hồi người mua. Hết hạn chưa xử lý → chuyển quản trị.</p>
+                    </div>
+
+                    <div class="card-white mt-10">
+                        <strong>Người mua: Mai Anh</strong>
+                        <p class="muted-p">Cam hỏng bên trong · Yêu cầu hoàn tiền</p>
+                        <p class="muted-p">Minh chứng: 2 ảnh · 11/11, 14:00</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-12">Phương án xử lý</h3>
+                    <div class="radio-stack">
+                        <label class="radio-row">
+                            <input type="radio" name="farmerDisputeReply" checked />
+                            <span>Đồng ý hoàn tiền phần bị hỏng</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="farmerDisputeReply" />
+                            <span>Đề xuất phương án khác</span>
+                        </label>
+                    </div>
+
+                    <textarea class="input-field mt-10" rows="3">Xin lỗi bạn về trải nghiệm này. Mình đồng ý hoàn 45.000đ cho 1 kg cam bị hỏng.</textarea>
+                    <button type="button" class="btn btn-primary mt-12" data-toast="Đã gửi phản hồi hoàn tiền 45.000đ cho người mua" data-go="16">Gửi phản hồi</button>
+                    <p class="helper-note mt-8">Không đồng thuận → <button type="button" class="text-link" data-go="28">quản trị phân xử.</button></p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 25 · QUẢN TRỊ · TỔNG QUAN
+            ========================================================= -->
+            <section class="screen" id="screen-25">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                    <button type="button" class="text-link" data-go="01">Đăng xuất</button>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">QUẢN TRỊ / TỔNG QUAN</p>
+                    <h1 class="screen-title">Tổng quan vận hành</h1>
+                    <p class="screen-subtitle">Tháng 11/2026 · Dữ liệu minh họa</p>
+
+                    <div class="admin-kpi-grid">
+                        <div class="admin-kpi-dark">
+                            <strong>126</strong>
+                            <span>Đơn hoàn tất</span>
+                        </div>
+                        <div class="admin-kpi-dark">
+                            <strong>12,8 triệu</strong>
+                            <span>Giá trị giao dịch</span>
+                        </div>
+                        <div class="card-tint clickable" data-go="26">
+                            <strong class="kpi-green">06</strong>
+                            <p class="muted-p">Chờ xác minh</p>
+                        </div>
+                        <div class="card-tint clickable" data-go="28">
+                            <strong class="kpi-green">03</strong>
+                            <p class="muted-p">Tranh chấp mở</p>
+                        </div>
+                    </div>
+
+                    <h3 class="sub-heading mt-16">Cần xử lý</h3>
+                    <div class="stack-list mt-8">
+                        <div class="card-amber clickable" data-go="28">
+                            <strong>03 hồ sơ tranh chấp</strong>
+                            <p>01 hồ sơ gần hết hạn xử lý →</p>
+                        </div>
+                        <div class="card-white clickable" data-go="26">
+                            <strong>06 tài khoản nông dân</strong>
+                            <p class="muted-p">Đang chờ xác minh chứng nhận →</p>
+                        </div>
+                        <div class="card-white clickable" data-go="27">
+                            <strong>02 sản phẩm bị báo cáo</strong>
+                            <p class="muted-p">Kiểm duyệt nội dung & chứng nhận →</p>
+                        </div>
+                        <div class="card-white clickable" data-go="29">
+                            <strong>Quản lý danh mục nông sản</strong>
+                            <p class="muted-p">04 danh mục đang hiển thị →</p>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-soft mt-14" data-toast="Đã xuất báo cáo giao dịch tháng 11/2026">Xem báo cáo giao dịch</button>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 26 · QUẢN TRỊ · NGƯỜI DÙNG
+            ========================================================= -->
+            <section class="screen" id="screen-26">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="25">‹ QUẢN TRỊ / VẬN HÀNH</button>
+                    <h1 class="screen-title">Quản lý người dùng</h1>
+
+                    <div class="form-group">
+                        <label class="form-label">Tìm tài khoản</label>
+                        <input type="text" class="input-field" placeholder="Tên, số điện thoại hoặc mã tài khoản" />
+                    </div>
+
+                    <div class="tab-underline-row mt-8">
+                        <button type="button" class="u-tab active">Chờ duyệt (6)</button>
+                        <button type="button" class="u-tab">Hoạt động</button>
+                        <button type="button" class="u-tab">Đã khóa</button>
+                    </div>
+
+                    <div class="stack-list mt-12">
+                        <div class="card-white">
+                            <strong>Nông trại Bình Minh</strong>
+                            <p class="muted-p">Nông dân cá thể · Hà Nội</p>
+                            <p class="muted-p">Đã gửi hồ sơ và chứng nhận VietGAP · Đăng ký: 10/11/2026</p>
+                            <div class="dual-btn-row mt-10">
+                                <button type="button" class="btn btn-soft btn-sm" data-toast="Đang xem chứng nhận VietGAP #VG-2026">Xem hồ sơ</button>
+                                <button type="button" class="btn btn-primary btn-sm" id="btnApproveFarm">Duyệt hồ sơ</button>
+                            </div>
+                        </div>
+
+                        <div class="card-white">
+                            <strong>Nguyễn Hoàng Nam</strong>
+                            <p class="muted-p">Người mua · 0903 456 789</p>
+                            <p class="muted-p" id="buyerAccountStatus">Trạng thái: Đang hoạt động</p>
+                            <button type="button" class="btn btn-soft btn-sm mt-10" id="btnToggleLockUser">Khóa tài khoản</button>
+                        </div>
+                    </div>
+
+                    <p class="helper-note mt-12">Mỗi quyết định đều lưu thời gian và người xử lý.</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 27 · QUẢN TRỊ · SẢN PHẨM
+            ========================================================= -->
+            <section class="screen" id="screen-27">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="25">‹ QUẢN TRỊ / VẬN HÀNH</button>
+                    <h1 class="screen-title">Kiểm duyệt sản phẩm</h1>
+
+                    <div class="tab-underline-row">
+                        <button type="button" class="u-tab">Tất cả</button>
+                        <button type="button" class="u-tab active">Bị báo cáo (2)</button>
+                        <button type="button" class="u-tab">Đã gỡ</button>
+                    </div>
+
+                    <div class="card-amber mt-12" id="reportedProductCard">
+                        <strong>Cam vàng hữu cơ</strong>
+                        <p>Gian hàng: Nông trại Bình Minh</p>
+                        <p>Báo cáo: Chứng nhận chưa hợp lệ</p>
+                        <p>Người báo cáo: Ẩn thông tin cá nhân</p>
+                        <button type="button" class="btn btn-soft btn-sm mt-10" data-toast="Hiển thị chi tiết bài đăng #SP-904">Xem chi tiết</button>
+                    </div>
+
+                    <div class="form-group mt-12">
+                        <label class="form-label">Lý do xử lý</label>
+                        <input type="text" class="input-field" value="Chưa cung cấp chứng nhận hợp lệ" />
+                    </div>
+
+                    <div class="card-white mt-10">
+                        <strong>Thông báo cho người bán</strong>
+                        <p class="muted-p">Người bán được xem lý do và hướng dẫn bổ sung hồ sơ trước khi đăng lại.</p>
+                    </div>
+
+                    <button type="button" class="btn btn-danger mt-14" id="btnRemoveReportedProduct">Gỡ sản phẩm vi phạm</button>
+                    <p class="helper-note center-text">Cần xác nhận trước khi gỡ sản phẩm.</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 28 · QUẢN TRỊ · TRANH CHẤP
+            ========================================================= -->
+            <section class="screen" id="screen-28">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="25">‹ QUẢN TRỊ / HỒ SƠ #KN008</button>
+                    <h1 class="screen-title">Phân xử tranh chấp</h1>
+
+                    <div class="card-white">
+                        <strong>Đơn #NN1018 · Cam vàng</strong>
+                        <p class="muted-p">Người mua: Mai Anh · Người bán: Vườn An</p>
+                        <p class="muted-p">Số tiền đề nghị hoàn: 45.000đ</p>
+                    </div>
+
+                    <div class="card-tint mt-10">
+                        <strong>Minh chứng được lưu</strong>
+                        <p class="muted-p">2 ảnh · Gửi 11/11, 14:00</p>
+                        <p class="muted-p">Đồng kiểm đạt ngoại quan; lỗi báo: lỗi ẩn.</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-12">Quyết định xử lý</h3>
+                    <div class="radio-stack">
+                        <label class="radio-row">
+                            <input type="radio" name="adminRuling" checked />
+                            <span>Hoàn tiền một phần · 45.000đ</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="adminRuling" />
+                            <span>Không chấp nhận khiếu nại</span>
+                        </label>
+                    </div>
+
+                    <textarea class="input-field mt-10" rows="3">Minh chứng cho thấy 1 kg cam bị hỏng bên trong. Lỗi ẩn được tiếp nhận trong 24 giờ kể từ khi đã giao.</textarea>
+
+                    <button type="button" class="btn btn-primary mt-12" data-toast="Đã phân xử hoàn 45.000đ qua cổng thanh toán mô phỏng" data-go="25">Xác nhận phân xử và hoàn tiền</button>
+                    <p class="helper-note center-text">Hoàn qua cổng thanh toán · Mô phỏng</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 29 · QUẢN TRỊ · DANH MỤC
+            ========================================================= -->
+            <section class="screen" id="screen-29">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="25">‹ QUẢN TRỊ / VẬN HÀNH</button>
+                    <h1 class="screen-title">Quản lý danh mục</h1>
+
+                    <button type="button" class="btn btn-primary" id="btnAddCategory">+ Thêm danh mục</button>
+
+                    <div class="stack-list mt-12" id="adminCategoryList">
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Rau củ quả</strong>
+                                <button type="button" class="text-link" data-toast="Đang chỉnh sửa danh mục Rau củ quả">Sửa</button>
+                            </div>
+                            <p class="muted-p">24 sản phẩm · Đang hiển thị</p>
+                        </div>
+
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Trái cây</strong>
+                                <button type="button" class="text-link" data-toast="Đang chỉnh sửa danh mục Trái cây">Sửa</button>
+                            </div>
+                            <p class="muted-p">18 sản phẩm · Đang hiển thị</p>
+                        </div>
+
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Đặc sản vùng miền</strong>
+                                <button type="button" class="text-link" data-toast="Đang chỉnh sửa danh mục Đặc sản vùng miền">Sửa</button>
+                            </div>
+                            <p class="muted-p">08 sản phẩm · Đang hiển thị</p>
+                        </div>
+
+                        <div class="card-white">
+                            <div class="card-row-between">
+                                <strong>Combo nông sản</strong>
+                                <button type="button" class="text-link" data-toast="Đang chỉnh sửa danh mục Combo nông sản">Sửa</button>
+                            </div>
+                            <p class="muted-p">06 sản phẩm · Đang hiển thị</p>
+                        </div>
+                    </div>
+
+                    <p class="helper-note mt-12">Tên và thứ tự hiển thị được dùng chung trong bộ lọc tìm kiếm và form đăng bán.</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 30 · ĐỒNG KIỂM VÀ GIAO HÀNG
+            ========================================================= -->
+            <section class="screen" id="screen-30">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                    <button type="button" class="text-link" data-go="01">Trang chủ</button>
+                </div>
+
+                <div class="screen-body">
+                    <p class="eyebrow">LIÊN KẾT MỘT LẦN / KHÔNG CẦN TÀI KHOẢN</p>
+                    <h1 class="screen-title">Xác nhận giao hàng</h1>
+
+                    <div class="card-white">
+                        <strong>Đơn #NN1025 · Hoàng Nam</strong>
+                        <p class="muted-p">Rau cải thìa · 2 kg</p>
+                        <p class="muted-p">24 Định Công, Hà Nội</p>
+                    </div>
+
+                    <div class="card-tint mt-10">
+                        <strong>Tiền COD cần thu: 70.000đ</strong>
+                        <p class="muted-p">Người mua đã yêu cầu đồng kiểm. Kiểm tra hàng trước khi thu tiền.</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-12">Kết quả đồng kiểm</h3>
+                    <div class="radio-stack">
+                        <label class="radio-row">
+                            <input type="radio" name="coInspectResult" checked />
+                            <span>Đạt · Người mua đồng ý nhận</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="coInspectResult" />
+                            <span>Không đạt · Không thu tiền COD</span>
+                        </label>
+                    </div>
+
+                    <label class="checkbox-row mt-10">
+                        <input type="checkbox" checked />
+                        <span>Đã giao hàng và đã thu tiền COD</span>
+                    </label>
+
+                    <p class="helper-note mt-8">Nếu không đạt: thêm ảnh làm căn cứ xử lý. Không xác nhận đã thu tiền.</p>
+
+                    <button type="button" class="btn btn-primary mt-12" id="btnConfirmDelivery">Xác nhận đã giao</button>
+                    <p class="helper-note">Liên kết chỉ sử dụng một lần. Mốc "Đã giao" bắt đầu hạn khiếu nại 24h.</p>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 31 · PHƯƠNG ÁN KHIẾU NẠI
+            ========================================================= -->
+            <section class="screen" id="screen-31">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="11">‹ KHIẾU NẠI · BƯỚC 2 / 3</button>
+                    <h1 class="screen-title">Phương án khiếu nại</h1>
+
+                    <div class="card-tint">
+                        <strong>Đơn #NN1018 · Cam vàng</strong>
+                        <p class="muted-p">1 kg bị hỏng bên trong · Đã thêm 2 ảnh minh chứng</p>
+                    </div>
+
+                    <h3 class="sub-heading mt-14">Bạn muốn được hỗ trợ thế nào?</h3>
+                    <div class="radio-stack">
+                        <label class="radio-row">
+                            <input type="radio" name="complaintSolution" value="Hoàn tiền phần hàng bị hỏng" checked />
+                            <span>Hoàn tiền phần hàng bị hỏng</span>
+                        </label>
+                        <label class="radio-row">
+                            <input type="radio" name="complaintSolution" value="Đổi sản phẩm mới" />
+                            <span>Đổi sản phẩm mới</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group mt-12">
+                        <label class="form-label">Số tiền yêu cầu hoàn</label>
+                        <input type="text" class="input-field" id="refundRequestInput" value="45.000đ" />
+                    </div>
+
+                    <div class="card-white mt-12">
+                        <strong>Quyền lợi sau đồng kiểm</strong>
+                        <p class="muted-p">Đồng kiểm đạt vẫn được khiếu nại lỗi ẩn trong 24 giờ từ lúc đơn đã giao.</p>
+                    </div>
+
+                    <button type="button" class="btn btn-primary mt-14" data-go="32">Tiếp tục · Kiểm tra yêu cầu</button>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 32 · XÁC NHẬN KHIẾU NẠI
+            ========================================================= -->
+            <section class="screen" id="screen-32">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="31">‹ KHIẾU NẠI · BƯỚC 3 / 3</button>
+                    <h1 class="screen-title">Xác nhận khiếu nại</h1>
+
+                    <div class="card-white">
+                        <strong>Kiểm tra yêu cầu của bạn</strong>
+                        <p class="muted-p">Đơn #NN1018 · Vườn An</p>
+                        <p class="muted-p">Lỗi ẩn: Cam hỏng bên trong</p>
+                        <p class="muted-p">Yêu cầu: Hoàn 45.000đ · Minh chứng: 2 ảnh</p>
+                    </div>
+
+                    <div class="card-tint mt-10">
+                        <strong>Điều gì xảy ra sau khi gửi?</strong>
+                        <p class="muted-p">Người bán có 24 giờ để phản hồi. Quá hạn hoặc không đồng thuận, hồ sơ được chuyển quản trị phân xử.</p>
+                    </div>
+
+                    <label class="checkbox-row mt-12">
+                        <input type="checkbox" checked />
+                        <span>Tôi xác nhận minh chứng đúng thực tế. Minh chứng không thể sửa sau khi gửi.</span>
+                    </label>
+
+                    <div class="btn-stack mt-14">
+                        <button type="button" class="btn btn-primary" data-toast="Đã gửi hồ sơ khiếu nại #KN008 tới Vườn An" data-go="13">Gửi khiếu nại</button>
+                        <button type="button" class="btn btn-soft" data-go="11">Quay lại chỉnh sửa</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 33 · ĐẶT CỌC THÀNH CÔNG
+            ========================================================= -->
+            <section class="screen" id="screen-33">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="08">‹ ĐẶT TRƯỚC · 3 / 3</button>
+                    <h1 class="screen-title">Đặt cọc thành công</h1>
+
+                    <div class="success-badge-circle">✓</div>
+                    <h2 class="center-title">Đã giữ chỗ mùa thu hoạch!</h2>
+
+                    <div class="card-white mt-14">
+                        <strong>Đơn #NN1024 · Vườn An</strong>
+                        <p class="muted-p" id="successPreorderSummary">Cà chua bi · 5 kg</p>
+                        <p class="muted-p">Thu hoạch: 18/11 · Giao: 19/11/2026</p>
+                    </div>
+
+                    <div class="card-tint mt-10">
+                        <strong id="successDepositPaid">Đã nhận cọc 60.000đ</strong>
+                        <p class="muted-p" id="successOrderTotal">Tổng đơn: 220.000đ · Còn thanh toán khi nhận: 160.000đ</p>
+                        <p class="muted-p">VNPay · Giao dịch mô phỏng</p>
+                    </div>
+
+                    <div class="btn-stack mt-16">
+                        <button type="button" class="btn btn-primary" data-go="09">Theo dõi đơn hàng</button>
+                        <button type="button" class="btn btn-soft" data-go="03">Tiếp tục khám phá</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 34 · XÁC THỰC SỐ ĐIỆN THOẠI (OTP)
+            ========================================================= -->
+            <section class="screen" id="screen-34">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>  
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="02">‹ TÀI KHOẢN / BẢO MẬT</button>
+                    <h1 class="screen-title">Xác thực số điện thoại</h1>
+                    <p class="screen-subtitle">Nhập mã xác thực đã được gửi đến 0912 345 678.</p>
+
+                    <div class="otp-row" id="otpRow">
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" placeholder="—" />
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" placeholder="—" />
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" placeholder="—" />
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" placeholder="—" />
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" placeholder="—" />
+                        <input type="text" inputmode="numeric" maxlength="1" class="otp-box" placeholder="—" />
+                    </div>
+
+                    <p class="muted-p mt-10">Gửi lại mã sau <strong id="otpCountdown">00:45</strong> <button type="button" class="text-link" id="btnResendOtp">Gửi lại ngay</button></p>
+
+                    <div class="card-tint mt-14">
+                        <strong>Xác thực trong môi trường mô phỏng</strong>
+                        <p class="muted-p">Mã OTP chỉ dùng cho bản demo. Không chia sẻ mã với người khác.</p>
+                    </div>
+
+                    <div class="btn-stack mt-16">
+                        <button type="button" class="btn btn-primary" data-toast="Xác thực số điện thoại thành công!" data-go="03">Xác thực số điện thoại</button>
+                        <button type="button" class="btn btn-soft" data-go="02">Thay đổi số điện thoại</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 35 · QUÊN MẬT KHẨU
+            ========================================================= -->
+            <section class="screen" id="screen-35">
+                <div class="app-topbar">
+                    <div class="brand-lockup">
+                        <img src="logocnpm 1.png" alt="Logo Nông Sản Việt" class="brand-logo" />
+                        <span class="brand-name">Nông Sản Việt</span>
+                    </div>
+                </div>
+
+                <div class="screen-body">
+                    <button type="button" class="back-eyebrow" data-go="01">‹ TÀI KHOẢN / BẢO MẬT</button>
+                    <h1 class="screen-title">Quên mật khẩu</h1>
+                    <p class="screen-subtitle">Nhập số điện thoại đã đăng ký để nhận mã xác thực và đặt lại mật khẩu.</p>
+
+                    <div class="form-group mt-14">
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="tel" class="input-field" value="0912 345 678" />
+                    </div>
+
+                    <button type="button" class="btn btn-primary mt-12" data-toast="Đã gửi mã OTP mô phỏng tới 0912 345 678" data-go="34">Gửi mã xác thực · Mô phỏng</button>
+
+                    <div class="card-tint mt-14">
+                        <strong>Bảo vệ tài khoản</strong>
+                        <p class="muted-p">Sau khi xác thực, bạn có thể tạo mật khẩu mới tối thiểu 8 ký tự.</p>
+                    </div>
+
+                    <button type="button" class="btn btn-soft mt-16" data-go="01">Quay lại đăng nhập</button>
+                </div>
+            </section>
+
+            <!-- Modal Quét QR / Tra cứu mã lô (Màn 10) -->
+            <div class="modal-overlay" id="qrModal">
+                <div class="modal-card">
+                    <div class="card-row-between">
+                        <strong>Tra cứu mã lô truy xuất</strong>
+                        <button type="button" class="icon-close" id="btnCloseQrModal">✕</button>
+                    </div>
+                    <div class="qr-viewfinder mt-10">
+                        <div class="qr-scan-line"></div>
+                        <span>⊞ Đưa mã QR trên tem bao bì vào khung</span>
+                    </div>
+                    <div class="form-group mt-10">
+                        <label class="form-label">Hoặc nhập mã lô trực tiếp</label>
+                        <input type="text" class="input-field" id="batchCodeInput" value="AN-181126" />
+                    </div>
+                    <button type="button" class="btn btn-primary mt-10" id="btnLookupBatch">Xác thực lô hàng</button>
+                </div>
+            </div>
+
+            <!-- Thông báo nổi (Toast) -->
+            <div class="toast-banner" id="toastBanner" role="status" aria-live="polite"></div>
+
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
