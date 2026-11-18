@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /** Bản tối thiểu cho PBI-18. Nếu PBI đặt hàng đã có OrderRepository thì gộp vào bản đó. */
