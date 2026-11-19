@@ -1,4 +1,4 @@
-package com.nsv.backend.product.dto;
+package com.nsv.backend.inventory.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;

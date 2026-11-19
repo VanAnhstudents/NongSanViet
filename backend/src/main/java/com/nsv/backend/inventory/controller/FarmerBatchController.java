@@ -1,10 +1,10 @@
-package com.nsv.backend.product.controller;
+package com.nsv.backend.inventory.controller;
 
 import com.nsv.backend.common.security.AuthenticatedUser;
-import com.nsv.backend.product.dto.BatchCreateRequest;
-import com.nsv.backend.product.dto.BatchResponse;
-import com.nsv.backend.product.dto.BatchUpdateRequest;
-import com.nsv.backend.product.service.BatchService;
+import com.nsv.backend.inventory.dto.BatchCreateRequest;
+import com.nsv.backend.inventory.dto.BatchResponse;
+import com.nsv.backend.inventory.dto.BatchUpdateRequest;
+import com.nsv.backend.inventory.service.BatchService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

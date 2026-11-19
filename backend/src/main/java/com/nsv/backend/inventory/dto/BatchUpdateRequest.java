@@ -1,4 +1,4 @@
-package com.nsv.backend.product.dto;
+package com.nsv.backend.inventory.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
@@ -7,11 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/** Khai báo lô: sản lượng (totalQuantity), giá, ngày thu hoạch (yyyy-MM-dd). Đơn vị lấy từ sản phẩm. */
-public record BatchCreateRequest(
-        @NotNull(message = "Vui lòng chọn sản phẩm")
-        Long productId,
-
+/** Sửa lô: không đổi sản phẩm. */
+public record BatchUpdateRequest(
         @NotNull(message = "Vui lòng nhập sản lượng dự kiến")
         @DecimalMin(value = "0.01", message = "Sản lượng phải lớn hơn 0")
         @Digits(integer = 8, fraction = 2, message = "Sản lượng tối đa 8 chữ số phần nguyên và 2 chữ số thập phân")

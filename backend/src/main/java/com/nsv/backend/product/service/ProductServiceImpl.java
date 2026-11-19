@@ -1,14 +1,14 @@
 package com.nsv.backend.product.service;
 
 import com.nsv.backend.common.exception.BusinessException;
-import com.nsv.backend.inventory.entity.Batch;
-import com.nsv.backend.inventory.repository.BatchRepository;
 import com.nsv.backend.product.dto.CreateProductRequest;
 import com.nsv.backend.product.dto.ProductSummaryResponse;
 import com.nsv.backend.product.entity.Product;
 import com.nsv.backend.product.entity.ProductImage;
 import com.nsv.backend.product.repository.ProductImageRepository;
 import com.nsv.backend.product.repository.ProductRepository;
+import com.nsv.backend.product.spi.ProductBatchPort;
+import com.nsv.backend.product.spi.ProductBatchSnapshot;
 import com.nsv.backend.user.entity.Farm;
 import com.nsv.backend.user.repository.FarmRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
-    private final BatchRepository batchRepository;
+    private final ProductBatchPort productBatchPort;
     private final FarmRepository farmRepository;
     private final JdbcTemplate jdbcTemplate;
 
@@ -88,17 +88,13 @@ public class ProductServiceImpl implements ProductService {
             ? request.saleStatus().trim().toUpperCase()
             : "AVAILABLE";
 
-        Batch initialBatch = Batch.builder()
-            .productId(savedProduct.getId())
-            .traceabilityCode(UUID.randomUUID())
-            .harvestDate(harvestDate)
-            .unitPrice(normalizedPrice)
-            .totalQuantity(normalizedQuantity)
-            .remainingQuantity(normalizedQuantity)
-            .status(saleStatus)
-            .build();
-
-        Batch savedBatch = batchRepository.save(initialBatch);
+        ProductBatchSnapshot savedBatch = productBatchPort.createInitialBatch(
+            savedProduct.getId(),
+            normalizedPrice,
+            normalizedQuantity,
+            harvestDate,
+            saleStatus
+        );
 
         recordAuditLog(farmerId, "CREATE_PRODUCT", "products", savedProduct.getId());
 
@@ -114,12 +110,12 @@ public class ProductServiceImpl implements ProductService {
             savedProduct.getDescription(),
             imageUrls.isEmpty() ? null : imageUrls.get(0),
             imageUrls,
-            savedBatch.getId(),
-            savedBatch.getTraceabilityCode(),
-            savedBatch.getUnitPrice(),
-            savedBatch.getRemainingQuantity(),
-            savedBatch.getStatus(),
-            savedBatch.getHarvestDate(),
+            savedBatch.id(),
+            savedBatch.traceabilityCode(),
+            savedBatch.unitPrice(),
+            savedBatch.remainingQuantity(),
+            savedBatch.status(),
+            savedBatch.harvestDate(),
             farm.getId(),
             farm.getFarmName(),
             provinceName,
@@ -193,10 +189,8 @@ public class ProductServiceImpl implements ProductService {
                 Collectors.mapping(ProductImage::getImageUrl, Collectors.toList())
             ));
 
-        Map<Long, Batch> latestActiveBatchByProductId = new HashMap<>();
-        for (Batch batch : batchRepository.findAllByProductIdInAndStatusInOrderByCreatedAtDesc(productIds, ACTIVE_SALE_STATUSES)) {
-            latestActiveBatchByProductId.putIfAbsent(batch.getProductId(), batch);
-        }
+        Map<Long, ProductBatchSnapshot> latestActiveBatchByProductId =
+            productBatchPort.findLatestActiveBatches(productIds, ACTIVE_SALE_STATUSES);
 
         Map<Long, Farm> farmByUserId = farmRepository.findAll().stream()
             .filter(f -> farmerIds.contains(f.getUserId()))
@@ -207,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductSummaryResponse> results = new ArrayList<>(products.size());
         for (Product product : products) {
-            Batch activeBatch = latestActiveBatchByProductId.get(product.getId());
+            ProductBatchSnapshot activeBatch = latestActiveBatchByProductId.get(product.getId());
             if (activeBatch == null) {
                 continue;
             }
@@ -235,12 +229,12 @@ public class ProductServiceImpl implements ProductService {
                 product.getDescription(),
                 urls.isEmpty() ? null : urls.get(0),
                 urls,
-                activeBatch.getId(),
-                activeBatch.getTraceabilityCode(),
-                activeBatch.getUnitPrice(),
-                activeBatch.getRemainingQuantity(),
-                activeBatch.getStatus(),
-                activeBatch.getHarvestDate(),
+                activeBatch.id(),
+                activeBatch.traceabilityCode(),
+                activeBatch.unitPrice(),
+                activeBatch.remainingQuantity(),
+                activeBatch.status(),
+                activeBatch.harvestDate(),
                 farm != null ? farm.getId() : null,
                 farm != null ? farm.getFarmName() : null,
                 provinceName,

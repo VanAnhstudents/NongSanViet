@@ -6,6 +6,7 @@ import com.nsv.backend.complaint.dto.ComplaintSlaResponse;
 import com.nsv.backend.dispute.entity.Complaint;
 import com.nsv.backend.complaint.repository.PbiComplaintRepository;
 import com.nsv.backend.complaint.service.ComplaintService;
+import com.nsv.backend.dispute.entity.Complaint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,8 @@ import static org.mockito.Mockito.when;
 class ComplaintServiceTest {
 
     private static final Instant NOW = Instant.parse("2026-11-17T03:00:00Z");
+    private static final ZoneId ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
+    private static final OffsetDateTime NOW_AT = OffsetDateTime.ofInstant(NOW, ZONE);
     private static final OffsetDateTime NOW_ODT = OffsetDateTime.ofInstant(NOW, ZoneOffset.UTC);
     private static final long FARMER_ID = 10L;
 
@@ -51,13 +54,15 @@ class ComplaintServiceTest {
 
     @BeforeEach
     void setUp() {
-        Clock clock = Clock.fixed(NOW, ZoneId.of("Asia/Ho_Chi_Minh"));
+        Clock clock = Clock.fixed(NOW, ZONE);
         service = new ComplaintService(complaintRepository, auditLogService, clock, 24);
         when(complaintRepository.existsOrderOfFarmer(100L, FARMER_ID)).thenReturn(true);
         when(complaintRepository.save(any(Complaint.class))).thenAnswer(inv -> inv.getArgument(0));
     }
 
     private Complaint complaintCreatedHoursAgo(long hours) {
+        return Complaint.builder().id(1L).orderId(100L).reason("Cà chua bị dập").status("OPEN")
+                .createdAt(NOW_AT.minusHours(hours)).build();
         return Complaint.builder()
                 .id(1L)
                 .orderId(100L)
@@ -103,6 +108,7 @@ class ComplaintServiceTest {
         OffsetDateTime deadline = NOW_ODT.atZoneSameInstant(ZoneId.of("Asia/Ho_Chi_Minh"))
                 .toOffsetDateTime().minusHours(24);
         when(complaintRepository.findByFarmerResponseIsNullAndAdminDecisionIsNullAndCreatedAtLessThanEqual(
+                eq(NOW_AT.minusHours(24)))).thenReturn(List.of(complaintCreatedHoursAgo(25)));
                 eq(deadline))).thenReturn(List.of(complaintCreatedHoursAgo(25)));
         when(auditLogService.exists("COMPLAINT_ESCALATED", "COMPLAINT", 1L)).thenReturn(false);
 

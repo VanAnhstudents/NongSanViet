@@ -1,8 +1,6 @@
 package com.nsv.backend.product;
 
 import com.nsv.backend.common.exception.BusinessException;
-import com.nsv.backend.inventory.entity.Batch;
-import com.nsv.backend.inventory.repository.BatchRepository;
 import com.nsv.backend.product.dto.CreateProductRequest;
 import com.nsv.backend.product.dto.ProductSummaryResponse;
 import com.nsv.backend.product.entity.Product;
@@ -10,6 +8,8 @@ import com.nsv.backend.product.entity.ProductImage;
 import com.nsv.backend.product.repository.ProductImageRepository;
 import com.nsv.backend.product.repository.ProductRepository;
 import com.nsv.backend.product.service.ProductServiceImpl;
+import com.nsv.backend.product.spi.ProductBatchPort;
+import com.nsv.backend.product.spi.ProductBatchSnapshot;
 import com.nsv.backend.user.entity.Farm;
 import com.nsv.backend.user.repository.FarmRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -45,7 +46,7 @@ class ProductQuickListingTest {
     private ProductImageRepository productImageRepository;
 
     @Mock
-    private BatchRepository batchRepository;
+    private ProductBatchPort productBatchPort;
 
     @Mock
     private FarmRepository farmRepository;
@@ -104,11 +105,24 @@ class ProductQuickListingTest {
             return p;
         });
         when(productImageRepository.saveAll(anyList())).thenAnswer(inv -> inv.getArgument(0));
-        when(batchRepository.save(any(Batch.class))).thenAnswer(inv -> {
-            Batch b = inv.getArgument(0);
-            b.setId(5001L);
-            return b;
-        });
+
+        UUID batchCode = UUID.randomUUID();
+        when(productBatchPort.createInitialBatch(
+            eq(1001L),
+            eq(new BigDecimal("42000.00")),
+            eq(new BigDecimal("250.00")),
+            eq(LocalDate.of(2026, 6, 12)),
+            eq("AVAILABLE")
+        )).thenReturn(new ProductBatchSnapshot(
+            5001L,
+            1001L,
+            batchCode,
+            LocalDate.of(2026, 6, 12),
+            new BigDecimal("42000.00"),
+            new BigDecimal("250.00"),
+            new BigDecimal("250.00"),
+            "AVAILABLE"
+        ));
 
         ProductSummaryResponse response = productService.createProductInQuickFlow(farmerId, request);
 
@@ -127,7 +141,13 @@ class ProductQuickListingTest {
 
         verify(productRepository, times(1)).save(any(Product.class));
         verify(productImageRepository, times(1)).saveAll(anyList());
-        verify(batchRepository, times(1)).save(any(Batch.class));
+        verify(productBatchPort, times(1)).createInitialBatch(
+            eq(1001L),
+            eq(new BigDecimal("42000.00")),
+            eq(new BigDecimal("250.00")),
+            eq(LocalDate.of(2026, 6, 12)),
+            eq("AVAILABLE")
+        );
         verify(jdbcTemplate, times(1)).update(
             startsWith("INSERT INTO audit_logs"),
             eq(farmerId),
@@ -163,7 +183,7 @@ class ProductQuickListingTest {
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatus());
         assertEquals("FARM_PROFILE_REQUIRED", ex.getCode());
         verify(productRepository, never()).save(any());
-        verify(batchRepository, never()).save(any());
+        verifyNoInteractions(productBatchPort);
     }
 
     @Test
@@ -187,16 +207,16 @@ class ProductQuickListingTest {
             .build();
 
         UUID qrCode = UUID.fromString("550e8400-e29b-41d4-a716-446655440000");
-        Batch activeBatch = Batch.builder()
-            .id(5001L)
-            .productId(1001L)
-            .traceabilityCode(qrCode)
-            .harvestDate(LocalDate.of(2026, 6, 12))
-            .unitPrice(new BigDecimal("42000.00"))
-            .totalQuantity(new BigDecimal("250.00"))
-            .remainingQuantity(new BigDecimal("250.00"))
-            .status("AVAILABLE")
-            .build();
+        ProductBatchSnapshot activeBatch = new ProductBatchSnapshot(
+            5001L,
+            1001L,
+            qrCode,
+            LocalDate.of(2026, 6, 12),
+            new BigDecimal("42000.00"),
+            new BigDecimal("250.00"),
+            new BigDecimal("250.00"),
+            "AVAILABLE"
+        );
 
         Farm farm = Farm.builder()
             .id(5L)
@@ -211,9 +231,9 @@ class ProductQuickListingTest {
             .thenReturn(List.of(newlyCreated));
         when(productImageRepository.findAllByProductIdInOrderBySortOrderAscIdAsc(Set.of(1001L)))
             .thenReturn(List.of(primaryImg));
-        when(batchRepository.findAllByProductIdInAndStatusInOrderByCreatedAtDesc(
+        when(productBatchPort.findLatestActiveBatches(
             Set.of(1001L), List.of("AVAILABLE", "PRE_ORDER")
-        )).thenReturn(List.of(activeBatch));
+        )).thenReturn(Map.of(1001L, activeBatch));
         when(farmRepository.findAll()).thenReturn(List.of(farm));
 
         mockSingleStringQuery("SELECT name FROM categories", "Trái cây theo mùa");
