@@ -1,95 +1,616 @@
-/* =================================================================
-   1. GLOBAL RESET & BOX-SIZING (Mobile-First Foundation)
-   ================================================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-page: #edf1eb;
+    --bg-app: #f3f6f1;
+    --bg-card: #ffffff;
+    --bg-soft-green: #e5ede2;
+    --bg-amber: #fdeed9;
+    --primary: #245d3c;
+    --primary-dark: #1b482e;
+    --danger: #b63225;
+    --text-main: #1d241f;
+    --text-muted: #667069;
+    --border: #dfe6dc;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-pill: 999px;
 }
 
-html, body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Triệt tiêu hoàn toàn thanh cuộn ngang ngoài ý muốn */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #333333;
-  background-color: #f9fafb;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/* =================================================================
-   2. MEDIA & CONTENT ADAPTATION (Chống phình to trên màn hình nhỏ 320px)
-   ================================================================ */
-img, video, canvas, svg, picture {
-  max-width: 100%;
-  height: auto;
-  display: block;
+body {
+    font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    font-size: 14px;
+    line-height: 1.45;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-/* Tự động ngắt từ, chống tràn chữ dài (mã đơn hàng, tên sản phẩm) */
-p, span, a, h1, h2, h3, h4, h5, h6, label, th, td {
-  overflow-wrap: break-word;
-  word-break: break-word;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-/* =================================================================
-   3. FORM & TOUCH TARGET OPTIMIZATION (Tối ưu cho thao tác chạm di động)
-   ================================================================ */
-input, select, textarea, button {
-  font-family: inherit;
-  font-size: 100%;
-  max-width: 100%;
+button, input, textarea, select {
+    font-family: inherit;
+    font-size: 14px;
 }
 
-/* Đảm bảo vùng chạm (touch target) tối thiểu 48x48px trên mobile */
-button, 
-input[type="submit"], 
-input[type="button"], 
+.app-shell {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: var(--bg-app);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+}
+
+/* Brand Header trong từng trang (không còn topbar chuyển màn hình prototype) */
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 10px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary);
+}
+
+.brand-logo {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    display: block;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-pill {
+    padding: 6px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-soft-green);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Thanh điều hướng nội bộ của Admin */
+.admin-nav {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 0 20px 12px;
+    scrollbar-width: none;
+}
+
+    .admin-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .admin-nav a {
+        white-space: nowrap;
+        padding: 6px 12px;
+        border-radius: var(--radius-pill);
+        background: #fff;
+        border: 1px solid var(--border);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+        .admin-nav a.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+/* Main Content */
+.content {
+    padding: 4px 20px 28px;
+    flex: 1;
+}
+
+.has-bottom-nav .content {
+    padding-bottom: 88px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+/* Cards */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.card-green {
+    background: var(--bg-soft-green);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.card-amber {
+    background: var(--bg-amber);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.card-primary {
+    background: var(--primary);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.meta-text {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Segmented Tabs & Chips */
+.seg-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.seg-btn {
+    padding: 10px 12px;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: var(--bg-soft-green);
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+}
+
+    .seg-btn.active {
+        background: var(--primary);
+        color: #fff;
+    }
+
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.chip {
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-soft-green);
+    color: var(--primary);
+    font-size: 12.5px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+    .chip.active {
+        background: var(--primary);
+        color: #fff;
+    }
+
+.filter-tabs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+    .filter-tabs span {
+        cursor: pointer;
+        padding-bottom: 4px;
+    }
+
+        .filter-tabs span.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+/* Forms */
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+.input, .textarea, .select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text-main);
+    outline: none;
+}
+
+    .input:focus, .textarea:focus, .select:focus {
+        border-color: var(--primary);
+    }
+
+.textarea {
+    min-height: 82px;
+    resize: vertical;
+}
+
+.check-row, .radio-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+    .check-row input, .radio-row input {
+        accent-color: var(--primary);
+        margin-top: 3px;
+        width: 16px;
+        height: 16px;
+    }
+
+/* Buttons */
 .btn {
-  min-height: 48px;
-  min-width: 48px;
-  padding: 0.75rem 1rem;
-  touch-action: manipulation;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
 }
 
-/* =================================================================
-   4. RESPONSIVE UTILITIES & TABLES
-   ================================================================ */
-/* Khung chứa bảng dữ liệu giúp cuộn ngang riêng biệt trên màn hình hẹp */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin-bottom: 1rem;
+    .btn + .btn {
+        margin-top: 10px;
+    }
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
 }
 
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  white-space: nowrap;
+    .btn-primary:hover {
+        background: var(--primary-dark);
+    }
+
+.btn-soft {
+    background: var(--bg-soft-green);
+    color: var(--primary);
 }
 
-/* Container chung cho các trang (tránh sát mép màn hình 320px) */
-.container {
-  width: 100%;
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-left: auto;
-  margin-right: auto;
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
 }
 
-/* Breakpoint từ màn hình Tablet (768px trở lên) */
-@media (min-width: 768px) {
-  .container {
-    max-width: 720px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+.btn-sm {
+    padding: 9px 12px;
+    font-size: 13px;
+    border-radius: 10px;
 }
 
-/* Breakpoint từ màn hình Desktop (1024px trở lên) */
-@media (min-width: 1024px) {
-  .container {
-    max-width: 960px;
-  }
+.btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
 }
+
+    .btn-row .btn + .btn {
+        margin-top: 0;
+    }
+
+/* Grids & Lists */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+    .product-card img {
+        width: 100%;
+        height: 112px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 8px;
+    }
+
+.price {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.row-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Stepper & Timeline */
+.step-bars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 12px 0 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.step-bar-item .bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 6px;
+}
+
+.step-bar-item.active {
+    color: var(--primary);
+}
+
+    .step-bar-item.active .bar {
+        background: var(--primary);
+    }
+
+.timeline {
+    position: relative;
+    padding-left: 22px;
+    margin: 14px 0 18px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 16px;
+}
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -22px;
+        top: 4px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+        background: #fff;
+    }
+
+    .timeline-item.done::before {
+        background: var(--primary);
+    }
+
+/* OTP & Qty Stepper */
+.otp-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin: 18px 0 14px;
+}
+
+.otp-input {
+    height: 48px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+}
+
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.qty-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: none;
+    background: var(--bg-soft-green);
+    color: var(--primary);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Chat */
+.chat-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 12px 0 16px;
+}
+
+.msg-out {
+    align-self: flex-end;
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 14px;
+    border-radius: 16px 16px 4px 16px;
+    max-width: 78%;
+    font-size: 13.5px;
+}
+
+.msg-in {
+    align-self: flex-start;
+    background: #fff;
+    color: var(--text-main);
+    padding: 12px 14px;
+    border-radius: 16px 16px 16px 4px;
+    max-width: 80%;
+    font-size: 13.5px;
+}
+
+.chat-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+    .chat-bar .input {
+        border-radius: var(--radius-pill);
+    }
+
+.send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 8px 10px;
+    z-index: 30;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 4px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+    .nav-item.active {
+        background: var(--bg-soft-green);
+        color: var(--primary);
+    }
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 84px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1d241f;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 120;
+    white-space: nowrap;
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
