@@ -1,53 +1,95 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập - Nông Sản Việt</title>
-    <link rel="stylesheet" href="../../css/main.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đăng nhập — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/auth.css">
 </head>
-<body data-role="auth">
-    <div class="app-shell">
-        <div class="brand-header" id="app-brand-header"></div>
-        <main class="content">
-            <div class="eyebrow">TỪ NÔNG TRẠI ĐẾN BÀN ĂN</div>
-            <h1 class="page-title">Chào bạn trở lại</h1>
-            <p class="subtitle">Mua tươi từ gốc. An tâm mỗi ngày</p>
+<body>
+  <div class="auth">
+    <!-- Cột thương hiệu (desktop) -->
+    <aside class="auth__brand">
+      <a class="auth__brand-logo" href="login.html">
+        <img src="../../assets/images/logocnpm 1.png" alt=""> Nông Sản Việt
+      </a>
+      <div class="auth__brand-tagline">
+        <h1>Tươi từ gốc, an tâm mỗi ngày.</h1>
+        <p>Mua nông sản trực tiếp từ trang trại, truy xuất nguồn gốc bằng mã QR, đặt trước theo mùa vụ.</p>
+      </div>
+      <div class="auth__brand-features">
+        <div class="auth__brand-feature">
+          <span data-icon="leaf" data-size="24"></span>
+          <div><strong>Nông sản thật</strong><span>Từ nông dân được xác minh, có chứng nhận VietGAP, hữu cơ.</span></div>
+        </div>
+        <div class="auth__brand-feature">
+          <span data-icon="qr-code" data-size="24"></span>
+          <div><strong>Truy xuất nguồn gốc</strong><span>Mỗi lô hàng có mã QR ghi nhật ký canh tác minh bạch.</span></div>
+        </div>
+        <div class="auth__brand-feature">
+          <span data-icon="clock" data-size="24"></span>
+          <div><strong>Đặt trước theo mùa</strong><span>Đặt cọc giữ chỗ, nhận hàng ngay mùa thu hoạch.</span></div>
+        </div>
+      </div>
+      <span class="auth__brand-deco"></span>
+      <span class="auth__brand-deco auth__brand-deco--2"></span>
+    </aside>
 
-            <div class="seg-tabs" id="roleTabs">
-                <button type="button" class="seg-btn active" data-target="../buyer/home.html">Người mua</button>
-                <button type="button" class="seg-btn" data-target="../farmer/dashboard.html">Người bán</button>
+    <!-- Cột form -->
+    <main class="auth__form-side">
+      <div class="auth__card">
+        <a class="auth__mobile-logo" href="login.html">
+          <img src="../../assets/images/logocnpm 1.png" alt=""> Nông Sản Việt
+        </a>
+        <div class="auth__head">
+          <h1>Chào bạn trở lại</h1>
+          <p>Đăng nhập để tiếp tục mua sắm nông sản tươi sạch.</p>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-field" id="fieldIdentifier">
+            <label class="form-field__label" for="identifier">Email hoặc số điện thoại<span class="req">*</span></label>
+            <input class="form-field__input" type="text" id="identifier" name="identifier"
+                   autocomplete="username" placeholder="vd: 0912345678 hoặc ban@email.com" required>
+            <p class="form-field__error" id="errIdentifier" hidden></p>
+          </div>
+
+          <div class="form-field" id="fieldPassword">
+            <label class="form-field__label" for="password">Mật khẩu<span class="req">*</span></label>
+            <div class="input-affix">
+              <input class="form-field__input" type="password" id="password" name="password"
+                     autocomplete="current-password" placeholder="Nhập mật khẩu" required>
+              <button class="input-affix__icon" type="button" id="togglePw" aria-label="Hiện/ẩn mật khẩu" aria-pressed="false"></button>
             </div>
+            <p class="form-field__error" id="errPassword" hidden></p>
+          </div>
 
-            <div class="form-group">
-                <label class="form-label">Số điện thoại</label>
-                <input class="input" type="tel" placeholder="Nhập số điện thoại" value="0912 345 678" />
-            </div>
+          <div class="row-between" style="margin-bottom: var(--space-5)">
+            <a href="forgot-password.html" style="font-size:var(--fs-sm);font-weight:var(--fw-semibold)">Quên mật khẩu?</a>
+          </div>
 
-            <div class="form-group">
-                <label class="form-label">Mật khẩu</label>
-                <input class="input" type="password" placeholder="Nhập mật khẩu" value="12345678" />
-                <div style="text-align:right;margin-top:8px">
-                    <a href="forgot-password.html" style="color:var(--primary);font-weight:600;font-size:13px">Quên mật khẩu?</a>
-                </div>
-            </div>
+          <button class="btn btn--primary btn--block btn--lg" type="submit" id="loginBtn">
+            <span class="btn__label">Đăng nhập</span>
+          </button>
+        </form>
 
-            <button type="button" class="btn btn-primary" onclick="handleLogin()">Đăng nhập</button>
-            <a href="register.html" class="btn btn-soft">Tạo tài khoản mới</a>
+        <p class="auth__footer-link">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+      </div>
+    </main>
+  </div>
 
-            <div style="text-align:center;margin-top:18px">
-                <a href="../admin/dashboard.html" class="meta-text" style="color:var(--primary);font-weight:600">
-                    Đăng nhập cổng Quản trị viên →
-                </a>
-            </div>
-        </main>
-    </div>
-    <script src=" ../../js/app.js"></script>
-    <script>
-            function handleLogin() {
-              const activeTab = document.querySelector('#roleTabs .seg-btn.active');
-                window.location.href = activeTab?.getAttribute('data-target') || '../../buyer/home.html';
-            }
-    </script>
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script src="../../js/pages/login.js"></script>
 </body>
 </html>
