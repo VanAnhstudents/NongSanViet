@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 /** Bản tối thiểu cho PBI-18. Nếu PBI đặt hàng đã có OrderItemRepository thì gộp vào bản đó. */
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
-    @Query("select coalesce(sum(i.quantity * i.unitPrice), 0) from OrderItem i where i.orderId = :orderId")
+    @Query("select coalesce(sum(i.quantity * i.unitPrice), 0) from OrderItem i where i.order.id = :orderId")
     BigDecimal sumAmountByOrderId(@Param("orderId") Long orderId);
 }

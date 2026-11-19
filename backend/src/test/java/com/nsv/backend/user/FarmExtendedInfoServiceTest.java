@@ -2,7 +2,6 @@ package com.nsv.backend.user;
 
 import com.nsv.backend.user.dto.FarmExtendedInfoRequest;
 import com.nsv.backend.user.dto.FarmExtendedInfoResponse;
-import com.nsv.backend.user.entity.CertificateStatus;
 import com.nsv.backend.user.entity.Farm;
 import com.nsv.backend.user.repository.FarmRepository;
 import com.nsv.backend.user.service.FarmExtendedInfoService;
@@ -49,7 +48,7 @@ class FarmExtendedInfoServiceTest {
                 new FarmExtendedInfoRequest("https://example.com/vietgap.pdf"));
 
         assertThat(result.certificateUrl()).isEqualTo("https://example.com/vietgap.pdf");
-        assertThat(result.certificateStatus()).isEqualTo(CertificateStatus.PENDING);
+        assertThat(result.certificateStatus()).isEqualTo("PENDING");
         ArgumentCaptor<Farm> saved = ArgumentCaptor.forClass(Farm.class);
         verify(farmRepository).save(saved.capture());
         assertThat(saved.getValue().getCertificateUrl()).isEqualTo("https://example.com/vietgap.pdf");
@@ -61,7 +60,7 @@ class FarmExtendedInfoServiceTest {
         FarmExtendedInfoResponse result = service.update(USER_ID, new FarmExtendedInfoRequest("  "));
 
         assertThat(result.certificateUrl()).isNull();
-        assertThat(result.certificateStatus()).isEqualTo(CertificateStatus.NONE);
+        assertThat(result.certificateStatus()).isEqualTo("NONE");
         verify(farmRepository).save(any(Farm.class));
     }
 }

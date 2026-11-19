@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng bán · Bước 2/3 · Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/post-product.css">
+  <link rel="stylesheet" href="../../css/post-product.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../index.html">
+      <img src="../../assets/images/logo.png" alt="" width="36" height="36" onerror="this.style.display='none'">
+      <span>Nông Sản Việt</span>
+    </a>
+    <span class="topbar__channel">Kênh nông dân</span>
+    <span class="topbar__user">Vườn An · Đã xác minh</span>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <p class="sidebar__farm">Vườn An</p>
+      <nav class="nav" aria-label="Menu nông dân">
+        <a href="#">Tổng quan</a>
+        <a href="#">Hồ sơ trang trại</a>
+        <a href="#">Sản phẩm và tồn kho</a>
+        <a href="post-product-step1.html" aria-current="page">Đăng bán sản phẩm</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Nhật ký trồng trọt</a>
+        <a href="#">Khiếu nại</a>
+      </nav>
+      <p class="sidebar__foot">Nông Sản Việt</p>
+    </aside>
+
+    <main class="content">
+      <p class="eyebrow">Đăng bán · Bước 2 / 3</p>
+      <h1>Đặt trước theo mùa vụ</h1>
+
+      <ol class="stepper" aria-label="Các bước đăng bán">
+        <li class="stepper__item is-done"><span class="stepper__bar"></span>1. Thông tin</li>
+        <li class="stepper__item is-active" aria-current="step"><span class="stepper__bar"></span>2. Mùa vụ</li>
+        <li class="stepper__item"><span class="stepper__bar"></span>3. Xác nhận</li>
+      </ol>
+
+      <form id="stepForm" novalidate>
+        <div class="review review--single">
+          <section class="card card--form card--tint" aria-labelledby="t1">
+            <h2 id="t1">Thông tin mùa vụ</h2>
+            <p class="muted summary" id="productSummary"></p>
+
+            <div class="field">
+              <label for="quantity">Sản lượng dự kiến (<span id="unitLabel">kg</span>)</label>
+              <input id="quantity" type="number" min="0" step="any" inputmode="decimal" placeholder="200">
+              <p class="field__error" id="quantity-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="depositPercent">Tiền cọc (%)</label>
+              <input id="depositPercent" type="number" min="10" max="100" step="1" inputmode="numeric" value="30">
+              <p class="field__hint">Từ 10% đến 100% giá trị đơn đặt trước.</p>
+              <p class="field__error" id="depositPercent-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="harvestDate">Ngày thu hoạch dự kiến</label>
+              <input id="harvestDate" type="date">
+              <p class="field__error" id="harvestDate-error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label for="cutoffAt">Giờ chốt đơn</label>
+              <input id="cutoffAt" type="datetime-local">
+              <p class="field__hint">Phải trước ngày thu hoạch. Sau giờ này khách không đặt thêm được.</p>
+              <p class="field__error" id="cutoffAt-error" hidden></p>
+            </div>
+          </section>
+        </div>
+
+        <div class="form-actions">
+          <a class="btn btn--secondary" href="post-product-step1.html">Quay lại</a>
+          <button class="btn btn--primary" type="submit">Tiếp tục: Xác nhận</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script src="../../js/core/postProductDraft.js"></script>
+  <script src="../../js/pages/post-product-step2.js"></script>
+</body>
+</html>
