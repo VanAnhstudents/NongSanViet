@@ -6,7 +6,7 @@
   <title>Đăng sản phẩm · Bước 3/3 · Nông Sản Việt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/tokens.css" />
   <link rel="stylesheet" href="../../css/base.css" />
   <link rel="stylesheet" href="../../css/components.css" />
@@ -70,7 +70,7 @@
         <li class="stepper__item is-active" aria-current="step"><span class="stepper__label">Xác nhận &amp; Đăng</span></li>
       </ol>
 
-      <div style="display:grid;grid-template-columns:1fr;gap:var(--space-5)">
+      <div class="review-grid">
         <!-- Left: Preview như buyer thấy -->
         <div>
           <h3 style="font-size:var(--fs-base);font-weight:var(--fw-semibold);color:var(--color-text-muted);margin:0 0 var(--space-3);display:flex;align-items:center;gap:var(--space-2)">
@@ -145,12 +145,12 @@
 </div>
 
 <!-- Success modal -->
-<div id="successModal" style="display:none;position:fixed;inset:0;background:rgba(23,26,21,.5);z-index:var(--z-modal);align-items:center;justify-content:center;">
-  <div style="background:var(--color-bg-surface);border-radius:var(--radius-xl);padding:var(--space-8);max-width:420px;width:90%;text-align:center;box-shadow:var(--shadow-lg)">
+<div id="successModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="successModalTitle">
+  <div class="modal-box" style="max-width:420px;text-align:center;">
     <div style="width:64px;height:64px;background:var(--color-success-bg);border-radius:var(--radius-circle);display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-4)">
       <span data-icon="check-circle" data-size="36" style="color:var(--color-success-text)"></span>
     </div>
-    <h3 style="font-size:var(--fs-xl);font-weight:var(--fw-bold);margin:0 0 var(--space-2)">Đăng sản phẩm thành công!</h3>
+    <h3 id="successModalTitle" style="font-size:var(--fs-xl);font-weight:var(--fw-bold);margin:0 0 var(--space-2)">Đăng sản phẩm thành công!</h3>
     <p style="color:var(--color-text-muted);font-size:var(--fs-sm);margin:0 0 var(--space-6)">Sản phẩm đã được đăng lên Nông Sản Việt và sẽ hiển thị với người mua ngay lập tức.</p>
     <div style="display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap">
       <a href="products.html" class="btn btn--primary">Xem danh sách sản phẩm</a>
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
       publishBtn.textContent = 'Đang đăng...';
       setTimeout(function() {
         try { sessionStorage.removeItem('productDraft'); } catch(e) {}
-        document.getElementById('successModal').style.display = 'flex';
+        document.getElementById('successModal').classList.add('is-open');
         if (typeof NSV !== 'undefined' && NSV.renderIcons) NSV.renderIcons();
       }, 1200);
     });

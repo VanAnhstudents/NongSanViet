@@ -6,7 +6,7 @@
   <title>Đăng sản phẩm · Bước 2/3 · Nông Sản Việt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/tokens.css" />
   <link rel="stylesheet" href="../../css/base.css" />
   <link rel="stylesheet" href="../../css/components.css" />
@@ -34,7 +34,7 @@
       <a class="farmer-nav__item" href="revenue.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo doanh thu</a>
     </nav>
     <div class="farmer-sidebar__foot">
-      <button class="btn btn--ghost btn--sm" id="farmerLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
+      <button class="btn btn--ghost btn--sm sidebar-logout-btn" id="farmerLogout">
         <span data-icon="log-out" data-size="18"></span>Đăng xuất
       </button>
     </div>
@@ -71,18 +71,18 @@
       </ol>
 
       <!-- Product summary from step 1 -->
-      <div class="alert alert--info" id="draftSummary" style="margin-bottom:var(--space-5)">
+      <div class="alert alert--info mb-5" id="draftSummary">
         <span data-icon="info" data-size="18"></span>
         <div id="draftSummaryText">Tiếp theo: thiết lập giá bán và sản lượng cho sản phẩm.</div>
       </div>
 
       <form id="stepForm" novalidate>
-        <div class="profile-form-card" style="margin-bottom:var(--space-5)">
-          <h3 style="font-size:var(--fs-lg);font-weight:var(--fw-semibold);margin:0 0 var(--space-5)">Giá bán &amp; Sản lượng</h3>
+        <div class="profile-form-card mb-5">
+          <h3 class="form-section-title">Giá bán &amp; Sản lượng</h3>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4)">
+          <div class="form-row-2">
             <div class="form-field">
-              <label class="form-label" for="price">Giá bán <span style="color:var(--color-danger-text)">*</span></label>
+              <label class="form-label" for="price">Giá bán <span class="text-danger">*</span></label>
               <input class="form-input" type="number" id="price" name="price" min="1000" step="1000" placeholder="40000" inputmode="numeric" />
               <p class="form-error" id="priceError" hidden>Vui lòng nhập giá bán.</p>
             </div>
@@ -99,14 +99,14 @@
             </div>
           </div>
 
-          <div class="form-field" style="margin-bottom:var(--space-4)">
-            <label class="form-label" for="stock">Tồn kho hiện tại <span style="color:var(--color-danger-text)">*</span></label>
+          <div class="form-field mb-4">
+            <label class="form-label" for="stock">Tồn kho hiện tại <span class="text-danger">*</span></label>
             <input class="form-input" type="number" id="stock" name="stock" min="0" step="1" placeholder="Ví dụ: 50" inputmode="numeric" />
             <p class="form-hint">Nhập 0 nếu hàng chưa có, bạn có thể cập nhật sau.</p>
             <p class="form-error" id="stockError" hidden>Vui lòng nhập tồn kho.</p>
           </div>
 
-          <div class="form-field" style="margin-bottom:var(--space-4)">
+          <div class="form-field mb-4">
             <label class="form-label" for="harvestDate">Lịch thu hoạch dự kiến</label>
             <input class="form-input" type="date" id="harvestDate" name="harvestDate" />
             <p class="form-hint">Để trống nếu không xác định.</p>
@@ -114,20 +114,20 @@
         </div>
 
         <!-- Pre-order toggle -->
-        <div class="profile-form-card" style="margin-bottom:var(--space-5)">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4)">
-            <div>
-              <h3 style="font-size:var(--fs-lg);font-weight:var(--fw-semibold);margin:0 0 var(--space-1)">Cho phép đặt trước (Pre-order)</h3>
-              <p style="font-size:var(--fs-sm);color:var(--color-text-muted);margin:0">Khách có thể đặt cọc trước ngày thu hoạch</p>
+        <div class="profile-form-card mb-5">
+          <div class="preorder-toggle-row">
+            <div class="preorder-toggle-row__info">
+              <h3 class="preorder-toggle-row__title">Cho phép đặt trước (Pre-order)</h3>
+              <p class="preorder-toggle-row__sub">Khách có thể đặt cọc trước ngày thu hoạch</p>
             </div>
             <label style="display:flex;align-items:center;cursor:pointer;flex-shrink:0">
-              <input type="checkbox" id="preorderToggle" name="preorder" style="width:40px;height:22px;appearance:none;-webkit-appearance:none;background:var(--color-neutral-200);border-radius:var(--radius-pill);cursor:pointer;position:relative;transition:background var(--duration-base);outline:none;" />
-              <span id="toggleLabel" style="margin-left:var(--space-2);font-size:var(--fs-sm);color:var(--color-text-muted)">Tắt</span>
+              <input type="checkbox" id="preorderToggle" name="preorder" class="toggle-switch" />
+              <span id="toggleLabel" class="toggle-label">Tắt</span>
             </label>
           </div>
 
-          <div id="preorderFields" style="display:none;margin-top:var(--space-5);padding-top:var(--space-5);border-top:1px solid var(--color-border-default)">
-            <div class="form-field" style="margin-bottom:var(--space-4)">
+          <div id="preorderFields" style="display:none" class="preorder-fields">
+            <div class="form-field mb-4">
               <label class="form-label" for="depositPercent">Tiền cọc (%)</label>
               <input class="form-input" type="number" id="depositPercent" name="depositPercent" min="10" max="100" step="1" value="30" />
               <p class="form-hint">Từ 10% đến 100% giá trị đơn. Người mua trả cọc khi đặt.</p>
@@ -140,7 +140,7 @@
           </div>
         </div>
 
-        <div style="display:flex;gap:var(--space-3);justify-content:space-between;flex-wrap:wrap">
+        <div class="form-actions">
           <a href="post-product-step1.html" class="btn btn--outline"><span data-icon="arrow-left" data-size="16"></span>Quay lại</a>
           <button type="submit" class="btn btn--primary"><span data-icon="arrow-right" data-size="16"></span>Tiếp theo: Xác nhận &amp; Đăng</button>
         </div>
@@ -199,10 +199,8 @@ document.addEventListener('DOMContentLoaded', function() {
       fields.style.display = toggle.checked ? '' : 'none';
       toggle.style.background = toggle.checked ? 'var(--color-primary-500)' : 'var(--color-neutral-200)';
       label.textContent = toggle.checked ? 'Bật' : 'Tắt';
-      label.style.color = toggle.checked ? 'var(--color-primary-600)' : 'var(--color-text-muted)';
+      if (toggle.checked) { label.classList.add('is-on'); } else { label.classList.remove('is-on'); }
     });
-    // Add knob via pseudo (simple CSS)
-    toggle.style.setProperty('transition', 'background 200ms');
   }
 
   // Set min harvest date
