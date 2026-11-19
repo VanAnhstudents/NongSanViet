@@ -2,12 +2,8 @@ package com.nsv.backend.order;
 
 import com.nsv.backend.order.dto.ShortageRefundResponse;
 import com.nsv.backend.order.entity.Order;
-import com.nsv.backend.order.entity.OrderStatus;
 import com.nsv.backend.order.entity.Payment;
-import com.nsv.backend.order.entity.PaymentStatus;
-import com.nsv.backend.order.entity.PaymentType;
 import com.nsv.backend.order.entity.Refund;
-import com.nsv.backend.order.entity.RefundStatus;
 import com.nsv.backend.order.repository.OrderRepository;
 import com.nsv.backend.order.repository.RefundPaymentRepository;
 import com.nsv.backend.order.repository.RefundQueryRepository;
@@ -27,7 +23,9 @@ import org.mockito.quality.Strictness;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +42,8 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class TcRefund01Test {
 
-    private static final Instant NOW = Instant.parse("2026-11-17T03:00:00Z");
+    private static final Instant NOW_INSTANT = Instant.parse("2026-11-17T03:00:00Z");
+    private static final OffsetDateTime NOW = OffsetDateTime.ofInstant(NOW_INSTANT, ZoneOffset.UTC);
     private static final long FARMER_ID = 10L;
     private static final long BUYER_ID = 5L;
     private static final long ORDER_ID = 1L;
@@ -70,12 +69,12 @@ class TcRefund01Test {
     @BeforeEach
     void setUp() {
         service = new PreorderRefundService(orderRepository, paymentRepository, refundRepository,
-                refundQueryRepository, buyerNotifier, Clock.fixed(NOW, ZoneId.of("Asia/Ho_Chi_Minh")));
+                refundQueryRepository, buyerNotifier, Clock.fixed(NOW_INSTANT, ZoneId.of("Asia/Ho_Chi_Minh")));
 
         order = new Order();
         order.setId(ORDER_ID);
         order.setBuyerId(BUYER_ID);
-        order.setStatus(OrderStatus.CONFIRMED);
+        order.setStatus("CONFIRMED");
 
         when(orderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
         when(orderRepository.save(any(Order.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -91,15 +90,15 @@ class TcRefund01Test {
     }
 
     private Payment paidDeposit() {
-        return Payment.builder().id(7L).orderId(ORDER_ID).paymentType(PaymentType.DEPOSIT)
-                .amount(new BigDecimal("60000.00")).status(PaymentStatus.PAID).createdAt(NOW).build();
+        return Payment.builder().id(7L).orderId(ORDER_ID).paymentType("DEPOSIT")
+                .amount(new BigDecimal("60000.00")).status("PAID").createdAt(NOW).build();
     }
 
     @Test
     @DisplayName("TC-REFUND-01: Farmer báo thiếu hàng Pre-order -> tự động tạo giao dịch hoàn tiền cọc tương ứng")
     void tc01_createsRefundForPaidDeposit() {
         Payment deposit = paidDeposit();
-        when(paymentRepository.findByOrderIdAndStatus(ORDER_ID, PaymentStatus.PAID)).thenReturn(List.of(deposit));
+        when(paymentRepository.findByOrderIdAndStatus(ORDER_ID, "PAID")).thenReturn(List.of(deposit));
 
         ShortageRefundResponse result = service.reportShortage(FARMER_ID, ORDER_ID, "Mất mùa do bão");
 
@@ -107,10 +106,10 @@ class TcRefund01Test {
         verify(refundRepository).save(saved.capture());
         assertThat(saved.getValue().getPaymentId()).isEqualTo(7L);
         assertThat(saved.getValue().getAmount()).isEqualByComparingTo("60000");
-        assertThat(saved.getValue().getStatus()).isEqualTo(RefundStatus.COMPLETED);
+        assertThat(saved.getValue().getStatus()).isEqualTo("COMPLETED");
         assertThat(saved.getValue().getComplaintId()).isNull();
         assertThat(saved.getValue().getReason()).contains("Mất mùa do bão");
-        assertThat(deposit.getStatus()).isEqualTo(PaymentStatus.REFUNDED);
+        assertThat(deposit.getStatus()).isEqualTo("REFUNDED");
         assertThat(result.totalRefunded()).isEqualByComparingTo("60000");
         assertThat(result.refunds()).hasSize(1);
     }
@@ -118,26 +117,25 @@ class TcRefund01Test {
     @Test
     @DisplayName("TC-REFUND-01: Buyer nhận thông báo hoàn tiền và đơn hàng chuyển sang Đã hủy")
     void tc01_buyerNotifiedAndOrderCancelled() {
-        when(paymentRepository.findByOrderIdAndStatus(ORDER_ID, PaymentStatus.PAID)).thenReturn(List.of(paidDeposit()));
+        when(paymentRepository.findByOrderIdAndStatus(ORDER_ID, "PAID")).thenReturn(List.of(paidDeposit()));
 
         ShortageRefundResponse result = service.reportShortage(FARMER_ID, ORDER_ID, "Mất mùa do bão");
 
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
-        assertThat(order.getUpdatedAt()).isEqualTo(NOW);
-        assertThat(result.orderStatus()).isEqualTo(OrderStatus.CANCELLED);
+        assertThat(order.getStatus()).isEqualTo("CANCELLED");
+        assertThat(result.orderStatus()).isEqualTo("CANCELLED");
         verify(buyerNotifier).notifyBuyer(eq(BUYER_ID), contains("đã được hoàn lại"));
     }
 
     @Test
     @DisplayName("TC-REFUND-01: Đơn chưa có khoản nào đã thanh toán -> vẫn hủy đơn và báo Buyer, không tạo giao dịch hoàn")
     void tc01_noPaidPaymentCancelsWithoutRefund() {
-        when(paymentRepository.findByOrderIdAndStatus(ORDER_ID, PaymentStatus.PAID)).thenReturn(List.of());
+        when(paymentRepository.findByOrderIdAndStatus(ORDER_ID, "PAID")).thenReturn(List.of());
 
         ShortageRefundResponse result = service.reportShortage(FARMER_ID, ORDER_ID, "Mất mùa do bão");
 
         verify(refundRepository, never()).save(any(Refund.class));
         assertThat(result.totalRefunded()).isEqualByComparingTo("0");
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
+        assertThat(order.getStatus()).isEqualTo("CANCELLED");
         verify(buyerNotifier).notifyBuyer(eq(BUYER_ID), anyString());
     }
 }

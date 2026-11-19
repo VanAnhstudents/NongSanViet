@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CoInspectionServiceImpl implements CoInspectionService {
 
-    // Chỉ cho phép gửi yêu cầu đồng kiểm trước khi đơn hàng được giao / xác nhận nhận hàng
     private static final Set<String> ELIGIBLE_STATUSES_FOR_REQUEST = Set.of(
         "PENDING", "CONFIRMED", "SHIPPING"
     );
@@ -41,52 +40,42 @@ public class CoInspectionServiceImpl implements CoInspectionService {
     ) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new BusinessException(
-                HttpStatus.NOT_FOUND,
-                "ORDER_NOT_FOUND",
-                "Không tìm thấy đơn hàng"
-            ));
+                HttpStatus.NOT_FOUND, "ORDER_NOT_FOUND", "Không tìm thấy đơn hàng"));
 
         if (!order.getBuyerId().equals(buyerId)) {
             throw new BusinessException(
-                HttpStatus.FORBIDDEN,
-                "ORDER_ACCESS_DENIED",
-                "Bạn không có quyền gửi yêu cầu đồng kiểm cho đơn hàng này"
-            );
+                HttpStatus.FORBIDDEN, "ORDER_ACCESS_DENIED",
+                "Bạn không có quyền gửi yêu cầu đồng kiểm cho đơn hàng này");
         }
 
         if (!ELIGIBLE_STATUSES_FOR_REQUEST.contains(order.getStatus())) {
             throw new BusinessException(
-                HttpStatus.BAD_REQUEST,
-                "INVALID_ORDER_STATUS_FOR_CO_INSPECTION",
-                "Chỉ có thể gửi yêu cầu đồng kiểm trước khi nhận hàng (trạng thái hiện tại: " + order.getStatus() + ")"
-            );
+                HttpStatus.BAD_REQUEST, "INVALID_ORDER_STATUS_FOR_CO_INSPECTION",
+                "Chỉ có thể gửi yêu cầu đồng kiểm trước khi nhận hàng (trạng thái hiện tại: " + order.getStatus() + ")");
         }
 
         if (coInspectionRepository.existsByOrderId(orderId)) {
             throw new BusinessException(
-                HttpStatus.CONFLICT,
-                "CO_INSPECTION_ALREADY_REQUESTED",
-                "Đơn hàng này đã được đăng ký yêu cầu đồng kiểm trước đó"
-            );
+                HttpStatus.CONFLICT, "CO_INSPECTION_ALREADY_REQUESTED",
+                "Đơn hàng này đã được đăng ký yêu cầu đồng kiểm trước đó");
         }
 
         boolean checkQuantity = request.checkQuantity() == null || request.checkQuantity();
         boolean checkQuality = request.checkQuality() == null || request.checkQuality();
         if (!checkQuantity && !checkQuality) {
             throw new BusinessException(
-                HttpStatus.BAD_REQUEST,
-                "INVALID_CO_INSPECTION_CRITERIA",
-                "Vui lòng chọn ít nhất một nội dung đồng kiểm (số lượng hoặc chất lượng)"
-            );
+                HttpStatus.BAD_REQUEST, "INVALID_CO_INSPECTION_CRITERIA",
+                "Vui lòng chọn ít nhất một nội dung đồng kiểm (số lượng hoặc chất lượng)");
         }
+
+        String notes = (request.note() != null && !request.note().isBlank()) ? request.note().trim() : null;
 
         OrderCoInspection coInspection = OrderCoInspection.builder()
             .orderId(order.getId())
             .buyerId(buyerId)
-            .checkQuantity(checkQuantity)
-            .checkQuality(checkQuality)
-            .note(request.note() != null && !request.note().isBlank() ? request.note().trim() : null)
-            .status("REQUESTED")
+            .result("PENDING")
+            .notes(notes)
+            .locked(false)
             .build();
 
         OrderCoInspection saved = coInspectionRepository.save(coInspection);
@@ -102,10 +91,7 @@ public class CoInspectionServiceImpl implements CoInspectionService {
     public CoInspectionResponse getOrderCoInspection(Long actorId, String role, Long orderId) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new BusinessException(
-                HttpStatus.NOT_FOUND,
-                "ORDER_NOT_FOUND",
-                "Không tìm thấy đơn hàng"
-            ));
+                HttpStatus.NOT_FOUND, "ORDER_NOT_FOUND", "Không tìm thấy đơn hàng"));
 
         boolean isAllowed = "ADMIN".equals(role)
             || ("BUYER".equals(role) && order.getBuyerId().equals(actorId))
@@ -113,18 +99,14 @@ public class CoInspectionServiceImpl implements CoInspectionService {
 
         if (!isAllowed) {
             throw new BusinessException(
-                HttpStatus.FORBIDDEN,
-                "ORDER_ACCESS_DENIED",
-                "Bạn không có quyền xem thông tin đồng kiểm của đơn hàng này"
-            );
+                HttpStatus.FORBIDDEN, "ORDER_ACCESS_DENIED",
+                "Bạn không có quyền xem thông tin đồng kiểm của đơn hàng này");
         }
 
         OrderCoInspection coInspection = coInspectionRepository.findByOrderId(orderId)
             .orElseThrow(() -> new BusinessException(
-                HttpStatus.NOT_FOUND,
-                "CO_INSPECTION_NOT_FOUND",
-                "Đơn hàng này chưa có yêu cầu đồng kiểm"
-            ));
+                HttpStatus.NOT_FOUND, "CO_INSPECTION_NOT_FOUND",
+                "Đơn hàng này chưa có yêu cầu đồng kiểm"));
 
         return CoInspectionResponse.from(coInspection, order.getStatus());
     }
@@ -154,37 +136,27 @@ public class CoInspectionServiceImpl implements CoInspectionService {
     public CoInspectionResponse acknowledgeCoInspection(Long farmerId, Long orderId) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new BusinessException(
-                HttpStatus.NOT_FOUND,
-                "ORDER_NOT_FOUND",
-                "Không tìm thấy đơn hàng"
-            ));
+                HttpStatus.NOT_FOUND, "ORDER_NOT_FOUND", "Không tìm thấy đơn hàng"));
 
         if (!orderRepository.existsOrderForFarmer(orderId, farmerId)) {
             throw new BusinessException(
-                HttpStatus.FORBIDDEN,
-                "ORDER_ACCESS_DENIED",
-                "Bạn không có quyền thao tác trên đơn hàng này"
-            );
+                HttpStatus.FORBIDDEN, "ORDER_ACCESS_DENIED",
+                "Bạn không có quyền thao tác trên đơn hàng này");
         }
 
         OrderCoInspection coInspection = coInspectionRepository.findByOrderId(orderId)
             .orElseThrow(() -> new BusinessException(
-                HttpStatus.NOT_FOUND,
-                "CO_INSPECTION_NOT_FOUND",
-                "Đơn hàng này chưa có yêu cầu đồng kiểm"
-            ));
+                HttpStatus.NOT_FOUND, "CO_INSPECTION_NOT_FOUND",
+                "Đơn hàng này chưa có yêu cầu đồng kiểm"));
 
-        if (!"REQUESTED".equals(coInspection.getStatus())) {
+        if (coInspection.isLocked()) {
             throw new BusinessException(
-                HttpStatus.BAD_REQUEST,
-                "CO_INSPECTION_ALREADY_PROCESSED",
-                "Yêu cầu đồng kiểm đã ở trạng thái " + coInspection.getStatus()
-            );
+                HttpStatus.BAD_REQUEST, "CO_INSPECTION_ALREADY_PROCESSED",
+                "Yêu cầu đồng kiểm đã được xử lý và khóa");
         }
 
-        coInspection.setStatus("ACKNOWLEDGED");
-        coInspection.setAcknowledgedBy(farmerId);
-        coInspection.setAcknowledgedAt(OffsetDateTime.now());
+        coInspection.setResult("ACKNOWLEDGED");
+        coInspection.setConfirmedAt(OffsetDateTime.now());
 
         OrderCoInspection saved = coInspectionRepository.save(coInspection);
 

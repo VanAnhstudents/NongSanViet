@@ -74,10 +74,9 @@ class TcCheck01Test {
         assertEquals(77L, response.id());
         assertEquals(orderId, response.orderId());
         assertEquals("SHIPPING", response.orderStatus());
-        assertTrue(response.checkQuantity());
-        assertTrue(response.checkQuality());
-        assertEquals("REQUESTED", response.status());
-        assertTrue(response.deliveryInstruction().contains("Kiểm tra cân đủ 5kg vải thiều"));
+        assertEquals("PENDING", response.result());
+        assertNotNull(response.notes());
+        assertTrue(response.notes().contains("Kiểm tra cân đủ 5kg vải thiều"));
 
         verify(coInspectionRepository, times(1)).save(any(OrderCoInspection.class));
         verify(jdbcTemplate, times(1)).update(startsWith("INSERT INTO notifications"), eq(farmerId), anyString());
@@ -112,7 +111,7 @@ class TcCheck01Test {
     }
 
     @Test
-    @DisplayName("TC-CHECK-01 (2): Yêu cầu đồng kiểm hiển thị cho Farmer/đơn vị giao hàng và Farmer xác nhận phối hợp")
+    @DisplayName("TC-CHECK-01 (2): Yêu cầu đồng kiểm hiển thị cho Farmer và Farmer xác nhận phối hợp")
     void farmerViewsAndAcknowledgesCoInspection_Success() {
         Long farmerId = 10L;
         Long buyerId = 20L;
@@ -128,32 +127,27 @@ class TcCheck01Test {
             .id(77L)
             .orderId(orderId)
             .buyerId(buyerId)
-            .checkQuantity(true)
-            .checkQuality(false)
-            .note("Cân kiểm tra trọng lượng tại chỗ")
-            .status("REQUESTED")
+            .result("PENDING")
+            .notes("Cân kiểm tra trọng lượng tại chỗ")
+            .locked(false)
             .build();
 
         when(coInspectionRepository.findAllByFarmerId(farmerId)).thenReturn(List.of(savedCi));
         when(orderRepository.findAllById(Set.of(orderId))).thenReturn(List.of(order));
 
-        // 1. Farmer xem danh sách yêu cầu đồng kiểm thuộc các đơn hàng của mình
         List<CoInspectionResponse> farmerList = coInspectionService.getFarmerCoInspections(farmerId);
         assertEquals(1, farmerList.size());
         assertEquals(orderId, farmerList.get(0).orderId());
-        assertEquals("REQUESTED", farmerList.get(0).status());
-        assertTrue(farmerList.get(0).deliveryInstruction().contains("Kiểm đếm đủ số lượng/trọng lượng"));
+        assertEquals("PENDING", farmerList.get(0).result());
 
-        // 2. Farmer xác nhận đã tiếp nhận để phối hợp với đơn vị giao hàng
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
         when(orderRepository.existsOrderForFarmer(orderId, farmerId)).thenReturn(true);
         when(coInspectionRepository.findByOrderId(orderId)).thenReturn(Optional.of(savedCi));
         when(coInspectionRepository.save(any(OrderCoInspection.class))).thenAnswer(inv -> inv.getArgument(0));
 
         CoInspectionResponse acknowledged = coInspectionService.acknowledgeCoInspection(farmerId, orderId);
-        assertEquals("ACKNOWLEDGED", acknowledged.status());
-        assertEquals(farmerId, acknowledged.acknowledgedBy());
-        assertNotNull(acknowledged.acknowledgedAt());
+        assertEquals("ACKNOWLEDGED", acknowledged.result());
+        assertNotNull(acknowledged.confirmedAt());
 
         verify(jdbcTemplate, times(1)).update(startsWith("INSERT INTO notifications"), eq(buyerId), anyString());
     }

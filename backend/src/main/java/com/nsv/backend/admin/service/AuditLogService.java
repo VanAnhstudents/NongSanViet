@@ -1,7 +1,7 @@
 package com.nsv.backend.admin.service;
 
 import com.nsv.backend.admin.entity.AuditLog;
-import com.nsv.backend.admin.repository.AuditLogRepository;
+import com.nsv.backend.admin.repository.AdminAuditLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +11,11 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Ghi và tra cứu nhật ký hoạt động; các module khác gọi qua service này. */
 @Service
 @RequiredArgsConstructor
 public class AuditLogService {
 
-    private final AuditLogRepository auditLogRepository;
+    private final AdminAuditLogRepository auditLogRepository;
     private final Clock clock;
 
     /** actorId = null nghĩa là hệ thống tự thực hiện. */

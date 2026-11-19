@@ -2,8 +2,6 @@ package com.nsv.backend.order.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,9 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 
-/** Ánh xạ bảng refunds. complaint_id để trống vì hoàn tiền này không phát sinh từ khiếu nại. */
 @Entity
 @Table(name = "refunds")
 @Getter
@@ -43,13 +40,12 @@ public class Refund {
     @Column(nullable = false, length = 255)
     private String reason;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private RefundStatus status;
+    private String status;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
+    private OffsetDateTime createdAt;
 
     @Column(name = "processed_at")
-    private Instant processedAt;
+    private OffsetDateTime processedAt;
 }
