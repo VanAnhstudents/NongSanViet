@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhật ký hệ thống — Nông Sản Việt Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
+</head>
+<body>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar__head">
+      <a class="admin-sidebar__brand" href="dashboard.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="NSV" />
+        Nông Sản Việt
+      </a>
+      <div class="admin-sidebar__label">Quản trị viên</div>
+    </div>
+    <nav class="admin-nav">
+      <a class="admin-nav__item" href="dashboard.html"><span data-icon="bar-chart-2" data-size="20"></span>Tổng quan</a>
+      <a class="admin-nav__item" href="farmer-approval.html"><span data-icon="shield" data-size="20"></span>Duyệt Farmer</a>
+      <a class="admin-nav__item" href="users.html"><span data-icon="user" data-size="20"></span>Quản lý người dùng</a>
+      <a class="admin-nav__item" href="categories.html"><span data-icon="leaf" data-size="20"></span>Danh mục sản phẩm</a>
+      <a class="admin-nav__item" href="disputes.html"><span data-icon="alert-triangle" data-size="20"></span>Khiếu nại &amp; Tranh chấp</a>
+      <a class="admin-nav__item" href="reports.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo hệ thống</a>
+      <a class="admin-nav__item is-active" href="audit-log.html"><span data-icon="database" data-size="20"></span>Nhật ký hệ thống</a>
+    </nav>
+    <div class="admin-sidebar__foot">
+      <button class="btn btn--ghost btn--sm" id="adminLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
+        <span data-icon="log-out" data-size="18"></span>Đăng xuất
+      </button>
+    </div>
+  </aside>
+  <div class="admin-sidebar__overlay" id="sidebarOverlay"></div>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header__inner">
+        <button class="admin-header__menu-btn" id="menuToggle" aria-label="Mở menu"><span data-icon="menu" data-size="22"></span></button>
+        <h1 class="admin-header__title">Nhật ký hệ thống</h1>
+        <div class="admin-header__actions">
+          <a class="icon-btn" href="disputes.html" aria-label="Khiếu nại chờ xử lý">
+            <span data-icon="bell" data-size="22"></span>
+            <span class="icon-btn__badge">2</span>
+          </a>
+          <div class="dropdown" id="adminDropdown">
+            <button class="app-header__avatar-btn" type="button" id="adminAvatarBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar--sm" style="background:var(--color-role-admin);color:#fff">A</div>
+              <span class="app-header__username">Admin</span>
+              <span data-icon="chevron-down" data-size="16"></span>
+            </button>
+            <div class="dropdown__menu" id="adminMenu">
+              <button class="dropdown__item" type="button" id="adminLogout2"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-content">
+
+      <!-- Filter bar -->
+      <div style="background:var(--color-bg-surface);border:1px solid var(--color-border-default);border-radius:var(--radius-lg);padding:var(--space-5);margin-bottom:var(--space-5)">
+        <div style="font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--color-text-heading);margin-bottom:var(--space-4)">Bộ lọc nhật ký</div>
+        <div class="form-row form-row--2" style="margin-bottom:var(--space-3)">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label" for="filterType">Loại sự kiện</label>
+            <select class="input select" id="filterType">
+              <option value="">Tất cả loại</option>
+              <option value="login">Đăng nhập</option>
+              <option value="order">Thay đổi đơn</option>
+              <option value="lock">Khóa tài khoản</option>
+              <option value="dispute">Phân xử khiếu nại</option>
+              <option value="category">Thay đổi danh mục</option>
+              <option value="farmer">Duyệt Farmer</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label" for="filterUser">Người thực hiện</label>
+            <input class="input" id="filterUser" type="text" placeholder="Tên hoặc email..." />
+          </div>
+        </div>
+        <div class="form-row form-row--2" style="margin-bottom:var(--space-4)">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label" for="filterFrom">Từ ngày</label>
+            <input class="input" id="filterFrom" type="date" value="2025-06-01" />
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label" for="filterTo">Đến ngày</label>
+            <input class="input" id="filterTo" type="date" value="2025-06-12" />
+          </div>
+        </div>
+        <button class="btn btn--primary btn--sm" onclick="applyFilter()">
+          <span data-icon="search" data-size="16"></span> Lọc nhật ký
+        </button>
+        <button class="btn btn--ghost btn--sm" onclick="resetFilter()">Đặt lại</button>
+      </div>
+
+      <!-- Pagination info -->
+      <div class="pagination-info">Hiển thị <strong>20</strong> / <strong>157</strong> bản ghi</div>
+
+      <!-- Desktop table -->
+      <div class="show-desktop">
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Loại</th>
+                <th>Người thực hiện</th>
+                <th>Đối tượng</th>
+                <th>Mô tả</th>
+              </tr>
+            </thead>
+            <tbody id="logTable">
+              <tr>
+                <td class="table__mono">12/06/2025 11:42:08</td>
+                <td><span class="badge badge--danger">Phân xử khiếu nại</span></td>
+                <td>admin@nsv.vn</td>
+                <td><span class="table__mono">#KN-003</span></td>
+                <td>Đã hoàn tiền 45.000đ cho Buyer Lê Thanh Hà. Đơn #NN1030.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">12/06/2025 10:15:33</td>
+                <td><span class="badge badge--warning">Duyệt Farmer</span></td>
+                <td>admin@nsv.vn</td>
+                <td>Vườn Xanh An Giang</td>
+                <td>Đã duyệt hồ sơ Farmer. Chứng nhận VietGAP hợp lệ.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">12/06/2025 09:50:14</td>
+                <td><span class="badge badge--info">Thay đổi danh mục</span></td>
+                <td>admin@nsv.vn</td>
+                <td>Rau củ quả</td>
+                <td>Đã thêm danh mục "Nông sản hữu cơ". Slug: nong-san-huu-co.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">12/06/2025 09:00:05</td>
+                <td><span class="badge badge--neutral">Đăng nhập</span></td>
+                <td>admin@nsv.vn</td>
+                <td>Hệ thống</td>
+                <td>Đăng nhập thành công. IP: 192.168.1.42.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">11/06/2025 17:30:22</td>
+                <td><span class="badge badge--danger">Khóa tài khoản</span></td>
+                <td>admin@nsv.vn</td>
+                <td>Lò Văn Hùng</td>
+                <td>Đã khóa tài khoản Farmer. Lý do: Vi phạm chính sách đăng sản phẩm.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">11/06/2025 15:12:49</td>
+                <td><span class="badge badge--success">Thay đổi đơn</span></td>
+                <td>admin@nsv.vn</td>
+                <td><span class="table__mono">#NN1038</span></td>
+                <td>Đã cập nhật trạng thái đơn từ "Đang giao" sang "Đã giao".</td>
+              </tr>
+              <tr>
+                <td class="table__mono">11/06/2025 14:00:01</td>
+                <td><span class="badge badge--warning">Duyệt Farmer</span></td>
+                <td>admin@nsv.vn</td>
+                <td>HTX Nông nghiệp Sơn La</td>
+                <td>Đã từ chối hồ sơ. Lý do: Giấy chứng nhận GlobalG.A.P hết hạn.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">11/06/2025 10:45:17</td>
+                <td><span class="badge badge--danger">Phân xử khiếu nại</span></td>
+                <td>admin@nsv.vn</td>
+                <td><span class="table__mono">#KN-002</span></td>
+                <td>Từ chối hoàn tiền. Bằng chứng không đủ cơ sở. Đơn #NN1025.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">10/06/2025 16:22:33</td>
+                <td><span class="badge badge--neutral">Đăng nhập</span></td>
+                <td>admin@nsv.vn</td>
+                <td>Hệ thống</td>
+                <td>Đăng nhập thành công. IP: 192.168.1.42.</td>
+              </tr>
+              <tr>
+                <td class="table__mono">10/06/2025 14:08:55</td>
+                <td><span class="badge badge--info">Thay đổi danh mục</span></td>
+                <td>admin@nsv.vn</td>
+                <td>Combo nông sản</td>
+                <td>Đã sửa tên danh mục từ "Combo" thành "Combo nông sản".</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile card list -->
+      <div class="hide-desktop card-list" id="logCards">
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <span class="badge badge--danger">Phân xử khiếu nại</span>
+            </div>
+            <span class="table__mono" style="font-size:var(--fs-xs)">12/06 11:42</span>
+          </div>
+          <div class="card-list__meta">admin@nsv.vn · #KN-003</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:4px">Đã hoàn tiền 45.000đ cho Buyer Lê Thanh Hà. Đơn #NN1030.</div>
+        </div>
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <span class="badge badge--warning">Duyệt Farmer</span>
+            </div>
+            <span class="table__mono" style="font-size:var(--fs-xs)">12/06 10:15</span>
+          </div>
+          <div class="card-list__meta">admin@nsv.vn · Vườn Xanh An Giang</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:4px">Đã duyệt hồ sơ Farmer. Chứng nhận VietGAP hợp lệ.</div>
+        </div>
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <span class="badge badge--danger">Khóa tài khoản</span>
+            </div>
+            <span class="table__mono" style="font-size:var(--fs-xs)">11/06 17:30</span>
+          </div>
+          <div class="card-list__meta">admin@nsv.vn · Lò Văn Hùng</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:4px">Đã khóa tài khoản Farmer. Lý do: Vi phạm chính sách.</div>
+        </div>
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <span class="badge badge--neutral">Đăng nhập</span>
+            </div>
+            <span class="table__mono" style="font-size:var(--fs-xs)">12/06 09:00</span>
+          </div>
+          <div class="card-list__meta">admin@nsv.vn · Hệ thống</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:4px">Đăng nhập thành công. IP: 192.168.1.42.</div>
+        </div>
+      </div>
+
+      <!-- Load more -->
+      <div style="text-align:center;margin-top:var(--space-6)">
+        <div class="pagination-info" style="margin-bottom:var(--space-3)">Đã hiển thị 20 / 157 bản ghi</div>
+        <button class="btn btn--secondary" id="loadMoreBtn" onclick="loadMore()">
+          <span data-icon="chevron-down" data-size="18"></span> Tải thêm 20 bản ghi
+        </button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+var loadedCount = 20;
+var totalCount = 157;
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+  var sidebar = document.getElementById('adminSidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+  if (menuBtn) menuBtn.addEventListener('click', function () { sidebar.classList.add('is-open'); });
+  if (overlay) overlay.addEventListener('click', function () { sidebar.classList.remove('is-open'); });
+  var btn = document.getElementById('adminAvatarBtn');
+  var dd = document.getElementById('adminDropdown');
+  if (btn && dd) {
+    btn.addEventListener('click', function () { dd.classList.toggle('is-open'); btn.setAttribute('aria-expanded', dd.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (dd && !dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); } });
+  }
+  function doLogout() { if (window.NSV && NSV.auth) NSV.auth.logout(); window.location.href = '../../pages/auth/login.html'; }
+  var l1 = document.getElementById('adminLogout'); if (l1) l1.addEventListener('click', doLogout);
+  var l2 = document.getElementById('adminLogout2'); if (l2) l2.addEventListener('click', doLogout);
+});
+
+function applyFilter() {
+  var type = document.getElementById('filterType').value;
+  var user = document.getElementById('filterUser').value;
+  var from = document.getElementById('filterFrom').value;
+  var to   = document.getElementById('filterTo').value;
+  alert('Đang lọc: Loại=' + (type || 'Tất cả') + ', Người=' + (user || 'Tất cả') + ', Từ ' + from + ' đến ' + to);
+}
+function resetFilter() {
+  document.getElementById('filterType').value = '';
+  document.getElementById('filterUser').value = '';
+  document.getElementById('filterFrom').value = '2025-06-01';
+  document.getElementById('filterTo').value   = '2025-06-12';
+}
+function loadMore() {
+  loadedCount = Math.min(loadedCount + 20, totalCount);
+  document.querySelectorAll('.pagination-info').forEach(function (el) {
+    el.innerHTML = 'Đã hiển thị <strong>' + loadedCount + '</strong> / <strong>' + totalCount + '</strong> bản ghi';
+  });
+  if (loadedCount >= totalCount) {
+    document.getElementById('loadMoreBtn').disabled = true;
+    document.getElementById('loadMoreBtn').textContent = 'Đã hiển thị tất cả';
+  }
+  alert('Đã tải thêm bản ghi (mô phỏng).');
+}
+</script>
+</body>
+</html>

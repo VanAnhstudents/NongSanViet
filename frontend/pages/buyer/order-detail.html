@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết đơn hàng — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <style>
+    .detail-layout { display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+    @media (min-width: 1024px) { .detail-layout { grid-template-columns: 2fr 1fr; align-items: start; } }
+  </style>
+</head>
+<body class="app">
+
+  <!-- Header -->
+  <header class="app-header" id="appHeader">
+    <div class="app-header__inner">
+      <a class="app-header__brand" href="home.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" width="32" height="32">
+        Nông Sản Việt
+      </a>
+      <div class="app-header__search">
+        <span class="app-header__search__icon" data-icon="search" data-size="18"></span>
+        <input class="form-field__input" type="search" placeholder="Tìm rau củ, trái cây, trang trại..." aria-label="Tìm kiếm sản phẩm">
+        <button class="app-header__search__btn" type="button">Tìm</button>
+      </div>
+      <div class="app-header__actions">
+        <a class="icon-btn" href="cart.html" aria-label="Giỏ hàng">
+          <span data-icon="shopping-cart" data-size="22"></span>
+          <span class="icon-btn__badge" id="cartBadge" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="notifications.html" aria-label="Thông báo">
+          <span data-icon="bell" data-size="22"></span>
+          <span class="icon-btn__badge" id="notifBadge" hidden>3</span>
+        </a>
+        <div class="dropdown" id="userDropdown">
+          <button class="app-header__avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userAvatarBtn">
+            <div class="avatar avatar--sm" id="userAvatar">N</div>
+            <span class="app-header__username" id="usernameText">Tài khoản</span>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </button>
+          <div class="dropdown__menu" id="userMenu" role="menu">
+            <a class="dropdown__item" href="profile.html" role="menuitem"><span data-icon="user" data-size="18"></span>Hồ sơ cá nhân</a>
+            <a class="dropdown__item" href="orders.html" role="menuitem"><span data-icon="package" data-size="18"></span>Đơn hàng của tôi</a>
+            <button class="dropdown__item" type="button" id="logoutBtn" role="menuitem"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category bar -->
+  <nav class="category-bar" aria-label="Danh mục sản phẩm">
+    <div class="category-bar__inner">
+      <a class="category-bar__link" href="search.html?cat=rau-cu"><span data-icon="leaf" data-size="16"></span>Rau củ</a>
+      <a class="category-bar__link" href="search.html?cat=trai-cay"><span data-icon="shopping-bag" data-size="16"></span>Trái cây</a>
+      <a class="category-bar__link" href="search.html?type=preorder"><span data-icon="calendar" data-size="16"></span>Pre-order theo mùa</a>
+      <a class="category-bar__link" href="search.html?type=combo"><span data-icon="package" data-size="16"></span>Combo</a>
+      <a class="category-bar__link" href="search.html?filter=region"><span data-icon="map-pin" data-size="16"></span>Theo khu vực</a>
+    </div>
+  </nav>
+
+  <main class="app__main">
+
+    <!-- Back + title -->
+    <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-5);">
+      <a href="orders.html" class="btn btn--ghost btn--sm">
+        <span data-icon="arrow-left" data-size="18"></span> Quay lại
+      </a>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-6);">
+      <div>
+        <div style="font-family:var(--font-family-mono);font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--color-text-heading);">#ORD-20250605-008</div>
+        <div style="color:var(--color-text-muted);font-size:var(--fs-sm);margin-top:2px;">Đặt ngày 05/06/2025 · 1 sản phẩm</div>
+      </div>
+      <span class="badge badge--info">Đang giao</span>
+    </div>
+
+    <div class="detail-layout">
+      <!-- Left -->
+      <div>
+        <!-- Timeline -->
+        <div class="card">
+          <h3 class="card__title" style="margin-bottom:var(--space-4);">
+            <span data-icon="truck" data-size="20" style="vertical-align:middle;margin-right:var(--space-2);"></span>
+            Tiến trình giao hàng
+          </h3>
+          <div class="timeline">
+            <div class="timeline__item timeline__item--done">
+              <div class="timeline__date">05/06/2025 · 09:12</div>
+              <div class="timeline__title">Đã đặt hàng</div>
+              <div class="timeline__note">Đơn hàng đã được ghi nhận thành công.</div>
+            </div>
+            <div class="timeline__item timeline__item--done">
+              <div class="timeline__date">05/06/2025 · 14:30</div>
+              <div class="timeline__title">Nông dân xác nhận</div>
+              <div class="timeline__note">Vườn Bình Thuận đã xác nhận và đang chuẩn bị hàng.</div>
+            </div>
+            <div class="timeline__item timeline__item--done">
+              <div class="timeline__date">06/06/2025 · 08:00</div>
+              <div class="timeline__title">Đang giao hàng</div>
+              <div class="timeline__note">Đơn hàng đã được bàn giao cho đơn vị vận chuyển GHN.</div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__date">Dự kiến 07/06/2025</div>
+              <div class="timeline__title" style="color:var(--color-text-muted);">Đã giao hàng</div>
+              <div class="timeline__note" style="color:var(--color-text-muted);">Hàng sẽ được giao đến địa chỉ của bạn.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products in order -->
+        <div class="card">
+          <h3 class="card__title" style="margin-bottom:var(--space-4);">Sản phẩm trong đơn</h3>
+          <div style="display:flex;gap:var(--space-4);align-items:center;padding:var(--space-3) 0;">
+            <img src="https://images.unsplash.com/photo-1598635675205-7a9d87a37f41?w=120&h=120&fit=crop" alt="Thanh long ruột đỏ" style="width:72px;height:72px;border-radius:var(--radius-md);object-fit:cover;">
+            <div style="flex:1;">
+              <div style="font-weight:var(--fw-semibold);">Thanh long ruột đỏ</div>
+              <div style="font-size:var(--fs-sm);color:var(--color-text-muted);">Vườn Bình Thuận · 2kg · 45.000đ/kg</div>
+            </div>
+            <div style="font-weight:var(--fw-semibold);color:var(--color-primary-700);">90.000đ</div>
+          </div>
+          <hr class="divider">
+          <div class="cart-summary__row"><span>Tạm tính</span><span>90.000đ</span></div>
+          <div class="cart-summary__row"><span>Phí giao hàng</span><span>30.000đ</span></div>
+          <div class="cart-summary__row" style="border-top:1px solid var(--color-border-default);margin-top:var(--space-2);padding-top:var(--space-3);font-weight:var(--fw-bold);font-size:var(--fs-md);">
+            <span>Tổng cộng</span>
+            <span class="price">120.000đ</span>
+          </div>
+          <div style="margin-top:var(--space-2);font-size:var(--fs-sm);color:var(--color-text-muted);">Phương thức: Tiền mặt khi nhận (COD)</div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div>
+        <!-- Address -->
+        <div class="card">
+          <h3 class="card__title" style="margin-bottom:var(--space-3);">
+            <span data-icon="map-pin" data-size="18" style="vertical-align:middle;margin-right:var(--space-1);"></span>
+            Địa chỉ giao hàng
+          </h3>
+          <div style="font-weight:var(--fw-semibold);">Nguyễn Văn A</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-muted);margin-top:var(--space-1);">0912 345 678</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-muted);margin-top:var(--space-1);">123 Nguyễn Trãi, P. Thanh Xuân Trung, Q. Thanh Xuân, Hà Nội</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card">
+          <h3 class="card__title" style="margin-bottom:var(--space-3);">Thao tác</h3>
+          <div class="stack">
+            <a class="btn btn--primary btn--block" href="#" id="confirmReceiveBtn">
+              <span data-icon="check-circle" data-size="18"></span>
+              Xác nhận đã nhận hàng
+            </a>
+            <a class="btn btn--secondary btn--block" href="chat.html">
+              <span data-icon="message-circle" data-size="18"></span>
+              Chat với người bán
+            </a>
+            <a class="btn btn--ghost btn--block" href="complaint.html" style="color:var(--color-danger-text);">
+              <span data-icon="alert-circle" data-size="18"></span>
+              Khiếu nại đơn hàng
+            </a>
+            <!-- Đánh giá (ẩn khi chưa giao, hiện khi đã giao) -->
+            <a class="btn btn--ghost btn--block hidden" href="review.html" id="reviewBtn">
+              <span data-icon="star" data-size="18"></span>
+              Đánh giá sản phẩm
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Điều hướng chính">
+    <a class="bottom-nav__item" href="home.html" aria-label="Trang chủ">
+      <span class="bottom-nav__item__icon" data-icon="home" data-size="22"></span>
+      <span class="bottom-nav__item__label">Trang chủ</span>
+    </a>
+    <a class="bottom-nav__item" href="search.html" aria-label="Tìm kiếm">
+      <span class="bottom-nav__item__icon" data-icon="search" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tìm kiếm</span>
+    </a>
+    <a class="bottom-nav__item" href="cart.html" aria-label="Giỏ hàng">
+      <span class="bottom-nav__item__icon">
+        <span data-icon="shopping-cart" data-size="22"></span>
+        <span class="bottom-nav__item__badge" id="bottomCartBadge" hidden>0</span>
+      </span>
+      <span class="bottom-nav__item__label">Giỏ hàng</span>
+    </a>
+    <a class="bottom-nav__item is-active" href="orders.html" aria-label="Đơn hàng">
+      <span class="bottom-nav__item__icon" data-icon="package" data-size="22"></span>
+      <span class="bottom-nav__item__label">Đơn hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="profile.html" aria-label="Tôi">
+      <span class="bottom-nav__item__icon" data-icon="user" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tôi</span>
+    </a>
+  </nav>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    NSV.renderIcons();
+    var btn = document.getElementById('userAvatarBtn');
+    var dd = document.getElementById('userDropdown');
+    if (btn && dd) {
+      btn.addEventListener('click', function() {
+        dd.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    }
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    window.addEventListener('scroll', function() {
+      var h = document.getElementById('appHeader');
+      if (h) h.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+    var user = NSV.auth.getUser();
+    if (user) {
+      var uname = document.getElementById('usernameText');
+      var uavatar = document.getElementById('userAvatar');
+      if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
+      if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+    }
+  });
+  </script>
+</body>
+</html>

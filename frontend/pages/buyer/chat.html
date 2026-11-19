@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <style>
+    .chat-list__item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md); cursor: pointer; }
+    .chat-list__item:hover, .chat-list__item.is-active { background: var(--color-primary-50); }
+    .chat-list__item__info { flex: 1; min-width: 0; }
+    .chat-list__item__name { font-weight: var(--fw-semibold); font-size: var(--fs-sm); }
+    .chat-list__item__preview { font-size: var(--fs-xs); color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chat-list__item__time { font-size: var(--fs-xs); color: var(--color-text-muted); flex-shrink: 0; }
+    .chat-list__item__badge { background: var(--color-role-buyer); color: #fff; border-radius: var(--radius-pill); font-size: 10px; font-weight: var(--fw-bold); min-width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+    .chat-pane__head { display: flex; align-items: center; gap: var(--space-3); }
+    .chat-pane__head__info { flex: 1; }
+    .chat-pane__head__name { font-weight: var(--fw-semibold); }
+    .chat-pane__head__sub { font-size: var(--fs-xs); color: var(--color-text-muted); }
+    .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-success-text); display: inline-block; margin-right: 4px; }
+  </style>
+</head>
+<body class="app">
+
+  <!-- Header -->
+  <header class="app-header" id="appHeader">
+    <div class="app-header__inner">
+      <a class="app-header__brand" href="home.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" width="32" height="32">
+        Nông Sản Việt
+      </a>
+      <div class="app-header__search">
+        <span class="app-header__search__icon" data-icon="search" data-size="18"></span>
+        <input class="form-field__input" type="search" placeholder="Tìm rau củ, trái cây, trang trại..." aria-label="Tìm kiếm sản phẩm">
+        <button class="app-header__search__btn" type="button">Tìm</button>
+      </div>
+      <div class="app-header__actions">
+        <a class="icon-btn" href="cart.html" aria-label="Giỏ hàng">
+          <span data-icon="shopping-cart" data-size="22"></span>
+          <span class="icon-btn__badge" id="cartBadge" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="notifications.html" aria-label="Thông báo">
+          <span data-icon="bell" data-size="22"></span>
+          <span class="icon-btn__badge" id="notifBadge" hidden>3</span>
+        </a>
+        <div class="dropdown" id="userDropdown">
+          <button class="app-header__avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userAvatarBtn">
+            <div class="avatar avatar--sm" id="userAvatar">N</div>
+            <span class="app-header__username" id="usernameText">Tài khoản</span>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </button>
+          <div class="dropdown__menu" id="userMenu" role="menu">
+            <a class="dropdown__item" href="profile.html" role="menuitem"><span data-icon="user" data-size="18"></span>Hồ sơ cá nhân</a>
+            <a class="dropdown__item" href="orders.html" role="menuitem"><span data-icon="package" data-size="18"></span>Đơn hàng của tôi</a>
+            <button class="dropdown__item" type="button" id="logoutBtn" role="menuitem"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category bar -->
+  <nav class="category-bar" aria-label="Danh mục sản phẩm">
+    <div class="category-bar__inner">
+      <a class="category-bar__link" href="search.html?cat=rau-cu"><span data-icon="leaf" data-size="16"></span>Rau củ</a>
+      <a class="category-bar__link" href="search.html?cat=trai-cay"><span data-icon="shopping-bag" data-size="16"></span>Trái cây</a>
+      <a class="category-bar__link" href="search.html?type=preorder"><span data-icon="calendar" data-size="16"></span>Pre-order theo mùa</a>
+      <a class="category-bar__link" href="search.html?type=combo"><span data-icon="package" data-size="16"></span>Combo</a>
+      <a class="category-bar__link" href="search.html?filter=region"><span data-icon="map-pin" data-size="16"></span>Theo khu vực</a>
+    </div>
+  </nav>
+
+  <main class="app__main" style="padding-bottom:calc(var(--space-8) + 72px);">
+
+    <div class="page-head">
+      <h1 class="page-head__title">Tin nhắn</h1>
+    </div>
+
+    <div class="chat-layout">
+      <!-- Conversation list (desktop) -->
+      <div class="chat-list" aria-label="Danh sách cuộc trò chuyện">
+        <div style="font-weight:var(--fw-semibold);font-size:var(--fs-sm);color:var(--color-text-muted);padding:var(--space-2) var(--space-3);margin-bottom:var(--space-1);">Cuộc trò chuyện</div>
+
+        <div class="chat-list__item is-active">
+          <div class="avatar" style="background:var(--color-primary-100);color:var(--color-primary-700);">V</div>
+          <div class="chat-list__item__info">
+            <div class="chat-list__item__name">Vườn Tiền Giang</div>
+            <div class="chat-list__item__preview">Hàng sẽ được giao sáng mai bạn nhé</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+            <span class="chat-list__item__time">10:32</span>
+            <span class="chat-list__item__badge">2</span>
+          </div>
+        </div>
+
+        <div class="chat-list__item">
+          <div class="avatar" style="background:var(--color-info-bg);color:var(--color-info-text);">T</div>
+          <div class="chat-list__item__info">
+            <div class="chat-list__item__name">Trang trại Xanh Lâm Đồng</div>
+            <div class="chat-list__item__preview">Bạn ơi, hiện đang có cải thảo đặc biệt...</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+            <span class="chat-list__item__time">Hôm qua</span>
+          </div>
+        </div>
+
+        <div class="chat-list__item">
+          <div class="avatar" style="background:var(--color-secondary-50);color:var(--color-secondary-700);">B</div>
+          <div class="chat-list__item__info">
+            <div class="chat-list__item__name">Vườn Bình Thuận</div>
+            <div class="chat-list__item__preview">Thanh long sẽ chín đẹp trong 2 ngày nữa</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+            <span class="chat-list__item__time">05/06</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat pane -->
+      <div class="chat-pane">
+        <!-- Head -->
+        <div class="chat-pane__head">
+          <div class="avatar" style="background:var(--color-primary-100);color:var(--color-primary-700);flex-shrink:0;">V</div>
+          <div class="chat-pane__head__info">
+            <div class="chat-pane__head__name">Vườn Tiền Giang</div>
+            <div class="chat-pane__head__sub">
+              <span class="online-dot"></span>Đang hoạt động
+            </div>
+          </div>
+          <a href="product-detail.html" class="btn btn--ghost btn--sm">
+            <span data-icon="external-link" data-size="16"></span>
+            Xem trang trại
+          </a>
+        </div>
+
+        <!-- Stream -->
+        <div class="chat-pane__stream" id="chatStream" aria-live="polite" aria-label="Tin nhắn">
+
+          <div style="text-align:center;font-size:var(--fs-xs);color:var(--color-text-muted);padding:var(--space-2) 0;">05/06/2025</div>
+
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;">
+            <div class="chat-bubble chat-bubble--in">Chào bạn, mình có thể tư vấn loại xoài phù hợp không?</div>
+            <span class="chat-bubble__time">09:15</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+            <div class="chat-bubble chat-bubble--out">Vâng, mình muốn mua xoài cát Hòa Lộc, loại ngon nhất đó ạ.</div>
+            <span class="chat-bubble__time">09:17</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;">
+            <div class="chat-bubble chat-bubble--in">Bên mình đang có loại A+ thu hoạch sáng nay, đảm bảo tươi ngon. Giá 65k/kg, giao ngay chiều mai.</div>
+            <span class="chat-bubble__time">09:20</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+            <div class="chat-bubble chat-bubble--out">Cho mình đặt 3kg nhé, địa chỉ giao ở Hà Nội.</div>
+            <span class="chat-bubble__time">09:22</span>
+          </div>
+
+          <div style="text-align:center;font-size:var(--fs-xs);color:var(--color-text-muted);padding:var(--space-2) 0;">Hôm nay</div>
+
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;">
+            <div class="chat-bubble chat-bubble--in">Hàng sẽ được giao sáng mai bạn nhé. Shipper sẽ gọi trước 30 phút.</div>
+            <span class="chat-bubble__time">10:32</span>
+          </div>
+
+        </div>
+
+        <!-- Chat bar -->
+        <div class="chat-bar">
+          <button class="btn btn--ghost btn--sm" type="button" aria-label="Đính kèm file" style="padding:var(--space-2);min-height:44px;width:44px;border-radius:var(--radius-circle);">
+            <span data-icon="paperclip" data-size="20"></span>
+          </button>
+          <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." aria-label="Nhập tin nhắn">
+          <button class="chat-bar__send" type="button" id="sendBtn" aria-label="Gửi">
+            <span data-icon="send" data-size="20"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Điều hướng chính">
+    <a class="bottom-nav__item" href="home.html" aria-label="Trang chủ">
+      <span class="bottom-nav__item__icon" data-icon="home" data-size="22"></span>
+      <span class="bottom-nav__item__label">Trang chủ</span>
+    </a>
+    <a class="bottom-nav__item" href="search.html" aria-label="Tìm kiếm">
+      <span class="bottom-nav__item__icon" data-icon="search" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tìm kiếm</span>
+    </a>
+    <a class="bottom-nav__item" href="cart.html" aria-label="Giỏ hàng">
+      <span class="bottom-nav__item__icon">
+        <span data-icon="shopping-cart" data-size="22"></span>
+        <span class="bottom-nav__item__badge" id="bottomCartBadge" hidden>0</span>
+      </span>
+      <span class="bottom-nav__item__label">Giỏ hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="orders.html" aria-label="Đơn hàng">
+      <span class="bottom-nav__item__icon" data-icon="package" data-size="22"></span>
+      <span class="bottom-nav__item__label">Đơn hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="profile.html" aria-label="Tôi">
+      <span class="bottom-nav__item__icon" data-icon="user" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tôi</span>
+    </a>
+  </nav>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    NSV.renderIcons();
+    var btn = document.getElementById('userAvatarBtn');
+    var dd = document.getElementById('userDropdown');
+    if (btn && dd) {
+      btn.addEventListener('click', function() {
+        dd.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    }
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    window.addEventListener('scroll', function() {
+      var h = document.getElementById('appHeader');
+      if (h) h.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+    var user = NSV.auth.getUser();
+    if (user) {
+      var uname = document.getElementById('usernameText');
+      var uavatar = document.getElementById('userAvatar');
+      if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
+      if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+    }
+
+    // Send message
+    function sendMessage() {
+      var input = document.getElementById('chatInput');
+      var stream = document.getElementById('chatStream');
+      var text = input.value.trim();
+      if (!text) return;
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'display:flex;flex-direction:column;align-items:flex-end;gap:2px;';
+      var now = new Date();
+      var timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+      wrap.innerHTML = '<div class="chat-bubble chat-bubble--out">' + text.replace(/</g,'&lt;') + '</div><span class="chat-bubble__time">' + timeStr + '</span>';
+      stream.appendChild(wrap);
+      input.value = '';
+      stream.scrollTop = stream.scrollHeight;
+      NSV.renderIcons();
+    }
+    document.getElementById('sendBtn').addEventListener('click', sendMessage);
+    document.getElementById('chatInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+
+    // Scroll to bottom
+    var stream = document.getElementById('chatStream');
+    if (stream) stream.scrollTop = stream.scrollHeight;
+  });
+  </script>
+</body>
+</html>

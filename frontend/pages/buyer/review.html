@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đánh giá sản phẩm - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="buyer">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <main class="content">
+            <a href="order-tracking.html" class="eyebrow">‹ ĐÁNH GIÁ SAU MUA</a>
+            <h1 class="page-title">Đánh giá sản phẩm</h1>
+
+            <div class="card" style="margin-top:12px">
+                <div class="card-title">Rau cải thìa · Vườn An</div>
+                <div class="meta-text">Đơn #NN1016 · Đã giao ngày 10/11</div>
+            </div>
+
+            <div class="form-label" style="margin-top:14px">Chất lượng sản phẩm</div>
+            <div style="display:flex;gap:12px;font-size:26px;color:#9b6a1c;margin:8px 0 4px;cursor:pointer">
+                <span data-star="1">★</span>
+                <span data-star="2">★</span>
+                <span data-star="3">★</span>
+                <span data-star="4">★</span>
+                <span data-star="5">★</span>
+            </div>
+            <div style="color:var(--primary);font-size:13px;font-weight:600;margin-bottom:12px">Rất hài lòng</div>
+
+            <div class="form-group">
+                <textarea class="textarea">Rau tươi, đóng gói cẩn thận. Nông dân trả lời nhanh và giao đúng hẹn. Tôi sẽ tiếp tục ủng hộ!</textarea>
+            </div>
+
+            <p class="meta-text" style="margin-bottom:20px">Chỉ khách đã mua hàng mới được đánh giá.</p>
+
+            <button type="button" class="btn btn-primary" onclick="showToast('Cảm ơn bạn đã gửi đánh giá!')">Gửi đánh giá</button>
+            <a href="order-tracking.html" class="btn btn-soft">Quay lại đơn hàng</a>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

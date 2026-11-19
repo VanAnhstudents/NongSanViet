@@ -3,151 +3,253 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hồ sơ trang trại - Nông Sản Việt</title>
+  <title>Hồ sơ trang trại - Kênh Nông Dân · Nông Sản Việt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../css/farm-profile.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/farmer.css" />
 </head>
 <body>
-
-  <!-- TOP NAVIGATION -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <button type="button" class="menu-toggle" id="menuToggle" aria-label="Mở menu">☰</button>
-      <div class="brand">
-        <span class="brand-icon">🌱</span>
-        <span>Nông Sản Việt</span>
-      </div>
+<div class="farmer-shell">
+  <aside class="farmer-sidebar" id="farmerSidebar" aria-label="Menu Farmer">
+    <div class="farmer-sidebar__head">
+      <a class="farmer-sidebar__brand" href="dashboard.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" onerror="this.style.display='none'">
+        Nông Sản Việt
+      </a>
+      <div class="farmer-sidebar__farm" id="sidebarFarmName">Kênh nông dân</div>
     </div>
-    <div class="topbar__channel">Kênh nông dân</div>
-    <div class="topbar-right" id="topbarFarmStatus">Vườn An · Đã xác minh</div>
-  </header>
+    <nav class="farmer-nav" aria-label="Menu chính">
+      <a class="farmer-nav__item" href="dashboard.html"><span data-icon="bar-chart-2" data-size="20"></span>Tổng quan</a>
+      <a class="farmer-nav__item is-active" href="farm-profile.html" aria-current="page"><span data-icon="tractor" data-size="20"></span>Hồ sơ trang trại</a>
+      <a class="farmer-nav__item" href="post-product-step1.html"><span data-icon="plus-circle" data-size="20"></span>Đăng sản phẩm</a>
+      <a class="farmer-nav__item" href="products.html"><span data-icon="leaf" data-size="20"></span>Sản phẩm &amp; Combo</a>
+      <a class="farmer-nav__item" href="traceability.html"><span data-icon="qr-code" data-size="20"></span>Nhật ký &amp; QR truy xuất</a>
+      <a class="farmer-nav__item" href="orders.html"><span data-icon="package" data-size="20"></span>Đơn hàng</a>
+      <a class="farmer-nav__item" href="chat.html"><span data-icon="message-circle" data-size="20"></span>Tin nhắn</a>
+      <a class="farmer-nav__item" href="complaints.html"><span data-icon="alert-triangle" data-size="20"></span>Khiếu nại</a>
+      <a class="farmer-nav__item" href="revenue.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo doanh thu</a>
+    </nav>
+    <div class="farmer-sidebar__foot">
+      <button class="btn btn--ghost btn--sm" id="farmerLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
+        <span data-icon="log-out" data-size="18"></span>Đăng xuất
+      </button>
+    </div>
+  </aside>
+  <div class="farmer-sidebar__overlay" id="sidebarOverlay"></div>
 
-  <div class="layout">
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div>
-        <div class="sidebar__farm" id="sidebarFarmName">VƯỜN AN</div>
-        <nav class="nav">
-          <a href="#">Tổng quan</a>
-          <a href="./farm-profile.html" aria-current="page">Hồ sơ trang trại</a>
-          <a href="#">Sản phẩm và tồn kho</a>
-          <a href="./post-product-step1.html">Đăng bán sản phẩm</a>
-          <a href="#">Đơn hàng</a>
-          <a href="#">Nhật ký trồng trọt</a>
-          <a href="#">Khiếu nại</a>
-        </nav>
-      </div>
-      <div class="sidebar__foot">Nông Sản Việt</div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="content">
-      <div class="content-wrapper">
-        <p class="eyebrow">Quản lý tài khoản</p>
-        <h1>Hồ sơ trang trại</h1>
-
-        <div class="profile-grid">
-          <!-- CỘT TRÁI: THẺ TÓM TẮT -->
-          <div class="left-cards">
-            <div class="info-card highlight">
-              <div class="card-title" id="cardFarmName">
-                Vườn An <span class="verified-badge">✓ Đã xác minh</span>
-              </div>
-              <div class="card-meta">Nông dân cá thể · Lâm Đồng</div>
-              <div class="card-meta">★ 4,9 · 128 đánh giá</div>
+  <div class="farmer-main">
+    <header class="farmer-header">
+      <div class="farmer-header__inner">
+        <button class="farmer-header__menu-btn" id="menuToggle" aria-label="Mở menu"><span data-icon="menu" data-size="22"></span></button>
+        <h1 class="farmer-header__title">Hồ sơ trang trại</h1>
+        <div class="farmer-header__actions">
+          <div class="dropdown" id="farmerDropdown">
+            <button class="app-header__avatar-btn" type="button" id="farmerAvatarBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar--sm" id="farmerAvatar">N</div>
+              <span class="app-header__username" id="farmerUsername">Trang trại</span>
+              <span data-icon="chevron-down" data-size="16"></span>
+            </button>
+            <div class="dropdown__menu" id="farmerMenu" role="menu">
+              <a class="dropdown__item" href="farm-profile.html"><span data-icon="tractor" data-size="18"></span>Hồ sơ trang trại</a>
+              <button class="dropdown__item" type="button" id="farmerLogout2"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
-            <div class="info-card">
-              <div class="card-title">Chứng nhận chất lượng</div>
-              <div class="card-meta" id="cardCertStatus">
+    <main class="farmer-content">
+      <div class="page-head">
+        <div>
+          <h2 class="page-head__title">Hồ sơ trang trại</h2>
+          <p class="page-head__sub">Thông tin hiển thị công khai với người mua</p>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <!-- Cột trái: thẻ tóm tắt -->
+        <div>
+          <div class="profile-summary-card">
+            <div class="profile-summary-card__name" id="cardFarmName">
+              Vườn An
+              <span class="badge badge--success" style="font-size:11px"><span data-icon="check" data-size="12"></span>Đã xác minh</span>
+            </div>
+            <div class="profile-summary-card__meta">
+              <span><span data-icon="map-pin" data-size="14"></span> Nông dân cá thể · Lâm Đồng</span>
+              <span><span data-icon="star" data-size="14"></span> 4,9 · 128 đánh giá</span>
+              <span id="cardPhone" style="font-family:var(--font-family-mono);font-size:var(--fs-sm)">0901 234 567</span>
+            </div>
+            <div class="profile-summary-card__cert">
+              <div class="profile-summary-card__cert-label">Chứng nhận chất lượng</div>
+              <div class="profile-summary-card__cert-value" id="cardCertStatus">
                 VietGAP · Đã được quản trị xác minh
               </div>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="cert-link"
-                id="cardCertLink"
-                hidden
-              >
-                Xem đường dẫn chứng nhận ↗
+              <a href="#" class="btn btn--ghost btn--sm" id="cardCertLink" style="margin-top:var(--space-2);display:none" target="_blank" rel="noopener">
+                <span data-icon="external-link" data-size="14"></span>Xem chứng nhận
               </a>
             </div>
           </div>
+        </div>
 
-          <!-- CỘT PHẢI: FORM THÔNG TIN -->
-          <div class="card card--form">
-            <form id="farmProfileForm" novalidate>
-              <!-- Thông tin cơ bản -->
-              <div class="field">
-                <label for="farmName">Tên trang trại</label>
-                <input
-                  type="text"
-                  id="farmName"
-                  name="farmName"
-                />
-                <div class="field__error" id="errorFarmName" hidden>Tên trang trại không được để trống.</div>
+        <!-- Cột phải: form -->
+        <div class="profile-form-card">
+          <form id="farmProfileForm" novalidate>
+            <div style="margin-bottom:var(--space-5)">
+              <h3 style="font-size:var(--fs-lg);font-weight:var(--fw-semibold);margin:0 0 var(--space-4)">Thông tin cơ bản</h3>
+
+              <div class="form-field" style="margin-bottom:var(--space-4)">
+                <label class="form-label" for="farmName">Tên trang trại</label>
+                <input class="form-input" type="text" id="farmName" name="farmName" value="Vườn An" maxlength="100" />
+                <p class="form-error" id="errorFarmName" hidden>Tên trang trại không được để trống.</p>
               </div>
 
-              <div class="field">
-                <label for="farmAddress">Địa chỉ vùng trồng</label>
-                <input
-                  type="text"
-                  id="farmAddress"
-                  name="farmAddress"
-                />
-                <div class="field__error" id="errorFarmAddress" hidden>Địa chỉ không được để trống.</div>
+              <div class="form-field" style="margin-bottom:var(--space-4)">
+                <label class="form-label" for="farmAddress">Địa chỉ vùng trồng</label>
+                <input class="form-input" type="text" id="farmAddress" name="farmAddress" value="Thôn 5, Lạc Dương, Lâm Đồng" maxlength="200" />
+                <p class="form-error" id="errorFarmAddress" hidden>Địa chỉ không được để trống.</p>
               </div>
 
-              <div class="field">
-                <label for="farmPhone">Số điện thoại liên hệ</label>
-                <input
-                  type="tel"
-                  id="farmPhone"
-                  name="farmPhone"
-                />
-                <div class="field__error" id="errorFarmPhone" hidden>Số điện thoại không được để trống.</div>
+              <div class="form-field" style="margin-bottom:var(--space-4)">
+                <label class="form-label" for="farmPhone">Số điện thoại liên hệ</label>
+                <input class="form-input" type="tel" id="farmPhone" name="farmPhone" value="0901234567" />
+                <p class="form-error" id="errorFarmPhone" hidden>Số điện thoại không được để trống.</p>
+              </div>
+            </div>
+
+            <hr class="divider" />
+
+            <div style="margin-bottom:var(--space-5)">
+              <h3 style="font-size:var(--fs-lg);font-weight:var(--fw-semibold);margin:0 0 var(--space-4)">Thông tin mở rộng <span style="font-size:var(--fs-sm);font-weight:var(--fw-regular);color:var(--color-text-muted)">(Tùy chọn)</span></h3>
+
+              <div class="form-field" style="margin-bottom:var(--space-4)">
+                <label class="form-label" for="certification">Chứng nhận chất lượng</label>
+                <select class="form-input" id="certification" name="certification">
+                  <option value="">Chọn chứng nhận</option>
+                  <option value="VietGAP" selected>VietGAP</option>
+                  <option value="GlobalGAP">GlobalGAP</option>
+                  <option value="Hữu cơ">Hữu cơ</option>
+                  <option value="Chưa có">Chưa có chứng nhận</option>
+                </select>
               </div>
 
-              <!-- PBI-11: Thông tin mở rộng (Tùy chọn) -->
-              <hr class="divider" />
-              <div class="section-subhead">Thông tin mở rộng (Tùy chọn)</div>
-
-              <div class="field">
-                <label for="certificateUrl">
-                  <span>Đường dẫn tài liệu chứng nhận (URL)</span>
-                  <span class="opt">Không bắt buộc · Tối đa 500 ký tự</span>
+              <div class="form-field" style="margin-bottom:var(--space-4)">
+                <label class="form-label" for="certificateUrl">
+                  Đường dẫn tài liệu chứng nhận (URL)
+                  <span style="font-size:var(--fs-xs);color:var(--color-text-muted);font-weight:var(--fw-regular)"> · Tối đa 500 ký tự</span>
                 </label>
-                <input
-                  type="url"
-                  id="certificateUrl"
-                  name="certificateUrl"
-                  maxlength="500"
-                />
-                <div class="field__hint">
+                <input class="form-input" type="url" id="certificateUrl" name="certificateUrl" maxlength="500" placeholder="https://..." />
+                <p class="form-hint" style="display:flex;justify-content:space-between">
                   <span>Có thể bỏ trống nếu chưa có.</span>
                   <span id="charCount">0/500</span>
-                </div>
-                <div class="field__error" id="errorCertUrl" hidden>Đường dẫn không được vượt quá 500 ký tự.</div>
+                </p>
+                <p class="form-error" id="errorCertUrl" hidden>Đường dẫn không được vượt quá 500 ký tự.</p>
               </div>
+            </div>
 
-              <div class="form-actions">
-                <button type="submit" class="btn btn--primary" id="btnSaveProfile">
-                  Lưu thông tin trang trại
-                </button>
-              </div>
-            </form>
-          </div>
+            <div style="display:flex;gap:var(--space-3);justify-content:flex-end;flex-wrap:wrap">
+              <button type="reset" class="btn btn--ghost">Đặt lại</button>
+              <button type="submit" class="btn btn--primary" id="btnSaveProfile">
+                <span data-icon="save" data-size="16"></span>Lưu thông tin trang trại
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </main>
   </div>
+</div>
 
-  <!-- Toast Thông báo -->
-  <div class="toast" id="toast" hidden></div>
+<!-- Toast -->
+<div id="toast" role="status" aria-live="polite" style="display:none;position:fixed;bottom:var(--space-6);right:var(--space-6);background:var(--color-neutral-900);color:#fff;padding:var(--space-3) var(--space-5);border-radius:var(--radius-lg);font-size:var(--fs-sm);z-index:var(--z-toast);box-shadow:var(--shadow-lg)"></div>
 
-  <script type="module" src="../../js/pages/farm-profile.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof NSV !== 'undefined' && NSV.renderIcons) NSV.renderIcons();
+  var sidebar = document.getElementById('farmerSidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+  if (menuBtn) menuBtn.addEventListener('click', function() { sidebar.classList.add('is-open'); });
+  if (overlay) overlay.addEventListener('click', function() { sidebar.classList.remove('is-open'); });
+  if (typeof NSV !== 'undefined' && NSV.auth) {
+    var user = NSV.auth.getUser();
+    if (user) {
+      var n = user.fullName || user.phone || 'Nông dân';
+      var el = document.getElementById('farmerUsername'); if(el) el.textContent = n;
+      var av = document.getElementById('farmerAvatar'); if(av) av.textContent = n[0].toUpperCase();
+      var fn = document.getElementById('sidebarFarmName'); if(fn) fn.textContent = n;
+    }
+  }
+  var btn = document.getElementById('farmerAvatarBtn');
+  var dd = document.getElementById('farmerDropdown');
+  if (btn && dd) {
+    btn.addEventListener('click', function() { dd.classList.toggle('is-open'); btn.setAttribute('aria-expanded', dd.classList.contains('is-open')); });
+    document.addEventListener('click', function(e) { if(!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); } });
+  }
+  function doLogout() { if(typeof NSV!=='undefined'&&NSV.auth) NSV.auth.logout(); window.location.href='../../pages/auth/login.html'; }
+  var l1 = document.getElementById('farmerLogout'); if(l1) l1.addEventListener('click', doLogout);
+  var l2 = document.getElementById('farmerLogout2'); if(l2) l2.addEventListener('click', doLogout);
+
+  // Char count cho certificate URL
+  var certUrlInp = document.getElementById('certificateUrl');
+  var charCount = document.getElementById('charCount');
+  if (certUrlInp && charCount) {
+    certUrlInp.addEventListener('input', function() { charCount.textContent = certUrlInp.value.length + '/500'; });
+    // Hiện link cert nếu có URL
+    certUrlInp.addEventListener('input', function() {
+      var link = document.getElementById('cardCertLink');
+      if (link) { link.style.display = certUrlInp.value.trim() ? '' : 'none'; link.href = certUrlInp.value.trim(); }
+    });
+  }
+
+  // Live-update card
+  var farmNameInp = document.getElementById('farmName');
+  if (farmNameInp) {
+    farmNameInp.addEventListener('input', function() {
+      var card = document.getElementById('cardFarmName');
+      if (card) { card.firstChild.textContent = farmNameInp.value || 'Vườn An'; }
+    });
+  }
+
+  // Form submit
+  var form = document.getElementById('farmProfileForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var ok = true;
+      ['farmName','farmAddress','farmPhone'].forEach(function(id) {
+        var inp = document.getElementById(id);
+        var err = document.getElementById('error' + id.charAt(0).toUpperCase() + id.slice(1));
+        if (inp && !inp.value.trim()) { if(err) err.hidden = false; inp.classList.add('is-invalid'); ok = false; }
+        else { if(err) err.hidden = true; if(inp) inp.classList.remove('is-invalid'); }
+      });
+      if (!ok) return;
+      var saveBtn = document.getElementById('btnSaveProfile');
+      saveBtn.disabled = true; saveBtn.textContent = 'Đang lưu...';
+      setTimeout(function() {
+        saveBtn.disabled = false; saveBtn.innerHTML = '<span data-icon="save" data-size="16"></span>Lưu thông tin trang trại';
+        if (typeof NSV !== 'undefined' && NSV.renderIcons) NSV.renderIcons();
+        showToast('Đã lưu hồ sơ trang trại thành công!');
+      }, 1000);
+    });
+  }
+});
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(function() { t.style.display = 'none'; }, 3000);
+}
+</script>
 </body>
 </html>

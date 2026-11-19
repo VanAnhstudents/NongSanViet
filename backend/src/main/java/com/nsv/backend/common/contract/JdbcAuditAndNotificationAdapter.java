@@ -15,6 +15,7 @@ public class JdbcAuditAndNotificationAdapter implements AuditAndNotificationPort
     private final InAppNotificationService notificationService;
     private final AuditLogService auditLogService;
     private final JdbcTemplate jdbcTemplate;
+    private final AuditLogService auditLogService;
 
     @Override
     public void sendNotification(Long userId, String content) {

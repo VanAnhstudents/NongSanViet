@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản trị · Sản phẩm - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="admin" data-active="products">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <nav class="admin-nav" id="app-admin-nav"></nav>
+        <main class="content">
+            <div class="eyebrow">QUẢN TRỊ / VẬN HÀNH</div>
+            <h1 class="page-title">Kiểm duyệt sản phẩm</h1>
+
+            <div class="filter-tabs" style="margin-top:10px">
+                <span>Tất cả</span>
+                <span class="active">Bị báo cáo (2)</span>
+                <span>Đã gỡ</span>
+            </div>
+
+            <div class="card-amber">
+                <div class="card-title">Cam vàng hữu cơ</div>
+                <div class="meta-text">Gian hàng: Nông trại Bình Minh<br />Báo cáo: Chứng nhận chưa hợp lệ<br />Người báo cáo: Ẩn thông tin cá nhân</div>
+                <button type="button" class="btn btn-soft btn-sm" style="margin-top:10px" onclick="showToast('Xem chi tiết báo cáo vi phạm')">Xem chi tiết</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Lý do xử lý</label>
+                <input class="input" type="text" value="Chưa cung cấp chứng nhận hợp lệ" />
+            </div>
+
+            <div class="card">
+                <div class="card-title">Thông báo cho người bán</div>
+                <div class="meta-text">Người bán được xem lý do và hướng dẫn bổ sung hồ sơ trước khi đăng lại.</div>
+            </div>
+
+            <button type="button" class="btn btn-danger" style="margin-top:12px" onclick="showToast('Đã gỡ sản phẩm vi phạm khỏi sàn')">Gỡ sản phẩm vi phạm</button>
+            <p class="meta-text" style="margin-top:8px">Cần xác nhận trước khi gỡ sản phẩm.</p>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

@@ -144,7 +144,13 @@ public class FinancialTransactionServiceImpl implements FinancialTransactionServ
             .complaintId(request.complaintId())
             .amount(refundAmount)
             .reason(request.reason().trim())
+<<<<<<< HEAD
             .status(RefundStatus.COMPLETED)
+=======
+            .status("COMPLETED")
+            .createdAt(now)
+            .processedAt(now)
+>>>>>>> origin/develop
             .build();
 
         Refund savedRefund = refundRepository.save(refund);

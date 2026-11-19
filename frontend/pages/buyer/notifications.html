@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông báo — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+</head>
+<body class="app">
+
+  <!-- Header -->
+  <header class="app-header" id="appHeader">
+    <div class="app-header__inner">
+      <a class="app-header__brand" href="home.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" width="32" height="32">
+        Nông Sản Việt
+      </a>
+      <div class="app-header__search">
+        <span class="app-header__search__icon" data-icon="search" data-size="18"></span>
+        <input class="form-field__input" type="search" placeholder="Tìm rau củ, trái cây, trang trại..." aria-label="Tìm kiếm sản phẩm">
+        <button class="app-header__search__btn" type="button">Tìm</button>
+      </div>
+      <div class="app-header__actions">
+        <a class="icon-btn" href="cart.html" aria-label="Giỏ hàng">
+          <span data-icon="shopping-cart" data-size="22"></span>
+          <span class="icon-btn__badge" id="cartBadge" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="notifications.html" aria-label="Thông báo">
+          <span data-icon="bell" data-size="22"></span>
+          <span class="icon-btn__badge" id="notifBadge">3</span>
+        </a>
+        <div class="dropdown" id="userDropdown">
+          <button class="app-header__avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userAvatarBtn">
+            <div class="avatar avatar--sm" id="userAvatar">N</div>
+            <span class="app-header__username" id="usernameText">Tài khoản</span>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </button>
+          <div class="dropdown__menu" id="userMenu" role="menu">
+            <a class="dropdown__item" href="profile.html" role="menuitem"><span data-icon="user" data-size="18"></span>Hồ sơ cá nhân</a>
+            <a class="dropdown__item" href="orders.html" role="menuitem"><span data-icon="package" data-size="18"></span>Đơn hàng của tôi</a>
+            <button class="dropdown__item" type="button" id="logoutBtn" role="menuitem"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category bar -->
+  <nav class="category-bar" aria-label="Danh mục sản phẩm">
+    <div class="category-bar__inner">
+      <a class="category-bar__link" href="search.html?cat=rau-cu"><span data-icon="leaf" data-size="16"></span>Rau củ</a>
+      <a class="category-bar__link" href="search.html?cat=trai-cay"><span data-icon="shopping-bag" data-size="16"></span>Trái cây</a>
+      <a class="category-bar__link" href="search.html?type=preorder"><span data-icon="calendar" data-size="16"></span>Pre-order theo mùa</a>
+      <a class="category-bar__link" href="search.html?type=combo"><span data-icon="package" data-size="16"></span>Combo</a>
+      <a class="category-bar__link" href="search.html?filter=region"><span data-icon="map-pin" data-size="16"></span>Theo khu vực</a>
+    </div>
+  </nav>
+
+  <main class="app__main">
+
+    <!-- Page head + mark all read -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-5);">
+      <div class="page-head" style="margin-bottom:0;">
+        <h1 class="page-head__title">Thông báo</h1>
+      </div>
+      <button class="btn btn--ghost btn--sm" type="button" id="markAllRead">
+        <span data-icon="check-check" data-size="16"></span>
+        Đánh dấu tất cả đã đọc
+      </button>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs" role="tablist" aria-label="Lọc thông báo">
+      <button class="filter-tabs__item is-active" role="tab" aria-selected="true" type="button">Tất cả</button>
+      <button class="filter-tabs__item" role="tab" aria-selected="false" type="button">Chưa đọc <span class="badge badge--danger" style="margin-left:4px;font-size:11px;padding:0 6px;min-height:0;">3</span></button>
+    </div>
+
+    <!-- Notification list -->
+    <div id="notifList" aria-live="polite">
+
+      <!-- Unread: Đơn hàng đang giao -->
+      <div class="notif-item notif-item--unread">
+        <div class="notif-item__icon">
+          <span data-icon="truck" data-size="24"></span>
+        </div>
+        <div class="notif-item__body">
+          <div class="notif-item__title">Đơn hàng đang được giao</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:var(--space-1);">Đơn #ORD-20250605-008 đã được bàn giao cho GHN. Dự kiến giao ngày 07/06/2025.</div>
+          <div class="notif-item__time">10 phút trước</div>
+        </div>
+        <a href="order-tracking.html" class="btn btn--ghost btn--sm" style="flex-shrink:0;white-space:nowrap;">Theo dõi</a>
+      </div>
+
+      <!-- Unread: Nông dân xác nhận -->
+      <div class="notif-item notif-item--unread">
+        <div class="notif-item__icon">
+          <span data-icon="check-circle" data-size="24"></span>
+        </div>
+        <div class="notif-item__body">
+          <div class="notif-item__title">Nông dân đã xác nhận đơn hàng</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:var(--space-1);">Vườn Tiền Giang đã xác nhận đơn #ORD-20250612-001 và đang chuẩn bị hàng.</div>
+          <div class="notif-item__time">2 giờ trước</div>
+        </div>
+        <a href="order-detail.html" class="btn btn--ghost btn--sm" style="flex-shrink:0;white-space:nowrap;">Xem</a>
+      </div>
+
+      <!-- Unread: Pre-order sắp mở -->
+      <div class="notif-item notif-item--unread">
+        <div class="notif-item__icon">
+          <span data-icon="calendar" data-size="24"></span>
+        </div>
+        <div class="notif-item__body">
+          <div class="notif-item__title">Pre-order dâu tây Mộc Châu sắp mở</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:var(--space-1);">Mùa dâu tây Mộc Châu 2025 sẽ mở đặt trước từ ngày 20/06. Số lượng có hạn!</div>
+          <div class="notif-item__time">Hôm qua · 15:30</div>
+        </div>
+        <a href="product-detail.html" class="btn btn--ghost btn--sm" style="flex-shrink:0;white-space:nowrap;">Xem</a>
+      </div>
+
+      <!-- Read: Đánh giá nhắc nhở -->
+      <div class="notif-item">
+        <div class="notif-item__icon" style="color:var(--color-secondary-500);">
+          <span data-icon="star" data-size="24"></span>
+        </div>
+        <div class="notif-item__body">
+          <div class="notif-item__title">Nhớ đánh giá sản phẩm đã mua</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:var(--space-1);">Bạn chưa đánh giá Khoai lang mật Đà Lạt từ đơn #ORD-20250528-003. Chia sẻ trải nghiệm để giúp cộng đồng nhé!</div>
+          <div class="notif-item__time">28/05/2025</div>
+        </div>
+        <a href="review.html" class="btn btn--ghost btn--sm" style="flex-shrink:0;white-space:nowrap;">Đánh giá</a>
+      </div>
+
+      <!-- Read: Khuyến mãi -->
+      <div class="notif-item">
+        <div class="notif-item__icon" style="color:var(--color-warning-text);">
+          <span data-icon="tag" data-size="24"></span>
+        </div>
+        <div class="notif-item__body">
+          <div class="notif-item__title">Ưu đãi mùa hè — Giảm 15% trái cây</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:var(--space-1);">Từ 01/06 đến 30/06, tất cả sản phẩm danh mục Trái cây giảm 15%. Áp dụng tự động khi thanh toán.</div>
+          <div class="notif-item__time">01/06/2025</div>
+        </div>
+        <a href="search.html?cat=trai-cay" class="btn btn--ghost btn--sm" style="flex-shrink:0;white-space:nowrap;">Xem</a>
+      </div>
+
+      <!-- Read: Hệ thống -->
+      <div class="notif-item">
+        <div class="notif-item__icon" style="color:var(--color-info-text);">
+          <span data-icon="info" data-size="24"></span>
+        </div>
+        <div class="notif-item__body">
+          <div class="notif-item__title">Cập nhật chính sách hoàn tiền</div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-body);margin-top:var(--space-1);">Từ 01/06/2025, chính sách hoàn tiền được cập nhật. Thời hạn khiếu nại kéo dài lên 7 ngày kể từ khi nhận hàng.</div>
+          <div class="notif-item__time">01/06/2025</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Điều hướng chính">
+    <a class="bottom-nav__item" href="home.html" aria-label="Trang chủ">
+      <span class="bottom-nav__item__icon" data-icon="home" data-size="22"></span>
+      <span class="bottom-nav__item__label">Trang chủ</span>
+    </a>
+    <a class="bottom-nav__item" href="search.html" aria-label="Tìm kiếm">
+      <span class="bottom-nav__item__icon" data-icon="search" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tìm kiếm</span>
+    </a>
+    <a class="bottom-nav__item" href="cart.html" aria-label="Giỏ hàng">
+      <span class="bottom-nav__item__icon">
+        <span data-icon="shopping-cart" data-size="22"></span>
+        <span class="bottom-nav__item__badge" id="bottomCartBadge" hidden>0</span>
+      </span>
+      <span class="bottom-nav__item__label">Giỏ hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="orders.html" aria-label="Đơn hàng">
+      <span class="bottom-nav__item__icon" data-icon="package" data-size="22"></span>
+      <span class="bottom-nav__item__label">Đơn hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="profile.html" aria-label="Tôi">
+      <span class="bottom-nav__item__icon" data-icon="user" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tôi</span>
+    </a>
+  </nav>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    NSV.renderIcons();
+    var btn = document.getElementById('userAvatarBtn');
+    var dd = document.getElementById('userDropdown');
+    if (btn && dd) {
+      btn.addEventListener('click', function() {
+        dd.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    }
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    window.addEventListener('scroll', function() {
+      var h = document.getElementById('appHeader');
+      if (h) h.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+    var user = NSV.auth.getUser();
+    if (user) {
+      var uname = document.getElementById('usernameText');
+      var uavatar = document.getElementById('userAvatar');
+      if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
+      if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+    }
+
+    // Filter tabs
+    document.querySelectorAll('.filter-tabs__item').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tabs__item').forEach(function(t) {
+          t.classList.remove('is-active'); t.setAttribute('aria-selected','false');
+        });
+        this.classList.add('is-active'); this.setAttribute('aria-selected','true');
+        var showUnread = this.textContent.includes('Chưa đọc');
+        document.querySelectorAll('.notif-item').forEach(function(item) {
+          item.style.display = (showUnread && !item.classList.contains('notif-item--unread')) ? 'none' : '';
+        });
+      });
+    });
+
+    // Mark all read
+    document.getElementById('markAllRead').addEventListener('click', function() {
+      document.querySelectorAll('.notif-item--unread').forEach(function(item) {
+        item.classList.remove('notif-item--unread');
+      });
+      var badge = document.getElementById('notifBadge');
+      if (badge) { badge.hidden = true; badge.textContent = '0'; }
+    });
+  });
+  </script>
+</body>
+</html>
