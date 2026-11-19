@@ -52,6 +52,9 @@ public class Complaint {
     @Builder.Default
     private BigDecimal refundAmount = BigDecimal.ZERO;
 
+    @Column(name = "sla_deadline_at")
+    private OffsetDateTime slaDeadlineAt;
+
     @Column(name = "resolved_by")
     private Long resolvedBy;
 

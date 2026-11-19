@@ -18,9 +18,15 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
     @EntityGraph(attributePaths = "evidences")
     Optional<Complaint> findWithEvidencesById(Long id);
 
+    @EntityGraph(attributePaths = "evidences")
+    Optional<Complaint> findWithEvidencesByOrderId(Long orderId);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT c FROM Complaint c WHERE c.id = :id")
     Optional<Complaint> findByIdForUpdate(@Param("id") Long id);
+
+    @EntityGraph(attributePaths = "evidences")
+    List<Complaint> findAllByBuyerIdOrderByCreatedAtDesc(Long buyerId);
 
     @EntityGraph(attributePaths = "evidences")
     List<Complaint> findAllByOrderByCreatedAtDesc();
