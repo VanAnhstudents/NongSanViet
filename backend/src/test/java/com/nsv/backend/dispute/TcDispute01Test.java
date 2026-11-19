@@ -110,9 +110,9 @@ class TcDispute01Test {
         DisputeDetailResponse response = disputeService.resolveDisputeByAdmin(ADMIN_ID, COMPLAINT_ID,
                 new ResolveDisputeRequest("REJECT_COMPLAINT", "Bằng chứng không đủ, giữ nguyên thanh toán", null));
 
-        assertEquals("RESOLVED_REJECTED", response.complaintStatus());
+        assertEquals("RESOLVED_REJECTED", response.status());
         assertEquals("REJECT_COMPLAINT", response.adminDecision());
-        assertEquals(0, response.refundAmount().compareTo(BigDecimal.ZERO));
+        assertEquals(0, response.refundedAmount().compareTo(BigDecimal.ZERO));
         assertEquals("COMPLETED", response.orderStatus());
         assertEquals(1, response.evidences().size());
         assertEquals("IMAGE", response.evidences().get(0).mediaType());
@@ -159,9 +159,9 @@ class TcDispute01Test {
         DisputeDetailResponse response = disputeService.resolveDisputeByAdmin(ADMIN_ID, COMPLAINT_ID,
                 new ResolveDisputeRequest("FULL_REFUND", "Chấp nhận hoàn tiền do lỗi của người bán", null));
 
-        assertEquals("RESOLVED_REFUND", response.complaintStatus());
+        assertEquals("RESOLVED_REFUND", response.status());
         assertEquals("FULL_REFUND", response.adminDecision());
-        assertEquals(0, response.refundAmount().compareTo(new BigDecimal("100000.00")));
+        assertEquals(0, response.refundedAmount().compareTo(new BigDecimal("100000.00")));
         assertEquals("CANCELLED", response.orderStatus());
         verify(financialTransactionService, times(1)).processRefund(eq(ADMIN_ID), any(ProcessRefundRequest.class));
     }

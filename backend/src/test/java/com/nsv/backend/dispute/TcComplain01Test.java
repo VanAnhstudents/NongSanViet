@@ -90,7 +90,8 @@ class TcComplain01Test {
     @Test
     @DisplayName("TC-COMPLAIN-01 (1a): Buyer gửi khiếu nại kèm 1 ảnh cho đơn Đã giao -> tạo thành công, lưu bằng chứng")
     void createComplaint_deliveredOrderWithEvidence_succeeds() {
-        when(orderRepository.findWithDetailsById(ORDER_ID)).thenReturn(Optional.of(order("DELIVERED", null)));
+        OffsetDateTime deliveredAt = OffsetDateTime.now().minusHours(2);
+        when(orderRepository.findWithDetailsById(ORDER_ID)).thenReturn(Optional.of(order("DELIVERED", deliveredAt)));
         when(complaintRepository.existsByOrderId(ORDER_ID)).thenReturn(false);
         when(complaintRepository.save(any(Complaint.class))).thenAnswer(inv -> {
             Complaint c = inv.getArgument(0);
@@ -101,9 +102,9 @@ class TcComplain01Test {
 
         DisputeDetailResponse response = disputeService.createComplaint(BUYER_ID, ORDER_ID, oneEvidenceRequest());
 
-        assertEquals(301L, response.complaintId());
+        assertEquals(301L, response.id());
         assertEquals(ORDER_ID, response.orderId());
-        assertEquals("OPEN", response.complaintStatus());
+        assertEquals("OPEN", response.status());
         assertEquals(1, response.evidences().size());
         assertEquals("IMAGE", response.evidences().get(0).mediaType());
         assertEquals("BUYER", response.evidences().get(0).uploaderRole());
@@ -140,7 +141,8 @@ class TcComplain01Test {
     @Test
     @DisplayName("TC-COMPLAIN-01 (1d): Đơn đã có khiếu nại -> từ chối trùng lặp (409)")
     void createComplaint_duplicateComplaint_rejected() {
-        when(orderRepository.findWithDetailsById(ORDER_ID)).thenReturn(Optional.of(order("DELIVERED", null)));
+        OffsetDateTime deliveredAt = OffsetDateTime.now().minusHours(2);
+        when(orderRepository.findWithDetailsById(ORDER_ID)).thenReturn(Optional.of(order("DELIVERED", deliveredAt)));
         when(complaintRepository.existsByOrderId(ORDER_ID)).thenReturn(true);
 
         BusinessException ex = assertThrows(BusinessException.class,
@@ -152,22 +154,14 @@ class TcComplain01Test {
     }
 
     @Test
-    @DisplayName("TC-COMPLAIN-01 (2): Khiếu nại gửi sau 24h kể từ 'Đã giao' -> bị từ chối (chưa hiện thực -> FAIL)")
+    @DisplayName("TC-COMPLAIN-01 (2): Khiếu nại gửi sau 24h kể từ 'Đã giao' -> bị từ chối")
     void createComplaint_after24hWindow_rejected() {
         OffsetDateTime delivered25hAgo = OffsetDateTime.now().minusHours(25);
         when(orderRepository.findWithDetailsById(ORDER_ID)).thenReturn(Optional.of(order("DELIVERED", delivered25hAgo)));
-        when(complaintRepository.existsByOrderId(ORDER_ID)).thenReturn(false);
-        when(complaintRepository.save(any(Complaint.class))).thenAnswer(inv -> {
-            Complaint c = inv.getArgument(0);
-            c.setId(302L);
-            return c;
-        });
-        when(orderRepository.findDistinctFarmerIdsByOrderId(ORDER_ID)).thenReturn(List.of(10L));
 
         BusinessException ex = assertThrows(BusinessException.class,
                 () -> disputeService.createComplaint(BUYER_ID, ORDER_ID, oneEvidenceRequest()));
 
-        // Hệ thống phải từ chối khiếu nại quá hạn 24h với mã rõ ràng.
-        assertEquals("COMPLAINT_WINDOW_EXPIRED", ex.getCode());
+        assertEquals("COMPLAINT_SLA_EXPIRED", ex.getCode());
     }
 }

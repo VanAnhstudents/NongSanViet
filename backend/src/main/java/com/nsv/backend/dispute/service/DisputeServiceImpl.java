@@ -71,7 +71,7 @@ public class DisputeServiceImpl implements DisputeService {
     private Clock clock = Clock.systemDefaultZone();
 
     // Cho phép unit test tiêm Clock cố định để kiểm thử chính xác mốc biên 24h
-    void setClock(Clock clock) {
+    public void setClock(Clock clock) {
         this.clock = Objects.requireNonNull(clock);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
+public interface AdminAuditLogRepository extends JpaRepository<AuditLog, Long> {
 
     boolean existsByActionAndEntityTypeAndEntityId(String action, String entityType, Long entityId);
 
