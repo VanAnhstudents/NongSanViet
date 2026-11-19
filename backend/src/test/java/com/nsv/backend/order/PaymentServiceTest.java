@@ -23,6 +23,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,6 +79,14 @@ class PaymentServiceTest {
                 .amount(new BigDecimal("170000.00")).status("PENDING")
                 .createdAt(OffsetDateTime.ofInstant(Instant.parse("2026-11-17T03:00:00Z"),
                         ZoneId.of("Asia/Ho_Chi_Minh"))).build();
+        return Payment.builder()
+                .id(1L)
+                .orderId(ORDER_ID)
+                .paymentType("FULL")
+                .amount(new BigDecimal("170000.00"))
+                .status("PENDING")
+                .createdAt(OffsetDateTime.ofInstant(Instant.parse("2026-11-17T03:00:00Z"), ZoneOffset.UTC))
+                .build();
     }
 
     @Test
