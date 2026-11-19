@@ -1,11 +1,622 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=auth/login.html" />
-    <title>Nông Sản Việt</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nông Sản Việt — Tươi từ vườn, giao đến bàn</title>
+  <meta name="description" content="Mua bán nông sản trực tiếp từ nông dân Việt Nam. Rau củ trái cây tươi sạch, truy xuất nguồn gốc minh bạch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/index.css" />
 </head>
-<body>
-    <script>window.location.href = "pages/auth/login.html";</script>
+<body class="home-page">
+
+  <!-- ========================================================
+       HEADER
+       ======================================================== -->
+  <header class="home-header" id="homeHeader">
+    <div class="home-header__inner">
+
+      <!-- Brand -->
+      <a class="home-header__brand" href="index.html">
+        <img src="assets/images/logocnpm 1.png" alt="Logo Nông Sản Việt" width="32" height="32" />
+        Nông Sản Việt
+      </a>
+
+      <!-- Search bar (ẩn trên mobile, JS bật lại ở ≥480px) -->
+      <div class="home-header__search" id="headerSearch" style="display:none" role="search" aria-label="Tìm kiếm sản phẩm">
+        <input type="search" id="headerSearchInput" placeholder="Tìm rau củ, trái cây…" aria-label="Từ khóa tìm kiếm" />
+        <button class="search-submit" type="button" id="headerSearchBtn">Tìm</button>
+      </div>
+
+      <!-- Desktop nav (ẩn trên mobile, CSS bật lại ở ≥768px) -->
+      <nav class="home-header__nav" aria-label="Điều hướng chính">
+        <a href="pages/buyer/home.html">Người mua</a>
+        <a href="pages/farmer/dashboard.html">Nhà vườn</a>
+        <a href="pages/admin/dashboard.html">Quản trị</a>
+        <a class="btn-login" href="pages/auth/login.html" id="headerLoginBtn">Đăng nhập</a>
+      </nav>
+
+      <!-- Hamburger (chỉ hiển thị trên mobile) -->
+      <button class="home-header__menu-toggle" id="mobileMenuToggle"
+              aria-label="Mở menu điều hướng" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile drawer nav -->
+    <nav class="home-mobile-nav" id="mobileNav" aria-label="Menu di động">
+      <a href="pages/auth/login.html" class="mobile-nav-login">Đăng nhập / Đăng ký</a>
+      <hr />
+      <a href="pages/buyer/home.html">Người mua</a>
+      <a href="pages/farmer/dashboard.html">Nhà vườn</a>
+      <a href="pages/admin/dashboard.html">Quản trị viên</a>
+      <hr />
+      <a href="pages/buyer/search.html?cat=rau-cu">Rau củ</a>
+      <a href="pages/buyer/search.html?cat=trai-cay">Trái cây</a>
+      <a href="pages/buyer/search.html?type=preorder">Pre-order theo mùa</a>
+    </nav>
+  </header>
+
+  <!-- ========================================================
+       HERO
+       ======================================================== -->
+  <section class="home-hero" aria-label="Giới thiệu">
+    <div class="home-hero__inner">
+
+      <!-- Left: content -->
+      <div class="home-hero__content">
+        <span class="home-hero__eyebrow">Nền tảng nông sản Việt Nam</span>
+        <h1 class="home-hero__title">Tươi từ vườn &mdash; <em>giao đến bạn</em></h1>
+        <p class="home-hero__desc">Đặt mua trực tiếp từ nông dân. Rau củ, trái cây tươi sạch, truy xuất nguồn gốc minh bạch từng lô hàng.</p>
+
+        <!-- CTA row -->
+        <div class="home-hero__cta-row">
+          <a class="home-hero__cta-primary" href="pages/buyer/home.html">Mua ngay</a>
+          <a class="home-hero__cta-secondary" href="pages/auth/register.html">Đăng ký miễn phí</a>
+        </div>
+
+        <!-- Quick category chips -->
+        <div class="home-hero__chips">
+          <span class="home-hero__chips-label">Khám phá:</span>
+          <a class="home-hero__chip" href="pages/buyer/search.html?cat=rau-cu">Rau củ</a>
+          <a class="home-hero__chip" href="pages/buyer/search.html?cat=trai-cay">Trái cây</a>
+          <a class="home-hero__chip" href="pages/buyer/search.html?type=preorder">Pre-order</a>
+          <a class="home-hero__chip" href="pages/buyer/search.html?type=combo">Combo</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="home-hero__stats">
+          <div class="home-hero__stat">
+            <span class="home-hero__stat-num">1.200+</span>
+            <span class="home-hero__stat-label">Nhà vườn</span>
+          </div>
+          <div class="home-hero__stat">
+            <span class="home-hero__stat-num">8.500+</span>
+            <span class="home-hero__stat-label">Sản phẩm</span>
+          </div>
+          <div class="home-hero__stat">
+            <span class="home-hero__stat-num">63</span>
+            <span class="home-hero__stat-label">Tỉnh thành</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: visual collage (desktop only) -->
+      <div class="home-hero__visual" aria-hidden="true">
+        <div class="home-hero__visual-card">
+          <img src="https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=640&h=320&fit=crop&auto=format&q=80"
+               alt="" loading="lazy"
+               onerror="this.style.display='none'" />
+          <span class="home-hero__visual-card-label">Rau Đà Lạt</span>
+        </div>
+        <div class="home-hero__visual-card">
+          <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=320&h=320&fit=crop&auto=format&q=80"
+               alt="" loading="lazy"
+               onerror="this.style.display='none'" />
+          <span class="home-hero__visual-card-label">Xoài Tiền Giang</span>
+        </div>
+        <div class="home-hero__visual-card">
+          <img src="https://images.unsplash.com/photo-1534940519139-f860fb3c6e38?w=320&h=320&fit=crop&auto=format&q=80"
+               alt="" loading="lazy"
+               onerror="this.style.display='none'" />
+          <span class="home-hero__visual-card-label">Sầu riêng Bến Tre</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       FEATURED PRODUCTS  (ưu tiên lên trước vai trò)
+       ======================================================== -->
+  <section class="home-products" aria-labelledby="productsTitle">
+    <div class="home-products__inner">
+
+      <div class="section-header">
+        <span class="section-header__eyebrow">Nổi bật hôm nay</span>
+        <h2 class="section-header__title" id="productsTitle">Sản phẩm nổi bật</h2>
+      </div>
+
+      <!-- Filter bar: ô tìm kiếm + chip danh mục -->
+      <div class="home-filter-bar">
+        <div class="home-filter-bar__search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="productSearch" placeholder="Tìm sản phẩm…" aria-label="Lọc sản phẩm theo tên" />
+        </div>
+        <div class="home-filter-chips" id="filterChips" role="group" aria-label="Lọc theo danh mục">
+          <button class="filter-chip is-active" data-cat="all"      type="button">Tất cả</button>
+          <button class="filter-chip"           data-cat="rau-cu"   type="button">Rau củ</button>
+          <button class="filter-chip"           data-cat="trai-cay" type="button">Trái cây</button>
+          <button class="filter-chip"           data-cat="preorder" type="button">Pre-order</button>
+        </div>
+      </div>
+
+      <!-- Product grid -->
+      <div class="home-product-grid" id="productGrid">
+
+        <article class="home-product-card" data-cat="rau-cu" data-name="cải thảo đà lạt">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Cải thảo Đà Lạt" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--success">Hữu cơ</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Cải thảo Đà Lạt</p>
+            <span class="home-product-card__farm">Trang trại Xanh Lâm Đồng</span>
+            <span class="home-product-card__rating">4.8 — 32 đánh giá</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">25.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Thêm cải thảo vào giỏ">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="trai-cay" data-name="xoài cát hòa lộc">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Xoài cát Hòa Lộc" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--seasonal">Mùa vụ</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Xoài cát Hòa Lộc</p>
+            <span class="home-product-card__farm">Vườn Tiền Giang</span>
+            <span class="home-product-card__rating">4.9 — 87 đánh giá</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">65.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Thêm xoài vào giỏ">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="rau-cu" data-name="khoai lang mật đà lạt">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1518977822534-7049a61ee0c2?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Khoai lang mật Đà Lạt" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--info">Combo</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Khoai lang mật Đà Lạt</p>
+            <span class="home-product-card__farm">HTX Nông nghiệp Lâm Đồng</span>
+            <span class="home-product-card__rating">4.7 — 54 đánh giá</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">30.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Thêm khoai vào giỏ">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="trai-cay" data-name="thanh long ruột đỏ bình thuận">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1598635675205-7a9d87a37f41?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Thanh long ruột đỏ" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--seasonal">Pre-order</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Thanh long ruột đỏ Bình Thuận</p>
+            <span class="home-product-card__farm">Vườn Bình Thuận</span>
+            <span class="home-product-card__rating">4.6 — 41 đánh giá</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">45.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Thêm thanh long vào giỏ">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="preorder" data-name="dâu tây mộc châu">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Dâu tây Mộc Châu" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--seasonal">Pre-order</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Dâu tây Mộc Châu</p>
+            <span class="home-product-card__farm">Vườn Sơn La</span>
+            <span class="home-product-card__rating">Giao tháng 11/2025</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">120.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Đặt trước dâu tây">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="preorder" data-name="sầu riêng ri6 cái mơn">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1534940519139-f860fb3c6e38?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Sầu riêng Ri6" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--seasonal">Pre-order</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Sầu riêng Ri6 Cái Mơn</p>
+            <span class="home-product-card__farm">Vườn Bến Tre</span>
+            <span class="home-product-card__rating">Giao tháng 7/2025</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">180.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Đặt trước sầu riêng">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="rau-cu" data-name="cà chua bi đà lạt">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1546094096-0df4bcaad337?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Cà chua bi Đà Lạt" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--success">Sạch GAP</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Cà chua bi Đà Lạt</p>
+            <span class="home-product-card__farm">Nông trại An Phú</span>
+            <span class="home-product-card__rating">4.8 — 19 đánh giá</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">35.000<span class="unit">/kg</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Thêm cà chua vào giỏ">+</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="home-product-card" data-cat="trai-cay" data-name="bưởi da xanh bến tre">
+          <div class="home-product-card__media">
+            <img src="https://images.unsplash.com/photo-1575853121743-60c24f0a7502?w=400&h=300&fit=crop&auto=format&q=80"
+                 alt="Bưởi da xanh Bến Tre" loading="lazy" onerror="this.style.display='none'" />
+            <span class="home-product-card__badge badge badge--success">VietGAP</span>
+          </div>
+          <div class="home-product-card__body">
+            <p class="home-product-card__name">Bưởi da xanh Bến Tre</p>
+            <span class="home-product-card__farm">HTX Bưởi Bến Tre</span>
+            <span class="home-product-card__rating">4.9 — 63 đánh giá</span>
+            <div class="home-product-card__footer">
+              <span class="home-product-card__price">55.000<span class="unit">/quả</span></span>
+              <a class="home-product-card__cta" href="pages/auth/login.html" aria-label="Thêm bưởi vào giỏ">+</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- No results placeholder -->
+        <div class="home-no-results" id="noResults" hidden>
+          <p>Không tìm thấy sản phẩm phù hợp.</p>
+        </div>
+
+      </div><!-- /productGrid -->
+
+      <div class="home-products__viewall">
+        <a class="btn btn--secondary" href="pages/buyer/search.html">Xem tất cả sản phẩm</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       ROLE ENTRY CARDS  (xuống sau sản phẩm)
+       ======================================================== -->
+  <section class="home-roles" aria-labelledby="rolesTitle">
+    <div class="home-roles__inner">
+
+      <div class="section-header section-header--center">
+        <span class="section-header__eyebrow">Nền tảng đa vai trò</span>
+        <h2 class="section-header__title" id="rolesTitle">Bạn là ai?</h2>
+        <p class="section-header__desc">Chọn đúng lối vào để trải nghiệm phù hợp nhất.</p>
+      </div>
+
+      <div class="home-role-cards">
+
+        <!-- Người mua -->
+        <a class="role-card role-card--buyer" href="pages/buyer/home.html">
+          <div class="role-card__icon">
+            <!-- cart icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </div>
+          <div>
+            <p class="role-card__title">Người mua</p>
+            <p class="role-card__desc">Tìm kiếm, đặt hàng và theo dõi đơn trực tiếp từ nhà vườn trên khắp Việt Nam.</p>
+          </div>
+          <span class="role-card__link">Vào mua sắm &rarr;</span>
+        </a>
+
+        <!-- Nhà vườn -->
+        <a class="role-card role-card--farmer" href="pages/farmer/dashboard.html">
+          <div class="role-card__icon">
+            <!-- leaf icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </svg>
+          </div>
+          <div>
+            <p class="role-card__title">Nhà vườn</p>
+            <p class="role-card__desc">Đăng bán nông sản, quản lý đơn hàng và doanh thu, kết nối hàng nghìn người mua.</p>
+          </div>
+          <span class="role-card__link">Vào quản lý &rarr;</span>
+        </a>
+
+        <!-- Quản trị -->
+        <a class="role-card role-card--admin" href="pages/admin/dashboard.html">
+          <div class="role-card__icon">
+            <!-- settings icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33
+                       1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33
+                       l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4
+                       h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06
+                       A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51
+                       1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9
+                       a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="role-card__title">Quản trị viên</p>
+            <p class="role-card__desc">Duyệt tài khoản, giám sát giao dịch và xử lý tranh chấp trên toàn hệ thống.</p>
+          </div>
+          <span class="role-card__link">Vào quản trị &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       CTA BANNER
+       ======================================================== -->
+  <section class="home-cta" aria-labelledby="ctaTitle">
+    <div class="home-cta__inner">
+      <h2 class="home-cta__title" id="ctaTitle">Sẵn sàng mua sắm<br>nông sản sạch hơn?</h2>
+      <p class="home-cta__desc">Đăng ký miễn phí, duyệt ngay hàng nghìn sản phẩm nông sản tươi từ khắp Việt Nam.</p>
+      <div class="home-cta__actions">
+        <a class="btn btn--primary btn--lg" href="pages/auth/register.html">Đăng ký ngay</a>
+        <a class="btn btn--secondary btn--lg" href="pages/auth/login.html">Đăng nhập</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       TRUST STRIP — xuống cuối, trước footer
+       ======================================================== -->
+  <section class="home-features" aria-label="Điểm nổi bật của nền tảng">
+    <div class="home-features__inner">
+
+      <div class="home-feature-item">
+        <div class="home-feature-item__icon">
+          <!-- search/qr icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+        </div>
+        <p class="home-feature-item__title">Truy xuất nguồn gốc</p>
+        <p class="home-feature-item__desc">QR code từng lô, minh bạch từ vườn đến bàn ăn.</p>
+      </div>
+
+      <div class="home-feature-item">
+        <div class="home-feature-item__icon">
+          <!-- leaf icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+        </div>
+        <p class="home-feature-item__title">Tươi &amp; sạch</p>
+        <p class="home-feature-item__desc">Liên kết trực tiếp nông dân, không qua trung gian.</p>
+      </div>
+
+      <div class="home-feature-item">
+        <div class="home-feature-item__icon">
+          <!-- package icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16.5 9.4 7.55 4.24"/>
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <p class="home-feature-item__title">Giao hàng tận nơi</p>
+        <p class="home-feature-item__desc">Đặt hôm nay, nhận ngay hoặc pre-order theo mùa vụ.</p>
+      </div>
+
+      <div class="home-feature-item">
+        <div class="home-feature-item__icon">
+          <!-- shield icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <p class="home-feature-item__title">Thanh toán an toàn</p>
+        <p class="home-feature-item__desc">Ký quỹ bảo vệ người mua, hoàn tiền nhanh chóng.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer class="home-footer">
+    <div class="home-footer__inner">
+
+      <div>
+        <a class="home-footer__brand" href="index.html">
+          <img src="assets/images/logocnpm 1.png" alt="Logo" width="28" height="28" />
+          Nông Sản Việt
+        </a>
+        <p class="home-footer__tagline">Kết nối nông dân và người tiêu dùng Việt Nam.<br>Minh bạch, tươi sạch, tin cậy.</p>
+      </div>
+
+      <div class="home-footer__col">
+        <h4>Mua sắm</h4>
+        <ul>
+          <li><a href="pages/buyer/search.html?cat=rau-cu">Rau củ</a></li>
+          <li><a href="pages/buyer/search.html?cat=trai-cay">Trái cây</a></li>
+          <li><a href="pages/buyer/search.html?type=preorder">Pre-order theo mùa</a></li>
+          <li><a href="pages/buyer/search.html?type=combo">Combo</a></li>
+          <li><a href="pages/buyer/search.html?filter=region">Theo khu vực</a></li>
+        </ul>
+      </div>
+
+      <div class="home-footer__col">
+        <h4>Nhà vườn</h4>
+        <ul>
+          <li><a href="pages/farmer/dashboard.html">Dashboard</a></li>
+          <li><a href="pages/farmer/products.html">Quản lý sản phẩm</a></li>
+          <li><a href="pages/farmer/orders.html">Đơn hàng</a></li>
+          <li><a href="pages/farmer/revenue.html">Doanh thu</a></li>
+        </ul>
+      </div>
+
+      <div class="home-footer__col">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="pages/auth/login.html">Đăng nhập</a></li>
+          <li><a href="pages/auth/register.html">Đăng ký</a></li>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="home-footer__bottom">
+      <span>&copy; 2026 Nông Sản Việt. Bảo lưu mọi quyền.</span>
+      <span>Phát triển bởi Nông Sản Việt</span>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       SCRIPTS
+       ======================================================== -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* --- Sticky header shadow --- */
+    var header = document.getElementById('homeHeader');
+    window.addEventListener('scroll', function () {
+      if (header) header.classList.toggle('is-scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    /* --- Header search bar: hiện khi viewport >= 480px --- */
+    var headerSearch = document.getElementById('headerSearch');
+    function syncHeaderSearch() {
+      if (headerSearch) headerSearch.style.display = window.innerWidth >= 480 ? 'grid' : 'none';
+    }
+    syncHeaderSearch();
+    window.addEventListener('resize', syncHeaderSearch);
+
+    /* --- Mobile hamburger toggle --- */
+    var toggle    = document.getElementById('mobileMenuToggle');
+    var mobileNav = document.getElementById('mobileNav');
+    if (toggle && mobileNav) {
+      toggle.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      /* Đóng menu khi click ngoài */
+      document.addEventListener('click', function (e) {
+        if (!header.contains(e.target)) {
+          mobileNav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    /* --- Search redirect (header) --- */
+    function doSearch(value) {
+      var q = (value || '').trim();
+      if (q) window.location.href = 'pages/buyer/search.html?q=' + encodeURIComponent(q);
+    }
+    var hdrInp = document.getElementById('headerSearchInput');
+    var hdrBtn = document.getElementById('headerSearchBtn');
+    if (hdrBtn) hdrBtn.addEventListener('click', function () { doSearch(hdrInp && hdrInp.value); });
+    if (hdrInp) hdrInp.addEventListener('keydown', function (e) { if (e.key === 'Enter') doSearch(hdrInp.value); });
+
+    /* --- Product filter: chip + text --- */
+    var chips       = document.querySelectorAll('.filter-chip');
+    var searchInput = document.getElementById('productSearch');
+    var cards       = document.querySelectorAll('.home-product-card');
+    var noResults   = document.getElementById('noResults');
+    var activeCat   = 'all';
+
+    function applyFilter() {
+      var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      var visible = 0;
+      cards.forEach(function (card) {
+        var catOk  = activeCat === 'all' || card.dataset.cat === activeCat;
+        var nameOk = !query || (card.dataset.name || '').indexOf(query) !== -1;
+        var show   = catOk && nameOk;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (noResults) noResults.hidden = visible > 0;
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.classList.remove('is-active'); });
+        chip.classList.add('is-active');
+        activeCat = chip.dataset.cat;
+        applyFilter();
+      });
+    });
+    if (searchInput) searchInput.addEventListener('input', applyFilter);
+
+    /* --- Auth state: đổi nút header nếu đã đăng nhập --- */
+    try {
+      var token = localStorage.getItem('nsv_token');
+      var user  = token ? JSON.parse(localStorage.getItem('nsv_user') || 'null') : null;
+      if (user) {
+        var loginBtn = document.getElementById('headerLoginBtn');
+        if (loginBtn) {
+          loginBtn.textContent = user.fullName || user.phone || 'Tài khoản';
+          var role = localStorage.getItem('nsv_role') || '';
+          if (role === 'FARMER')     loginBtn.href = 'pages/farmer/dashboard.html';
+          else if (role === 'ADMIN') loginBtn.href = 'pages/admin/dashboard.html';
+          else                       loginBtn.href = 'pages/buyer/home.html';
+        }
+      }
+    } catch (e) { /* bỏ qua lỗi parse */ }
+
+  })();
+  </script>
+
 </body>
 </html>
