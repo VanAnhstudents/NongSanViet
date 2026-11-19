@@ -16,10 +16,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -131,7 +134,7 @@ class EvidenceStorageNfr05Test {
             adminId, "ADMIN", 9001L
         );
 
-        byte[] readBackBytes = downloadedAfterRestart.resource().getInputStream().readAllBytes();
+        byte[] readBackBytes = readResource(downloadedAfterRestart.resource());
         assertArrayEquals(videoBinaryContent, readBackBytes, "Dữ liệu tệp sau khi restart phải khớp 100%");
         assertEquals(uploaded.checksumSha256(), downloadedAfterRestart.checksumSha256());
     }
@@ -191,15 +194,15 @@ class EvidenceStorageNfr05Test {
 
         // 1. Buyer chủ khiếu nại truy cập được
         EvidenceDownloadPayload buyerPayload = accessService.downloadEvidenceContent(buyerId, "BUYER", evidenceId);
-        assertArrayEquals(imageBytes, buyerPayload.resource().getInputStream().readAllBytes());
+        assertArrayEquals(imageBytes, readResource(buyerPayload.resource()));
 
         // 2. Farmer của đơn hàng bị khiếu nại truy cập được
         EvidenceDownloadPayload farmerPayload = accessService.downloadEvidenceContent(farmerId, "FARMER", evidenceId);
-        assertArrayEquals(imageBytes, farmerPayload.resource().getInputStream().readAllBytes());
+        assertArrayEquals(imageBytes, readResource(farmerPayload.resource()));
 
         // 3. Admin phân xử truy cập được
         EvidenceDownloadPayload adminPayload = accessService.downloadEvidenceContent(adminId, "ADMIN", evidenceId);
-        assertArrayEquals(imageBytes, adminPayload.resource().getInputStream().readAllBytes());
+        assertArrayEquals(imageBytes, readResource(adminPayload.resource()));
     }
 
     @Test
@@ -290,5 +293,11 @@ class EvidenceStorageNfr05Test {
         );
         assertEquals(HttpStatus.BAD_REQUEST, traversal.getStatus());
         assertEquals("INVALID_STORAGE_PATH", traversal.getCode());
+    }
+
+    private static byte[] readResource(Resource resource) throws IOException {
+        try (InputStream input = resource.getInputStream()) {
+            return input.readAllBytes();
+        }
     }
 }
