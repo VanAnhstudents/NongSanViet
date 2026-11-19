@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản trị · Người dùng - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="admin" data-active="users">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <nav class="admin-nav" id="app-admin-nav"></nav>
+        <main class="content">
+            <div class="eyebrow">QUẢN TRỊ / VẬN HÀNH</div>
+            <h1 class="page-title">Quản lý người dùng</h1>
+
+            <div class="form-group" style="margin-top:12px">
+                <label class="form-label">Tìm tài khoản</label>
+                <input class="input" type="text" placeholder="Tên, số điện thoại hoặc mã tài khoản" />
+            </div>
+
+            <div class="filter-tabs">
+                <span class="active">Chờ duyệt (6)</span>
+                <span>Hoạt động</span>
+                <span>Đã khóa</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Nông trại Bình Minh</div>
+                <div class="meta-text">Nông dân cá thể · Hà Nội<br />Đã gửi hồ sơ và chứng nhận VietGAP<br />Đăng ký: 10/11/2026</div>
+                <div class="btn-row">
+                    <button type="button" class="btn btn-soft btn-sm" onclick="showToast('Đang mở hồ sơ VietGAP Nông trại Bình Minh')">Xem hồ sơ</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showToast('Đã duyệt hồ sơ Nông trại Bình Minh')">Duyệt hồ sơ</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Nguyễn Hoàng Nam</div>
+                <div class="meta-text">Người mua · 0903 456 789<br />Trạng thái: Đang hoạt động</div>
+                <button type="button" class="btn btn-soft btn-sm" style="margin-top:10px" onclick="showToast('Đã cập nhật trạng thái tài khoản')">Khóa tài khoản</button>
+            </div>
+
+            <p class="meta-text" style="margin-top:10px">Mỗi quyết định đều lưu thời gian và người xử lý.</p>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>
