@@ -1,12 +1,12 @@
-package com.nsv.backend.product.service;
+package com.nsv.backend.inventory.service;
 
 import com.nsv.backend.common.exception.ApiException;
 import com.nsv.backend.common.exception.FieldErrorDetail;
+import com.nsv.backend.inventory.dto.BatchCreateRequest;
+import com.nsv.backend.inventory.dto.BatchResponse;
+import com.nsv.backend.inventory.dto.BatchUpdateRequest;
 import com.nsv.backend.inventory.entity.Batch;
 import com.nsv.backend.inventory.repository.BatchRepository;
-import com.nsv.backend.product.dto.BatchCreateRequest;
-import com.nsv.backend.product.dto.BatchResponse;
-import com.nsv.backend.product.dto.BatchUpdateRequest;
 import com.nsv.backend.product.entity.Product;
 import com.nsv.backend.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;

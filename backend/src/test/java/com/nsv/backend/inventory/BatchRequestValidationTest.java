@@ -1,6 +1,6 @@
-package com.nsv.backend.product;
+package com.nsv.backend.inventory;
 
-import com.nsv.backend.product.dto.BatchCreateRequest;
+import com.nsv.backend.inventory.dto.BatchCreateRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

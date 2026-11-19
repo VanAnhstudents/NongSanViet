@@ -56,7 +56,7 @@ class AccountStatusInterceptorTest {
     void tc01_activeAccountPasses() {
         loginAs(5L);
         when(userLookupService.findActiveById(5L))
-                .thenReturn(Optional.of(new UserDto(5L, "Cô Lan", "0988888888", Role.BUYER)));
+                .thenReturn(Optional.of(new UserDto(5L, "Cô Lan", null, "0988888888", Role.BUYER)));
         AccountStatusInterceptor interceptor = new AccountStatusInterceptor(userLookupService);
 
         assertThat(interceptor.preHandle(new MockHttpServletRequest(), new MockHttpServletResponse(), new Object()))
