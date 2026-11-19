@@ -1,13 +1,12 @@
 package com.nsv.backend.admin.service;
 
-import com.nsv.backend.admin.entity.AuditLog;
 import com.nsv.backend.admin.repository.AdminAuditLogRepository;
+import com.nsv.backend.common.audit.entity.AuditLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import java.util.Map;
 public class AuditLogService {
 
     private final AdminAuditLogRepository auditLogRepository;
-    private final Clock clock;
 
     /** actorId = null nghĩa là hệ thống tự thực hiện. */
     @Transactional
@@ -26,7 +24,6 @@ public class AuditLogService {
                 .action(action)
                 .entityType(entityType)
                 .entityId(entityId)
-                .createdAt(Instant.now(clock))
                 .build());
     }
 
@@ -37,8 +34,8 @@ public class AuditLogService {
 
     /** entityId -> thời điểm ghi sớm nhất của hành động đó, mới nhất trước. */
     @Transactional(readOnly = true)
-    public Map<Long, Instant> entityTimesByAction(String action, String entityType) {
-        Map<Long, Instant> result = new LinkedHashMap<>();
+    public Map<Long, OffsetDateTime> entityTimesByAction(String action, String entityType) {
+        Map<Long, OffsetDateTime> result = new LinkedHashMap<>();
         for (AuditLog log : auditLogRepository.findByActionAndEntityTypeOrderByIdDesc(action, entityType)) {
             result.merge(log.getEntityId(), log.getCreatedAt(),
                     (a, b) -> a != null && (b == null || a.isBefore(b)) ? a : b);
