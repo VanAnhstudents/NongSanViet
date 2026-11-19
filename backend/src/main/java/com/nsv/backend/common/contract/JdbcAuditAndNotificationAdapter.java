@@ -5,10 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 @RequiredArgsConstructor
 public class JdbcAuditAndNotificationAdapter implements AuditAndNotificationPort {
-
     private final InAppNotificationService notificationService;
     private final JdbcTemplate jdbcTemplate;
 
@@ -52,6 +53,36 @@ public class JdbcAuditAndNotificationAdapter implements AuditAndNotificationPort
             action,
             entityType,
             entityId
+        );
+    }
+
+    @Override
+    public void recordAdminAction(
+            Long adminId,
+            String action,
+            String entityType,
+            Long entityId,
+            Long targetUserId,
+            Long orderId,
+            String details
+    ) {
+        auditLogService.recordAdminAction(adminId, action, entityType, entityId, targetUserId, orderId, details);
+    }
+
+    @Override
+    public void recordFinancialTransaction(
+            Long orderId,
+            Long userId,
+            Long actorId,
+            String transactionType,
+            String paymentMethod,
+            BigDecimal amount,
+            String status,
+            String providerRef,
+            String note
+    ) {
+        auditLogService.recordFinancialTransaction(
+            orderId, userId, actorId, transactionType, paymentMethod, amount, status, providerRef, note
         );
     }
 }
