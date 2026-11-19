@@ -3,6 +3,7 @@ package com.nsv.backend.order.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -25,28 +26,32 @@ public class OrderCoInspection {
     @Column(name = "buyer_id", nullable = false)
     private Long buyerId;
 
-    @Column(name = "check_quantity", nullable = false)
+    @Column(name = "result", nullable = false, length = 20)
+    private String result; // PASSED | FAILED
+
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
+
+    @Column(name = "is_locked", nullable = false)
     @Builder.Default
-    private boolean checkQuantity = true;
+    private Boolean locked = false;
 
-    @Column(name = "check_quality", nullable = false)
-    @Builder.Default
-    private boolean checkQuality = true;
-
-    @Column(name = "note", length = 500)
-    private String note;
-
-    @Column(name = "status", nullable = false, length = 20)
-    @Builder.Default
-    private String status = "REQUESTED"; // REQUESTED | ACKNOWLEDGED | COMPLETED
-
-    @Column(name = "acknowledged_by")
-    private Long acknowledgedBy;
-
-    @Column(name = "acknowledged_at")
-    private OffsetDateTime acknowledgedAt;
+    @Column(name = "confirmed_at")
+    private OffsetDateTime confirmedAt;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private OffsetDateTime updatedAt;
+
+    public boolean isPassed() {
+        return "PASSED".equalsIgnoreCase(this.result);
+    }
+
+    public boolean isLocked() {
+        return Boolean.TRUE.equals(this.locked);
+    }
 }
