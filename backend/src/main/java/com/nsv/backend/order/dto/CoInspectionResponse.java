@@ -7,43 +7,32 @@ import java.time.OffsetDateTime;
 public record CoInspectionResponse(
     Long id,
     Long orderId,
-    String orderStatus,
     Long buyerId,
-    boolean checkQuantity,
-    boolean checkQuality,
-    String note,
-    String status,
-    String deliveryInstruction,
-    Long acknowledgedBy,
-    OffsetDateTime acknowledgedAt,
-    OffsetDateTime createdAt
+    String result,
+    String resultLabel,
+    boolean passed,
+    String notes,
+    boolean locked,
+    String orderStatus,
+    OffsetDateTime confirmedAt,
+    OffsetDateTime createdAt,
+    OffsetDateTime updatedAt
 ) {
     public static CoInspectionResponse from(OrderCoInspection entity, String orderStatus) {
-        StringBuilder instruction = new StringBuilder("Yêu cầu đồng kiểm khi giao hàng: ");
-        if (entity.isCheckQuantity() && entity.isCheckQuality()) {
-            instruction.append("Kiểm đếm đủ số lượng/trọng lượng và kiểm tra chất lượng nông sản");
-        } else if (entity.isCheckQuantity()) {
-            instruction.append("Kiểm đếm đủ số lượng/trọng lượng");
-        } else if (entity.isCheckQuality()) {
-            instruction.append("Kiểm tra chất lượng/ngoại quan nông sản");
-        }
-        if (entity.getNote() != null && !entity.getNote().isBlank()) {
-            instruction.append(" (Ghi chú: ").append(entity.getNote()).append(")");
-        }
-
+        boolean isPassed = entity.isPassed();
         return new CoInspectionResponse(
             entity.getId(),
             entity.getOrderId(),
-            orderStatus,
             entity.getBuyerId(),
-            entity.isCheckQuantity(),
-            entity.isCheckQuality(),
-            entity.getNote(),
-            entity.getStatus(),
-            instruction.toString(),
-            entity.getAcknowledgedBy(),
-            entity.getAcknowledgedAt(),
-            entity.getCreatedAt()
+            entity.getResult(),
+            isPassed ? "Đạt yêu cầu đồng kiểm" : "Không đạt yêu cầu đồng kiểm",
+            isPassed,
+            entity.getNotes(),
+            entity.isLocked(),
+            orderStatus,
+            entity.getConfirmedAt(),
+            entity.getCreatedAt(),
+            entity.getUpdatedAt()
         );
     }
 }
