@@ -18,18 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
             auth: '',
             buyer: `
         <div class="header-actions">
-          <a href="../../buyer/cart.html" class="header-pill">Giỏ hàng</a>
-          <a href="../../buyer/notifications.html" class="header-pill">Thông báo</a>
+          <a href="../../pages/buyer/cart.html" class="header-pill">Giỏ hàng</a>
+          <a href="../../pages/buyer/notifications.html" class="header-pill">Thông báo</a>
         </div>
       `,
             farmer: `
         <div class="header-actions">
-          <a href="../../auth/login.html" class="header-pill">Đăng xuất</a>
+          <a href="../../pages/auth/login.html" class="header-pill">Đăng xuất</a>
         </div>
       `,
             admin: `
         <div class="header-actions">
-          <a href="../../auth/login.html" class="header-pill">Đăng xuất</a>
+          <a href="../../pages/auth/login.html" class="header-pill">Đăng xuất</a>
         </div>
       `
         };
@@ -47,11 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminNav = document.getElementById('app-admin-nav');
     if (adminNav && role === 'admin') {
         const adminTabs = [
-            { id: 'dashboard', label: 'Tổng quan', href: '../admin/dashboard.html' },
-            { id: 'users', label: 'Người dùng', href: '../admin/users.html' },
-            { id: 'products', label: 'Sản phẩm', href: '../admin/products.html' },
-            { id: 'disputes', label: 'Tranh chấp', href: '../admin/disputes.html' },
-            { id: 'categories', label: 'Danh mục', href: '../admin/categories.html' }
+            { id: 'dashboard', label: 'Tổng quan', href: '../../pages/admin/dashboard.html' },
+            { id: 'users', label: 'Người dùng', href: '../../pages/admin/users.html' },
+            { id: 'products', label: 'Sản phẩm', href: '../../pages/admin/products.html' },
+            { id: 'disputes', label: 'Tranh chấp', href: '../../pages/admin/disputes.html' },
+            { id: 'categories', label: 'Danh mục', href: '../../pages/admin/categories.html' }
         ];
         adminNav.innerHTML = adminTabs
             .map(tab => `<a href="${tab.href}" class="${activeNav === tab.id ? 'active' : ''}">${tab.label}</a>`)
@@ -64,16 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.app-shell')?.classList.add('has-bottom-nav');
         const navMap = {
             buyer: [
-                { id: 'home', icon: '⌂', label: 'Khám phá', href: '../buyer/home.html' },
-                { id: 'orders', icon: '☰', label: 'Đơn hàng', href: '../buyer/order-tracking.html' },
-                { id: 'chat', icon: '💬', label: 'Tin nhắn', href: '../buyer/chat.html' },
-                { id: 'account', icon: '👤', label: 'Tài khoản', href: '../auth/login.html' }
+                { id: 'home', icon: '⌂', label: 'Khám phá', href: '../../pages/buyer/home.html' },
+                { id: 'orders', icon: '☰', label: 'Đơn hàng', href: '../../pages/buyer/order-tracking.html' },
+                { id: 'chat', icon: '💬', label: 'Tin nhắn', href: '../../pages/buyer/chat.html' },
+                { id: 'account', icon: '👤', label: 'Tài khoản', href: '../../pages/auth/login.html' }
             ],
             farmer: [
-                { id: 'dashboard', icon: '⌂', label: 'Tổng quan', href: '../farmer/dashboard.html' },
-                { id: 'products', icon: '⊞', label: 'Sản phẩm', href: '../farmer/products.html' },
-                { id: 'orders', icon: '☰', label: 'Đơn hàng', href: '../farmer/orders.html' },
-                { id: 'profile', icon: '👤', label: 'Gian hàng', href: '../farmer/farm-profile.html' }
+                { id: 'dashboard', icon: '⌂', label: 'Tổng quan', href: '../../pages/farmer/dashboard.html' },
+                { id: 'products', icon: '⊞', label: 'Sản phẩm', href: '../../pages/farmer/products.html' },
+                { id: 'orders', icon: '☰', label: 'Đơn hàng', href: '../../pages/farmer/orders.html' },
+                { id: 'profile', icon: '👤', label: 'Gian hàng', href: '../../pages/farmer/farm-profile.html' }
             ]
         };
 
