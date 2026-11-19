@@ -1,0 +1,148 @@
+/* ============================================
+   tokens.css — DESIGN TOKENS GỐC (KHÔNG SỬA TRỰC TIẾP)
+   Nguồn chân lý duy nhất về màu, font, spacing.
+   Mọi file CSS khác chỉ được đọc (var(--...)), không ghi đè giá trị số.
+   Nạp ĐẦU TIÊN trước mọi file CSS khác.
+   ============================================ */
+:root {
+  /* ---------- 1. BRAND COLOR — Xanh nông sản ---------- */
+  --color-primary-50:  #eef7ee;
+  --color-primary-100: #d4ecd6;
+  --color-primary-200: #a9d9ad;
+  --color-primary-300: #7ec67f;
+  --color-primary-400: #52a854;
+  --color-primary-500: #2e8b3d; /* MÀU THƯƠNG HIỆU CHÍNH */
+  --color-primary-600: #246f31;
+  --color-primary-700: #1c5726;
+  --color-primary-800: #153f1c;
+  --color-primary-900: #0d2611;
+
+  /* ---------- 2. SECONDARY COLOR — Cam đất (mùa vụ, pre-order) ---------- */
+  --color-secondary-50:  #fdf2e7;
+  --color-secondary-100: #fadfc2;
+  --color-secondary-300: #f0a85c;
+  --color-secondary-500: #e2822c;
+  --color-secondary-600: #c06a1c;
+  --color-secondary-700: #955115;
+
+  /* ---------- 3. NEUTRAL / GRAYSCALE ---------- */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f7f8f6;
+  --color-neutral-100: #eef0ec;
+  --color-neutral-200: #dde1d8;
+  --color-neutral-300: #c3c9bd;
+  --color-neutral-400: #9aa295;
+  --color-neutral-500: #717a6c;
+  --color-neutral-600: #545c50;
+  --color-neutral-700: #3c423a;
+  --color-neutral-800: #282d26;
+  --color-neutral-900: #171a15;
+
+  /* ---------- 4. SEMANTIC / TRẠNG THÁI ---------- */
+  --color-success-bg:    #e5f6e8;
+  --color-success-text:  #1c7a31;
+  --color-success-border:#8fd6a0;
+
+  --color-warning-bg:    #fff6e0;
+  --color-warning-text:  #8a6200;
+  --color-warning-border:#f0d479;
+
+  --color-danger-bg:     #fdecec;
+  --color-danger-text:   #c1282c;
+  --color-danger-border: #f1a6a6;
+
+  --color-info-bg:       #e8f1fb;
+  --color-info-text:     #1d5aa6;
+  --color-info-border:   #a7c6ec;
+
+  /* ---------- 5. VAI TRÒ (ROLE ACCENT) ---------- */
+  --color-role-farmer:  var(--color-primary-500);
+  --color-role-buyer:   #2f6fa8;
+  --color-role-admin:   #4a3f7a;
+
+  /* ---------- 6. NỀN & CHỮ MẶC ĐỊNH ---------- */
+  --color-bg-page:        var(--color-neutral-50);
+  --color-bg-surface:     var(--color-neutral-0);
+  --color-bg-surface-alt: var(--color-neutral-100);
+  --color-text-heading:   var(--color-neutral-900);
+  --color-text-body:      var(--color-neutral-700);
+  --color-text-muted:     var(--color-neutral-500);
+  --color-text-on-primary: var(--color-neutral-0);
+  --color-border-default:  var(--color-neutral-200);
+  --color-border-strong:   var(--color-neutral-300);
+  --color-focus-ring:       #1b73e8;
+
+  /* ---------- 7. TYPOGRAPHY ---------- */
+  --font-family-base: 'Inter', 'Be Vietnam Pro', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-family-heading: 'Be Vietnam Pro', 'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --fs-xs:   0.8125rem; /* 13px — timestamp, caption */
+  --fs-sm:   0.875rem;  /* 14px — label phụ, helper */
+  --fs-base: 1rem;      /* 16px — BODY MẶC ĐỊNH (NFR-02) */
+  --fs-md:   1.125rem;  /* 18px */
+  --fs-lg:   1.25rem;   /* 20px — H5/tiêu đề card */
+  --fs-xl:   1.5rem;    /* 24px — H4 */
+  --fs-2xl:  1.875rem;  /* 30px — H3 */
+  --fs-3xl:  2.25rem;   /* 36px — H2 */
+  --fs-4xl:  2.75rem;   /* 44px — H1/Hero */
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  --lh-tight:  1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.75;
+
+  /* ---------- 8. SPACING SCALE (bội số 4px) ---------- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* ---------- 9. BO GÓC ---------- */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* ---------- 10. ĐỔ BÓNG ---------- */
+  --shadow-xs: 0 1px 2px rgba(23, 26, 21, 0.06);
+  --shadow-sm: 0 2px 6px rgba(23, 26, 21, 0.08);
+  --shadow-md: 0 6px 16px rgba(23, 26, 21, 0.10);
+  --shadow-lg: 0 14px 32px rgba(23, 26, 21, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(27, 115, 232, 0.35);
+
+  /* ---------- 11. Z-INDEX LAYERS ---------- */
+  --z-dropdown: 100;
+  --z-sticky-header: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* ---------- 12. ANIMATION ---------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  /* ---------- 13. LAYOUT CONTAINER ---------- */
+  --container-max-width: 1200px;
+  --container-padding-mobile: 1rem;
+  --container-padding-desktop: 2rem;
+  --header-height: 64px;
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 72px;
+}
