@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-/** Bản tối thiểu cho PBI-18. Nếu PBI đặt hàng đã có OrderRepository thì gộp vào bản đó. */
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Optional<Order> findByIdAndBuyerId(Long id, Long buyerId);
@@ -28,6 +27,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @EntityGraph(attributePaths = {"items", "orderAddress"})
     List<Order> findAllByBuyerIdOrderByCreatedAtDesc(Long buyerId);
+
+    @EntityGraph(attributePaths = {"items", "orderAddress"})
+    List<Order> findAllByBuyerIdAndOrderTypeOrderByCreatedAtDesc(Long buyerId, String orderType);
 
     @EntityGraph(attributePaths = {"items", "orderAddress"})
     @Query("""

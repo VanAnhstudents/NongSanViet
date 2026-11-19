@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +30,34 @@ public class Order {
     @Column(name = "address_id")
     private Long addressId;
 
+    @Column(name = "order_type", nullable = false, length = 20)
+    @Builder.Default
+    private String orderType = "STANDARD"; // STANDARD | PRE_ORDER
+
     @Column(name = "payment_method", nullable = false, length = 20)
     private String paymentMethod; // COD | ONLINE
 
     @Column(name = "status", nullable = false, length = 20)
     @Builder.Default
-    private String status = "PENDING"; // PENDING | CONFIRMED | SHIPPING | DELIVERED | COMPLETED | CANCELLED
+    private String status = "PENDING"; // STANDARD: PENDING.. | PRE_ORDER: AWAITING_DEPOSIT -> DEPOSIT_PAID -> CONFIRMED -> SHIPPING -> DELIVERED -> COMPLETED
 
     @Column(name = "shipping_fee", nullable = false, precision = 15, scale = 2)
     @Builder.Default
     private BigDecimal shippingFee = BigDecimal.ZERO;
+
+    @Column(name = "deposit_rate", precision = 5, scale = 4)
+    private BigDecimal depositRate;
+
+    @Column(name = "deposit_amount", nullable = false, precision = 15, scale = 2)
+    @Builder.Default
+    private BigDecimal depositAmount = BigDecimal.ZERO;
+
+    @Column(name = "remaining_amount", nullable = false, precision = 15, scale = 2)
+    @Builder.Default
+    private BigDecimal remainingAmount = BigDecimal.ZERO;
+
+    @Column(name = "expected_harvest_date")
+    private LocalDate expectedHarvestDate;
 
     @Column(name = "delivered_at")
     private OffsetDateTime deliveredAt;
