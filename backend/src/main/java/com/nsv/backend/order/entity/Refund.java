@@ -1,19 +1,30 @@
 package com.nsv.backend.order.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
+/** Ánh xạ bảng refunds. complaint_id để trống vì hoàn tiền này không phát sinh từ khiếu nại. */
 @Entity
 @Table(name = "refunds")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Refund {
 
     @Id
@@ -26,20 +37,19 @@ public class Refund {
     @Column(name = "complaint_id")
     private Long complaintId;
 
-    @Column(name = "amount", nullable = false, precision = 15, scale = 2)
+    @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal amount;
 
-    @Column(name = "reason", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String reason;
 
-    @Column(name = "status", nullable = false, length = 20)
-    @Builder.Default
-    private String status = "PENDING"; // PENDING | COMPLETED | FAILED
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private RefundStatus status;
 
-    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
+    private Instant createdAt;
 
     @Column(name = "processed_at")
-    private OffsetDateTime processedAt;
+    private Instant processedAt;
 }
