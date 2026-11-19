@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tìm kiếm nông sản - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="buyer" data-active="home" data-bottom="true">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <main class="content">
+            <a href="home.html" class="eyebrow">‹ KHÁM PHÁ / TÌM KIẾM</a>
+            <h1 class="page-title">Tìm nông sản</h1>
+
+            <div class="form-group" style="margin-top:12px">
+                <label class="form-label">Từ khóa</label>
+                <input class="input" type="text" value="Cà chua" />
+            </div>
+
+            <div class="form-label">Bộ lọc</div>
+            <div class="seg-tabs" style="margin-bottom:10px">
+                <button type="button" class="seg-btn active">Lâm Đồng</button>
+                <button type="button" class="seg-btn active">VietGAP</button>
+                <button type="button" class="seg-btn">Có sẵn</button>
+                <button type="button" class="seg-btn active">Đặt trước</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Khoảng giá / kg</label>
+                <input class="input" type="text" value="20.000đ — 60.000đ" />
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="showToast('Đã áp dụng bộ lọc nông sản')">Áp dụng bộ lọc</button>
+
+            <div class="form-label" style="margin:18px 0 10px">2 sản phẩm phù hợp</div>
+            <a href="product-detail.html" class="card" style="display:flex;gap:12px;align-items:center">
+                <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200&q=80" alt="Cà chua bi Đà Lạt"
+                     style="width:64px;height:64px;border-radius:12px;object-fit:cover" />
+                <div>
+                    <strong>Cà chua bi Đà Lạt</strong>
+                    <div class="meta-text">Vườn An · Đặt trước</div>
+                    <div class="price">40.000đ / kg</div>
+                </div>
+            </a>
+        </main>
+        <nav class="bottom-nav" id="app-bottom-nav"></nav>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

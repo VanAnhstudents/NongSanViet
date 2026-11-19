@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giỏ hàng - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="buyer">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <main class="content">
+            <a href="home.html" class="eyebrow">‹ MUA HÀNG · 1 / 3</a>
+            <h1 class="page-title">Giỏ hàng của bạn</h1>
+
+            <label class="check-row" style="margin-top:12px;font-weight:600">
+                <input type="checkbox" checked />
+                <span>Vườn An · Lâm Đồng</span>
+            </label>
+
+            <div class="card" style="display:flex;gap:12px;align-items:center">
+                <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=200&q=80" alt="Rau cải thìa"
+                     style="width:62px;height:62px;border-radius:12px;object-fit:cover" />
+                <div>
+                    <strong>Rau cải thìa</strong>
+                    <div class="meta-text">25.000đ / kg · Có sẵn</div>
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" data-qty-minus>−</button>
+                        <span data-qty-val>2 kg</span>
+                        <button type="button" class="qty-btn" data-qty-plus>+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="display:flex;gap:12px;align-items:center">
+                <img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=200&q=80" alt="Cam vàng"
+                     style="width:62px;height:62px;border-radius:12px;object-fit:cover" />
+                <div>
+                    <strong>Cam vàng</strong>
+                    <div class="meta-text">45.000đ / kg · Có sẵn</div>
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" data-qty-minus>−</button>
+                        <span data-qty-val>2 kg</span>
+                        <button type="button" class="qty-btn" data-qty-plus>+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row-between meta-text"><span>Tiền hàng</span><strong style="color:var(--text-main)">140.000đ</strong></div>
+                <div class="row-between meta-text" style="margin:8px 0"><span>Phí giao dự kiến</span><strong style="color:var(--text-main)">20.000đ</strong></div>
+                <div class="row-between"><strong>Tổng dự kiến</strong><strong class="price">160.000đ</strong></div>
+            </div>
+
+            <p class="meta-text" style="margin-bottom:14px">Phí giao cuối cùng theo địa chỉ nhận hàng.</p>
+
+            <a href="checkout-cod.html" class="btn btn-primary">Tiếp tục đặt hàng</a>
+            <a href="home.html" style="display:block;margin-top:12px;color:var(--primary);font-weight:600">Tiếp tục mua sắm</a>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

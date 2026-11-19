@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoàn cọc đặt trước - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="buyer">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <main class="content">
+            <a href="order-tracking.html" class="eyebrow">‹ BẢO VỆ TIỀN CỌC / #NN1024</a>
+            <h1 class="page-title">Hoàn cọc đặt trước</h1>
+
+            <div class="card-amber" style="margin-top:12px">
+                <div class="card-title">Vườn An báo không đủ hàng</div>
+                <div class="meta-text">Mưa lớn ảnh hưởng sản lượng thu hoạch.<br />Đơn 5 kg cà chua bi không thể giao đủ.</div>
+            </div>
+
+            <div class="card-green">
+                <div class="card-title">Hoàn 100% tiền đã đặt cọc</div>
+                <div style="font-size:24px;font-weight:700;color:var(--primary);margin:6px 0">60.000đ</div>
+                <div class="meta-text">Đang xử lý về VNPay · Mô phỏng</div>
+            </div>
+
+            <div class="form-label" style="margin:14px 0 8px">Bạn cũng có thể chọn</div>
+            <label class="radio-row"><input type="radio" name="refund" /><span>Nhận phần có sẵn, hoàn phần thiếu</span></label>
+            <label class="radio-row"><input type="radio" name="refund" /><span>Đổi sản phẩm tương đương</span></label>
+            <label class="radio-row"><input type="radio" name="refund" /><span>Chờ đợt thu hoạch tiếp theo</span></label>
+
+            <p class="meta-text" style="margin:12px 0 18px">Phương án thay thế cần bạn xác nhận.<br />Mặc định hệ thống hoàn toàn bộ cọc.</p>
+
+            <button type="button" class="btn btn-primary" onclick="showToast('Đã xác nhận hoàn 60.000đ tiền cọc')">Giữ phương án hoàn cọc</button>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>
