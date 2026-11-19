@@ -37,3 +37,5 @@ app:
     email: ${ADMIN_EMAIL:}
     password: ${ADMIN_PASSWORD:}
     full-name: ${ADMIN_FULL_NAME:Quản trị viên}
+  integrity:
+    secret: ${INTEGRITY_SECRET:${JWT_SECRET:NongSanVietSecretKeyForJwtSigningMustBeAtLeast256BitsLong2026}}

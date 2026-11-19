@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ sơ cá nhân — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <style>
+    .review-mini { border: 1px solid var(--color-border-default); border-radius: var(--radius-md); padding: var(--space-4); margin-bottom: var(--space-3); }
+    .review-mini__head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2); }
+    .stars-sm { display: flex; gap: 2px; color: var(--color-secondary-500); font-size: var(--fs-sm); }
+  </style>
+</head>
+<body class="app">
+
+  <!-- Header -->
+  <header class="app-header" id="appHeader">
+    <div class="app-header__inner">
+      <a class="app-header__brand" href="home.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" width="32" height="32">
+        Nông Sản Việt
+      </a>
+      <div class="app-header__search">
+        <span class="app-header__search__icon" data-icon="search" data-size="18"></span>
+        <input class="form-field__input" type="search" placeholder="Tìm rau củ, trái cây, trang trại..." aria-label="Tìm kiếm sản phẩm">
+        <button class="app-header__search__btn" type="button">Tìm</button>
+      </div>
+      <div class="app-header__actions">
+        <a class="icon-btn" href="cart.html" aria-label="Giỏ hàng">
+          <span data-icon="shopping-cart" data-size="22"></span>
+          <span class="icon-btn__badge" id="cartBadge" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="notifications.html" aria-label="Thông báo">
+          <span data-icon="bell" data-size="22"></span>
+          <span class="icon-btn__badge" id="notifBadge" hidden>3</span>
+        </a>
+        <div class="dropdown" id="userDropdown">
+          <button class="app-header__avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userAvatarBtn">
+            <div class="avatar avatar--sm" id="userAvatar">N</div>
+            <span class="app-header__username" id="usernameText">Tài khoản</span>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </button>
+          <div class="dropdown__menu" id="userMenu" role="menu">
+            <a class="dropdown__item" href="profile.html" role="menuitem"><span data-icon="user" data-size="18"></span>Hồ sơ cá nhân</a>
+            <a class="dropdown__item" href="orders.html" role="menuitem"><span data-icon="package" data-size="18"></span>Đơn hàng của tôi</a>
+            <button class="dropdown__item" type="button" id="logoutBtn" role="menuitem"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category bar -->
+  <nav class="category-bar" aria-label="Danh mục sản phẩm">
+    <div class="category-bar__inner">
+      <a class="category-bar__link" href="search.html?cat=rau-cu"><span data-icon="leaf" data-size="16"></span>Rau củ</a>
+      <a class="category-bar__link" href="search.html?cat=trai-cay"><span data-icon="shopping-bag" data-size="16"></span>Trái cây</a>
+      <a class="category-bar__link" href="search.html?type=preorder"><span data-icon="calendar" data-size="16"></span>Pre-order theo mùa</a>
+      <a class="category-bar__link" href="search.html?type=combo"><span data-icon="package" data-size="16"></span>Combo</a>
+      <a class="category-bar__link" href="search.html?filter=region"><span data-icon="map-pin" data-size="16"></span>Theo khu vực</a>
+    </div>
+  </nav>
+
+  <main class="app__main">
+
+    <div class="page-head">
+      <h1 class="page-head__title">Hồ sơ cá nhân</h1>
+    </div>
+
+    <div class="profile-grid">
+      <!-- Left: profile card + nav -->
+      <div>
+        <div class="card profile-card">
+          <div class="profile-card__avatar">
+            <div class="avatar" style="width:96px;height:96px;font-size:var(--fs-2xl);margin:0 auto;" id="profileAvatar">N</div>
+          </div>
+          <h2 style="margin-bottom:var(--space-1);" id="profileName">Nguyễn Văn A</h2>
+          <p style="color:var(--color-text-muted);font-size:var(--fs-sm);margin-bottom:var(--space-4);" id="profilePhone">0912 345 678</p>
+          <span class="badge badge--info">Người mua</span>
+
+          <hr class="divider" style="margin:var(--space-4) 0;">
+
+          <nav class="profile-nav" aria-label="Điều hướng hồ sơ">
+            <a class="profile-nav__link is-active" href="#info">
+              <span data-icon="user" data-size="18"></span> Thông tin cá nhân
+            </a>
+            <a class="profile-nav__link" href="#address">
+              <span data-icon="map-pin" data-size="18"></span> Sổ địa chỉ
+            </a>
+            <a class="profile-nav__link" href="#reviews">
+              <span data-icon="star" data-size="18"></span> Đánh giá đã viết
+            </a>
+            <a class="profile-nav__link" href="orders.html">
+              <span data-icon="package" data-size="18"></span> Đơn hàng
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Right: forms & sections -->
+      <div>
+
+        <!-- Thông tin cá nhân -->
+        <div class="card" id="info">
+          <h3 class="card__title" style="margin-bottom:var(--space-5);">
+            <span data-icon="user" data-size="20" style="vertical-align:middle;margin-right:var(--space-2);"></span>
+            Thông tin cá nhân
+          </h3>
+          <form id="profileForm">
+            <div class="form-field">
+              <label class="form-field__label" for="fullName">Họ và tên</label>
+              <input class="form-field__input" type="text" id="fullName" value="Nguyễn Văn A" placeholder="Nhập họ tên đầy đủ">
+            </div>
+            <div class="form-field">
+              <label class="form-field__label" for="phone">Số điện thoại</label>
+              <input class="form-field__input" type="tel" id="phone" value="0912 345 678" placeholder="Nhập số điện thoại">
+            </div>
+            <div class="form-field">
+              <label class="form-field__label" for="email">Email</label>
+              <input class="form-field__input" type="email" id="email" value="nguyenvana@example.com" placeholder="Nhập địa chỉ email">
+            </div>
+            <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
+              <button class="btn btn--primary" type="submit">
+                <span data-icon="save" data-size="18"></span> Lưu thay đổi
+              </button>
+              <button class="btn btn--ghost" type="button">
+                <span data-icon="key" data-size="18"></span> Đổi mật khẩu
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sổ địa chỉ -->
+        <div class="card" id="address">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4);">
+            <h3 class="card__title" style="margin:0;">
+              <span data-icon="map-pin" data-size="20" style="vertical-align:middle;margin-right:var(--space-2);"></span>
+              Sổ địa chỉ
+            </h3>
+            <button class="btn btn--secondary btn--sm" type="button">
+              <span data-icon="plus" data-size="16"></span> Thêm địa chỉ
+            </button>
+          </div>
+
+          <div class="address-card address-card--default">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-3);">
+              <div>
+                <div style="font-weight:var(--fw-semibold);display:flex;align-items:center;gap:var(--space-2);">
+                  Nhà riêng
+                  <span class="badge badge--success" style="font-size:11px;">Mặc định</span>
+                </div>
+                <div style="font-size:var(--fs-sm);color:var(--color-text-muted);margin-top:var(--space-1);">Nguyễn Văn A · 0912 345 678</div>
+                <div style="font-size:var(--fs-sm);color:var(--color-text-muted);margin-top:var(--space-1);">123 Nguyễn Trãi, P. Thanh Xuân Trung, Q. Thanh Xuân, Hà Nội</div>
+              </div>
+            </div>
+            <div class="address-card__actions">
+              <button class="btn btn--ghost btn--sm" type="button"><span data-icon="edit-2" data-size="14"></span> Sửa</button>
+            </div>
+          </div>
+
+          <div class="address-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-3);">
+              <div>
+                <div style="font-weight:var(--fw-semibold);">Văn phòng</div>
+                <div style="font-size:var(--fs-sm);color:var(--color-text-muted);margin-top:var(--space-1);">Nguyễn Văn A · 0987 654 321</div>
+                <div style="font-size:var(--fs-sm);color:var(--color-text-muted);margin-top:var(--space-1);">45 Lê Duẩn, P. Bến Nghé, Q. 1, TP. Hồ Chí Minh</div>
+              </div>
+            </div>
+            <div class="address-card__actions">
+              <button class="btn btn--ghost btn--sm" type="button"><span data-icon="edit-2" data-size="14"></span> Sửa</button>
+              <button class="btn btn--ghost btn--sm" type="button" style="color:var(--color-danger-text);"><span data-icon="trash-2" data-size="14"></span> Xóa</button>
+              <button class="btn btn--ghost btn--sm" type="button">Đặt làm mặc định</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Đánh giá đã viết -->
+        <div class="card" id="reviews">
+          <h3 class="card__title" style="margin-bottom:var(--space-4);">
+            <span data-icon="star" data-size="20" style="vertical-align:middle;margin-right:var(--space-2);"></span>
+            Đánh giá đã viết
+          </h3>
+
+          <div class="review-mini">
+            <div class="review-mini__head">
+              <img src="https://images.unsplash.com/photo-1587334207128-eadba5b80e56?w=80&h=80&fit=crop" alt="" style="width:48px;height:48px;border-radius:var(--radius-sm);object-fit:cover;">
+              <div>
+                <div style="font-weight:var(--fw-semibold);font-size:var(--fs-sm);">Xoài cát Hòa Lộc — Vườn Tiền Giang</div>
+                <div class="stars-sm">
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                </div>
+              </div>
+              <span style="margin-left:auto;font-size:var(--fs-xs);color:var(--color-text-muted);">05/06/2025</span>
+            </div>
+            <p style="margin:0;font-size:var(--fs-sm);color:var(--color-text-body);">Xoài rất ngon, ngọt tự nhiên, đóng gói cẩn thận. Lần sau sẽ mua thêm!</p>
+          </div>
+
+          <div class="review-mini">
+            <div class="review-mini__head">
+              <img src="https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=80&h=80&fit=crop" alt="" style="width:48px;height:48px;border-radius:var(--radius-sm);object-fit:cover;">
+              <div>
+                <div style="font-weight:var(--fw-semibold);font-size:var(--fs-sm);">Cải thảo Đà Lạt — Trang trại Xanh</div>
+                <div class="stars-sm">
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14"></span>
+                  <span data-icon="star" data-size="14" style="color:var(--color-neutral-300);"></span>
+                </div>
+              </div>
+              <span style="margin-left:auto;font-size:var(--fs-xs);color:var(--color-text-muted);">01/06/2025</span>
+            </div>
+            <p style="margin:0;font-size:var(--fs-sm);color:var(--color-text-body);">Hàng tươi, giòn ngon. Mua định kỳ hàng tuần.</p>
+          </div>
+        </div>
+
+        <!-- Đăng xuất -->
+        <div style="padding:var(--space-2) 0 var(--space-6);">
+          <button class="btn btn--danger" type="button" id="logoutBtnPage">
+            <span data-icon="log-out" data-size="18"></span>
+            Đăng xuất
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Điều hướng chính">
+    <a class="bottom-nav__item" href="home.html" aria-label="Trang chủ">
+      <span class="bottom-nav__item__icon" data-icon="home" data-size="22"></span>
+      <span class="bottom-nav__item__label">Trang chủ</span>
+    </a>
+    <a class="bottom-nav__item" href="search.html" aria-label="Tìm kiếm">
+      <span class="bottom-nav__item__icon" data-icon="search" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tìm kiếm</span>
+    </a>
+    <a class="bottom-nav__item" href="cart.html" aria-label="Giỏ hàng">
+      <span class="bottom-nav__item__icon">
+        <span data-icon="shopping-cart" data-size="22"></span>
+        <span class="bottom-nav__item__badge" id="bottomCartBadge" hidden>0</span>
+      </span>
+      <span class="bottom-nav__item__label">Giỏ hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="orders.html" aria-label="Đơn hàng">
+      <span class="bottom-nav__item__icon" data-icon="package" data-size="22"></span>
+      <span class="bottom-nav__item__label">Đơn hàng</span>
+    </a>
+    <a class="bottom-nav__item is-active" href="profile.html" aria-label="Tôi">
+      <span class="bottom-nav__item__icon" data-icon="user" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tôi</span>
+    </a>
+  </nav>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    NSV.renderIcons();
+    var btn = document.getElementById('userAvatarBtn');
+    var dd = document.getElementById('userDropdown');
+    if (btn && dd) {
+      btn.addEventListener('click', function() {
+        dd.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    }
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    var logoutBtnPage = document.getElementById('logoutBtnPage');
+    if (logoutBtnPage) logoutBtnPage.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    window.addEventListener('scroll', function() {
+      var h = document.getElementById('appHeader');
+      if (h) h.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+    var user = NSV.auth.getUser();
+    if (user) {
+      var uname = document.getElementById('usernameText');
+      var uavatar = document.getElementById('userAvatar');
+      var pName = document.getElementById('profileName');
+      var pPhone = document.getElementById('profilePhone');
+      var pAvatar = document.getElementById('profileAvatar');
+      if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
+      if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+      if (pName) pName.textContent = user.fullName || 'Người dùng';
+      if (pPhone) pPhone.textContent = user.phone || '';
+      if (pAvatar) pAvatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+    }
+
+    // Profile form save
+    var profileForm = document.getElementById('profileForm');
+    if (profileForm) {
+      profileForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Mô phỏng lưu
+        var saveBtn = profileForm.querySelector('[type="submit"]');
+        var orig = saveBtn.textContent;
+        saveBtn.textContent = 'Đã lưu';
+        saveBtn.disabled = true;
+        setTimeout(function() { saveBtn.textContent = orig; saveBtn.disabled = false; NSV.renderIcons(); }, 1500);
+      });
+    }
+  });
+  </script>
+</body>
+</html>

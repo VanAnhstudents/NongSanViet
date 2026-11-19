@@ -49,7 +49,7 @@ public class ComplaintService {
 
     @Transactional(readOnly = true)
     public List<FarmerComplaintItem> listForFarmer(Long farmerId) {
-        Map<Long, Instant> escalated = auditLogService.entityTimesByAction(ACTION_ESCALATED, ENTITY);
+        Map<Long, OffsetDateTime> escalated = auditLogService.entityTimesByAction(ACTION_ESCALATED, ENTITY);
         return complaintRepository.findAllOfFarmer(farmerId).stream()
                 .map(c -> new FarmerComplaintItem(c.getId(), c.getOrderId(), c.getReason(),
                         c.getCreatedAt().toInstant(),
@@ -102,12 +102,12 @@ public class ComplaintService {
 
     @Transactional(readOnly = true)
     public List<EscalatedComplaintItem> listEscalated() {
-        Map<Long, Instant> times = auditLogService.entityTimesByAction(ACTION_ESCALATED, ENTITY);
+        Map<Long, OffsetDateTime> times = auditLogService.entityTimesByAction(ACTION_ESCALATED, ENTITY);
         return complaintRepository.findAllById(times.keySet()).stream()
                 .sorted(Comparator.comparing(Complaint::getId).reversed())
                 .map(c -> new EscalatedComplaintItem(c.getId(), c.getOrderId(), c.getReason(),
                         c.getCreatedAt().toInstant(),
-                        times.get(c.getId()), c.getFarmerResponse(), c.getAdminDecision()))
+                        times.get(c.getId()) != null ? times.get(c.getId()).toInstant() : null, c.getFarmerResponse(), c.getAdminDecision()))
                 .toList();
     }
 

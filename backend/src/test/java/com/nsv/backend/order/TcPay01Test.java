@@ -75,10 +75,6 @@ class TcPay01Test {
     }
 
     private Payment pendingPayment() {
-        return Payment.builder().id(1L).orderId(ORDER_ID).paymentType("FULL")
-                .amount(new BigDecimal("170000.00")).status("PENDING")
-                .createdAt(OffsetDateTime.ofInstant(Instant.parse("2026-11-17T03:00:00Z"),
-                        ZoneId.of("Asia/Ho_Chi_Minh"))).build();
         return Payment.builder()
                 .id(1L)
                 .orderId(ORDER_ID)

@@ -144,6 +144,7 @@ public class FinancialTransactionServiceImpl implements FinancialTransactionServ
             .amount(refundAmount)
             .reason(request.reason().trim())
             .status("COMPLETED")
+            .createdAt(now)
             .processedAt(now)
             .build();
 

@@ -4,11 +4,8 @@ import com.nsv.backend.common.exception.ApiException;
 import com.nsv.backend.order.dto.RefundItem;
 import com.nsv.backend.order.dto.ShortageRefundResponse;
 import com.nsv.backend.order.entity.Order;
-import com.nsv.backend.order.entity.OrderStatus;
 import com.nsv.backend.order.entity.Payment;
-import com.nsv.backend.order.entity.PaymentStatus;
 import com.nsv.backend.order.entity.Refund;
-import com.nsv.backend.order.entity.RefundStatus;
 import com.nsv.backend.order.repository.OrderRepository;
 import com.nsv.backend.order.repository.RefundPaymentRepository;
 import com.nsv.backend.order.repository.RefundQueryRepository;
@@ -21,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.Clock;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -30,14 +27,12 @@ import java.util.Set;
 /**
  * PBI-32: Farmer báo thiếu hàng cho đơn Pre-order -> hệ thống tự hoàn 100% các khoản đã thanh toán (BR-05),
  * hủy đơn (orders.status = CANCELLED) và thông báo cho Buyer.
- * Việc hoàn tiền được mô phỏng như thanh toán online ở PBI-18: giao dịch hoàn tạo ra ở trạng thái COMPLETED
- * và giao dịch gốc chuyển sang REFUNDED.
  */
 @Service
 @RequiredArgsConstructor
 public class PreorderRefundService {
 
-    private static final Set<OrderStatus> CANCELLABLE = Set.of(OrderStatus.PENDING, OrderStatus.CONFIRMED);
+    private static final Set<String> CANCELLABLE = Set.of("PENDING", "CONFIRMED");
     private static final String REASON_PREFIX = "Người bán báo thiếu hàng Pre-order: ";
 
     private final OrderRepository orderRepository;
@@ -62,31 +57,31 @@ public class PreorderRefundService {
             throw invalidState("Đơn hàng không còn ở trạng thái có thể hủy do thiếu hàng");
         }
 
-        Instant now = Instant.now(clock);
+        OffsetDateTime now = OffsetDateTime.now(clock);
         String refundReason = limit(REASON_PREFIX + reason.trim(), 255);
         List<RefundItem> items = new ArrayList<>();
         BigDecimal total = BigDecimal.ZERO;
-        for (Payment payment : paymentRepository.findByOrderIdAndStatus(orderId, PaymentStatus.PAID)) {
+        for (Payment payment : paymentRepository.findByOrderIdAndStatus(orderId, "PAID")) {
             Refund refund = refundRepository.save(Refund.builder()
                     .paymentId(payment.getId())
                     .amount(payment.getAmount())
                     .reason(refundReason)
-                    .status(RefundStatus.COMPLETED)
+                    .status("COMPLETED")
                     .createdAt(now)
                     .processedAt(now)
                     .build());
-            payment.setStatus(PaymentStatus.REFUNDED);
+            payment.setStatus("REFUNDED");
             paymentRepository.save(payment);
             items.add(new RefundItem(refund.getId(), payment.getId(), refund.getAmount(), refund.getStatus()));
             total = total.add(payment.getAmount());
         }
 
-        order.setStatus(OrderStatus.CANCELLED);
+        order.setStatus("CANCELLED");
         order.setUpdatedAt(now);
         orderRepository.save(order);
 
         buyerNotifier.notifyBuyer(order.getBuyerId(), message(orderId, total));
-        return new ShortageRefundResponse(orderId, OrderStatus.CANCELLED, total, items);
+        return new ShortageRefundResponse(orderId, "CANCELLED", total, items);
     }
 
     private static String message(Long orderId, BigDecimal total) {

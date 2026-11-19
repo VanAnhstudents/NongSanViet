@@ -1,43 +1,203 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xác nhận giao hàng - Nông Sản Việt</title>
-    <link rel="stylesheet" href="../../css/main.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xác nhận giao hàng — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
+  <style>
+    .confirm-shell {
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start; background: var(--color-bg-surface-alt);
+      padding: var(--space-6) var(--space-4);
+    }
+    .confirm-card {
+      background: var(--color-bg-surface); border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg); width: 100%; max-width: 480px;
+      padding: var(--space-7) var(--space-6); border-top: 4px solid var(--color-primary-500);
+    }
+    .confirm-eyebrow {
+      font-size: var(--fs-xs); font-weight: var(--fw-semibold); letter-spacing: .08em;
+      text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--space-4);
+    }
+    .confirm-brand {
+      display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-6);
+      font-family: var(--font-family-heading); font-weight: var(--fw-bold); font-size: var(--fs-base);
+      color: var(--color-text-heading);
+    }
+    .confirm-order-box {
+      background: var(--color-bg-surface-alt); border-radius: var(--radius-lg);
+      padding: var(--space-4); border: 1px solid var(--color-border-default);
+      margin-bottom: var(--space-5);
+    }
+    .confirm-order-box__id {
+      font-family: var(--font-family-mono); font-size: var(--fs-sm); color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+    .confirm-order-box__title { font-size: var(--fs-base); font-weight: var(--fw-semibold); color: var(--color-text-heading); }
+    .confirm-order-box__meta { font-size: var(--fs-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .confirm-cod {
+      background: var(--color-warning-bg); border: 1px solid var(--color-warning-border);
+      border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-5);
+      display: flex; align-items: center; gap: var(--space-3);
+    }
+    .confirm-cod__amount { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--color-warning-text); }
+    .confirm-cod__label { font-size: var(--fs-sm); color: var(--color-warning-text); }
+    .radio-row {
+      display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3);
+      border: 1.5px solid var(--color-border-default); border-radius: var(--radius-md);
+      cursor: pointer; margin-bottom: var(--space-2); transition: border-color var(--duration-base);
+      font-size: var(--fs-sm); color: var(--color-text-body);
+    }
+    .radio-row:has(input:checked) { border-color: var(--color-primary-500); background: var(--color-primary-50); }
+    .check-row {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      font-size: var(--fs-sm); color: var(--color-text-body); padding: var(--space-2) 0; cursor: pointer;
+    }
+    .check-row input { margin-top: 2px; }
+  </style>
 </head>
-<body data-role="admin">
-    <div class="app-shell">
-        <div class="brand-header" id="app-brand-header"></div>
-        <main class="content">
-            <div class="eyebrow">LIÊN KẾT MỘT LẦN / KHÔNG CẦN TÀI KHOẢN</div>
-            <h1 class="page-title">Xác nhận giao hàng</h1>
+<body>
 
-            <div class="card" style="margin-top:12px">
-                <div class="card-title">Đơn #NN1025 · Hoàng Nam</div>
-                <div class="meta-text">Rau cải thìa · 2 kg<br />24 Định Công, Hà Nội</div>
-            </div>
-
-            <div class="card-green">
-                <div class="card-title">Tiền COD cần thu: 70.000đ</div>
-                <div class="meta-text">Người mua đã yêu cầu đồng kiểm.<br />Kiểm tra hàng trước khi thu tiền.</div>
-            </div>
-
-            <div class="form-label" style="margin:12px 0 8px">Kết quả đồng kiểm</div>
-            <label class="radio-row"><input type="radio" name="inspect" checked /><span>Đạt · Người mua đồng ý nhận</span></label>
-            <label class="radio-row"><input type="radio" name="inspect" /><span>Không đạt · Không thu tiền COD</span></label>
-
-            <label class="check-row" style="margin-top:12px">
-                <input type="checkbox" checked />
-                <span>Đã giao hàng và đã thu tiền COD</span>
-            </label>
-
-            <p class="meta-text" style="margin:8px 0 16px">Nếu không đạt: thêm ảnh làm căn cứ xử lý. Không xác nhận đã thu tiền.</p>
-
-            <button type="button" class="btn btn-primary" onclick="showToast('Đã xác nhận giao thành công đơn #NN1025')">Xác nhận đã giao</button>
-            <p class="meta-text" style="margin-top:10px">Liên kết chỉ sử dụng một lần.<br />Mốc "Đã giao" bắt đầu hạn khiếu nại 24h.</p>
-        </main>
+<div class="confirm-shell">
+  <div class="confirm-card">
+    <div class="confirm-brand">
+      <img src="../../assets/images/logocnpm 1.png" alt="NSV" style="width:28px;height:28px" />
+      Nông Sản Việt
     </div>
-    <script src="../../js/app.js"></script>
+    <div class="confirm-eyebrow">Liên kết một lần · Không cần tài khoản</div>
+    <h1 style="font-size:var(--fs-xl);font-weight:var(--fw-bold);color:var(--color-text-heading);margin-bottom:var(--space-5)">
+      Xác nhận giao hàng
+    </h1>
+
+    <!-- Order info -->
+    <div class="confirm-order-box">
+      <div class="confirm-order-box__id">Đơn hàng #NN1025</div>
+      <div class="confirm-order-box__title">Rau cải thìa hữu cơ · 2 kg</div>
+      <div class="confirm-order-box__meta">
+        <span data-icon="user" data-size="14"></span> Hoàng Nam &nbsp;·&nbsp;
+        <span data-icon="map-pin" data-size="14"></span> 24 Định Công, Hoàng Mai, Hà Nội
+      </div>
+    </div>
+
+    <!-- COD amount -->
+    <div class="confirm-cod">
+      <span data-icon="dollar-sign" data-size="24" style="color:var(--color-warning-text)"></span>
+      <div>
+        <div class="confirm-cod__amount">70.000đ</div>
+        <div class="confirm-cod__label">Tiền COD cần thu · Kiểm tra hàng trước khi thu tiền</div>
+      </div>
+    </div>
+
+    <!-- Inspection result -->
+    <div class="form-group">
+      <div class="form-label" style="margin-bottom:var(--space-3)">Kết quả đồng kiểm</div>
+      <label class="radio-row">
+        <input type="radio" name="inspect" value="pass" checked />
+        <div>
+          <div style="font-weight:var(--fw-medium)">Đạt — Người mua đồng ý nhận hàng</div>
+          <div style="font-size:var(--fs-xs);color:var(--color-text-muted)">Thu tiền COD 70.000đ</div>
+        </div>
+      </label>
+      <label class="radio-row">
+        <input type="radio" name="inspect" value="fail" />
+        <div>
+          <div style="font-weight:var(--fw-medium)">Không đạt — Hàng không đúng chất lượng</div>
+          <div style="font-size:var(--fs-xs);color:var(--color-text-muted)">Không thu tiền COD, cần ảnh minh chứng</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Photo upload (shows when fail) -->
+    <div id="uploadSection" style="display:none;margin-bottom:var(--space-4)">
+      <div class="form-label">Ảnh minh chứng hàng lỗi</div>
+      <div class="upload-zone" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-zone__icon"><span data-icon="camera" data-size="32"></span></div>
+        <div class="upload-zone__label">Chụp ảnh hoặc tải lên</div>
+        <div class="upload-zone__hint">JPG, PNG · Tối đa 5MB</div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" />
+    </div>
+
+    <!-- Signature -->
+    <div class="form-group">
+      <div class="form-label">Chữ ký xác nhận (tùy chọn)</div>
+      <div class="sig-pad" id="sigPad">
+        <span data-icon="edit-3" data-size="20" style="margin-right:8px"></span>
+        Vẽ chữ ký tại đây
+      </div>
+      <button class="btn btn--ghost btn--sm" style="margin-top:var(--space-2)" onclick="clearSig()">
+        <span data-icon="rotate-ccw" data-size="14"></span> Xóa chữ ký
+      </button>
+    </div>
+
+    <!-- Confirm check -->
+    <label class="check-row" style="margin-bottom:var(--space-5)">
+      <input type="checkbox" id="confirmCheck" />
+      <span>Tôi xác nhận đã giao hàng và <strong>đã thu tiền COD</strong> từ người mua</span>
+    </label>
+
+    <div class="alert alert--warning" style="margin-bottom:var(--space-5)">
+      <span data-icon="clock" data-size="18"></span>
+      <div>Mốc "Đã giao" bắt đầu hạn khiếu nại <strong>24 giờ</strong>. Liên kết này chỉ sử dụng được <strong>một lần</strong>.</div>
+    </div>
+
+    <button class="btn btn--primary btn--block" id="confirmBtn" onclick="submitConfirm()">
+      <span data-icon="check-circle" data-size="20"></span>
+      Xác nhận đã giao hàng
+    </button>
+
+    <div style="text-align:center;margin-top:var(--space-4);font-size:var(--fs-xs);color:var(--color-text-muted)">
+      Nếu gặp sự cố, gọi hotline: <strong>1900 xxxx</strong>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+
+  var radios = document.querySelectorAll('input[name="inspect"]');
+  radios.forEach(function (r) {
+    r.addEventListener('change', function () {
+      var upload = document.getElementById('uploadSection');
+      var check  = document.getElementById('confirmCheck');
+      if (r.value === 'fail' && r.checked) {
+        upload.style.display = 'block';
+        check.parentElement.style.display = 'none';
+        if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+      } else {
+        upload.style.display = 'none';
+        check.parentElement.style.display = 'flex';
+      }
+    });
+  });
+});
+
+function clearSig() { document.getElementById('sigPad').textContent = 'Vẽ chữ ký tại đây'; }
+
+function submitConfirm() {
+  var inspectPass = document.querySelector('input[name="inspect"]:checked').value === 'pass';
+  if (inspectPass) {
+    var checked = document.getElementById('confirmCheck').checked;
+    if (!checked) { alert('Vui lòng xác nhận đã giao hàng và thu tiền COD trước khi tiếp tục.'); return; }
+    alert('✅ Đã xác nhận giao thành công đơn #NN1025. Thu tiền COD 70.000đ. Hạn khiếu nại bắt đầu từ bây giờ.');
+  } else {
+    alert('Đã ghi nhận hàng không đạt. Không thu tiền COD. Khiếu nại sẽ được xử lý bởi Admin.');
+  }
+}
+</script>
 </body>
 </html>

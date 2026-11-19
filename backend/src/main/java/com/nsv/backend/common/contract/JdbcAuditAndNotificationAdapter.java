@@ -1,5 +1,6 @@
 package com.nsv.backend.common.contract;
 
+import com.nsv.backend.common.audit.service.AuditLogService;
 import com.nsv.backend.common.notification.service.InAppNotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 public class JdbcAuditAndNotificationAdapter implements AuditAndNotificationPort {
     private final InAppNotificationService notificationService;
     private final JdbcTemplate jdbcTemplate;
+    private final AuditLogService auditLogService;
 
     @Override
     public void sendNotification(Long userId, String content) {

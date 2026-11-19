@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặt hàng — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <style>
+    .payment-option { display: flex; align-items: center; gap: var(--space-4); border: 1.5px solid var(--color-border-default); border-radius: var(--radius-md); padding: var(--space-4); cursor: pointer; margin-bottom: var(--space-3); transition: border-color var(--duration-base); }
+    .payment-option:has(input:checked) { border-color: var(--color-primary-500); background: var(--color-primary-50); }
+    .payment-option input { accent-color: var(--color-primary-500); width: 20px; height: 20px; flex-shrink: 0; }
+    .payment-option__icon { width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; background: var(--color-neutral-100); flex-shrink: 0; }
+  </style>
+</head>
+<body class="app">
+
+  <!-- Header -->
+  <header class="app-header" id="appHeader">
+    <div class="app-header__inner">
+      <a class="app-header__brand" href="home.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" width="32" height="32">
+        Nông Sản Việt
+      </a>
+      <div class="app-header__search">
+        <span class="app-header__search__icon" data-icon="search" data-size="18"></span>
+        <input class="form-field__input" type="search" placeholder="Tìm rau củ, trái cây, trang trại..." aria-label="Tìm kiếm sản phẩm">
+        <button class="app-header__search__btn" type="button">Tìm</button>
+      </div>
+      <div class="app-header__actions">
+        <a class="icon-btn" href="cart.html" aria-label="Giỏ hàng">
+          <span data-icon="shopping-cart" data-size="22"></span>
+          <span class="icon-btn__badge" id="cartBadge">3</span>
+        </a>
+        <a class="icon-btn" href="notifications.html" aria-label="Thông báo">
+          <span data-icon="bell" data-size="22"></span>
+          <span class="icon-btn__badge" id="notifBadge" hidden>3</span>
+        </a>
+        <div class="dropdown" id="userDropdown">
+          <button class="app-header__avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userAvatarBtn">
+            <div class="avatar avatar--sm" id="userAvatar">N</div>
+            <span class="app-header__username" id="usernameText">Tài khoản</span>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </button>
+          <div class="dropdown__menu" id="userMenu" role="menu">
+            <a class="dropdown__item" href="profile.html" role="menuitem"><span data-icon="user" data-size="18"></span>Hồ sơ cá nhân</a>
+            <a class="dropdown__item" href="orders.html" role="menuitem"><span data-icon="package" data-size="18"></span>Đơn hàng của tôi</a>
+            <button class="dropdown__item" type="button" id="logoutBtn" role="menuitem"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category bar -->
+  <nav class="category-bar" aria-label="Danh mục sản phẩm">
+    <div class="category-bar__inner">
+      <a class="category-bar__link" href="search.html?cat=rau-cu"><span data-icon="leaf" data-size="16"></span>Rau củ</a>
+      <a class="category-bar__link" href="search.html?cat=trai-cay"><span data-icon="shopping-bag" data-size="16"></span>Trái cây</a>
+      <a class="category-bar__link" href="search.html?type=preorder"><span data-icon="calendar" data-size="16"></span>Pre-order theo mùa</a>
+      <a class="category-bar__link" href="search.html?type=combo"><span data-icon="package" data-size="16"></span>Combo</a>
+      <a class="category-bar__link" href="search.html?filter=region"><span data-icon="map-pin" data-size="16"></span>Theo khu vực</a>
+    </div>
+  </nav>
+
+  <main class="app__main">
+
+    <div class="page-head">
+      <h1 class="page-head__title">Đặt hàng</h1>
+    </div>
+
+    <!-- Stepper -->
+    <ol class="stepper" aria-label="Các bước đặt hàng">
+      <li class="stepper__step is-active">
+        <span class="stepper__circle">1</span>
+        <span>Địa chỉ &amp; Thanh toán</span>
+      </li>
+      <div class="stepper__connector"></div>
+      <li class="stepper__step">
+        <span class="stepper__circle">2</span>
+        <span>Xác nhận đơn</span>
+      </li>
+      <div class="stepper__connector"></div>
+      <li class="stepper__step">
+        <span class="stepper__circle">3</span>
+        <span>Hoàn thành</span>
+      </li>
+    </ol>
+
+    <div class="checkout-grid">
+      <!-- Left: address + payment -->
+      <div>
+        <!-- Địa chỉ giao hàng -->
+        <div class="card">
+          <h3 class="card__title" style="margin-bottom:var(--space-4);">
+            <span data-icon="map-pin" data-size="20" style="vertical-align:middle;margin-right:var(--space-2);"></span>
+            Địa chỉ giao hàng
+          </h3>
+          <div class="address-pick">
+            <label class="address-option is-active">
+              <input type="radio" name="address" checked style="accent-color:var(--color-primary-500);flex-shrink:0;width:18px;height:18px;">
+              <div>
+                <div style="font-weight:var(--fw-semibold);margin-bottom:var(--space-1);">Nguyễn Văn A <span class="badge badge--success" style="margin-left:var(--space-2);">Mặc định</span></div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">0912 345 678</div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">123 Nguyễn Trãi, P. Thanh Xuân Trung, Q. Thanh Xuân, Hà Nội</div>
+              </div>
+            </label>
+            <label class="address-option">
+              <input type="radio" name="address" style="accent-color:var(--color-primary-500);flex-shrink:0;width:18px;height:18px;">
+              <div>
+                <div style="font-weight:var(--fw-semibold);margin-bottom:var(--space-1);">Văn phòng công ty</div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">0987 654 321</div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">45 Lê Duẩn, P. Bến Nghé, Q. 1, TP. Hồ Chí Minh</div>
+              </div>
+            </label>
+            <a href="profile.html" class="btn btn--ghost btn--sm" style="align-self:flex-start;">
+              <span data-icon="plus" data-size="16"></span> Thêm địa chỉ mới
+            </a>
+          </div>
+
+          <div class="alert alert--info" style="margin-top:var(--space-4);">
+            <span class="alert__icon" data-icon="truck" data-size="18"></span>
+            <div>
+              <strong>Phí vận chuyển: 30.000đ</strong><br>
+              <span style="font-size:var(--fs-sm);">Dự kiến giao trong 1–2 ngày làm việc. Miễn phí ship đơn từ 300.000đ.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phương thức thanh toán -->
+        <div class="card">
+          <h3 class="card__title" style="margin-bottom:var(--space-4);">
+            <span data-icon="credit-card" data-size="20" style="vertical-align:middle;margin-right:var(--space-2);"></span>
+            Phương thức thanh toán
+          </h3>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="cod" checked>
+            <div class="payment-option__icon">
+              <span data-icon="banknote" data-size="20" style="color:var(--color-success-text)"></span>
+            </div>
+            <div>
+              <div style="font-weight:var(--fw-semibold);">Tiền mặt khi nhận hàng (COD)</div>
+              <div style="font-size:var(--fs-sm);color:var(--color-text-muted);">Trả tiền mặt khi shipper giao tới</div>
+            </div>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="vnpay">
+            <div class="payment-option__icon">
+              <span data-icon="smartphone" data-size="20" style="color:var(--color-info-text)"></span>
+            </div>
+            <div>
+              <div style="font-weight:var(--fw-semibold);">VNPay / Chuyển khoản</div>
+              <div style="font-size:var(--fs-sm);color:var(--color-text-muted);">Thanh toán qua QR VNPay hoặc internet banking</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Pre-order deposit warning -->
+        <div class="alert alert--warning">
+          <span class="alert__icon" data-icon="alert-triangle" data-size="18"></span>
+          <div>
+            <strong>Đơn có sản phẩm Pre-order</strong><br>
+            <span style="font-size:var(--fs-sm);">Dâu tây Mộc Châu yêu cầu đặt cọc 30% (36.000đ). Phần còn lại thanh toán khi nhận hàng.</span>
+          </div>
+        </div>
+
+        <!-- Note -->
+        <div class="form-field">
+          <label class="form-field__label" for="orderNote">Ghi chú đơn hàng (không bắt buộc)</label>
+          <textarea class="form-field__textarea" id="orderNote" placeholder="VD: Gọi trước khi giao, không có người trước 8h sáng..." style="min-height:80px;"></textarea>
+        </div>
+      </div>
+
+      <!-- Right: Order summary -->
+      <aside>
+        <div class="cart-summary">
+          <h3 style="margin-bottom:var(--space-4);">Tóm tắt đơn hàng</h3>
+
+          <div style="margin-bottom:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3);">
+            <div style="display:flex;gap:var(--space-3);align-items:center;">
+              <img src="https://images.unsplash.com/photo-1587334207128-eadba5b80e56?w=100&h=100&fit=crop" alt="" style="width:48px;height:48px;border-radius:var(--radius-sm);object-fit:cover;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Xoài cát Hòa Lộc × 2kg</div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">130.000đ</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-3);align-items:center;">
+              <img src="https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=100&h=100&fit=crop" alt="" style="width:48px;height:48px;border-radius:var(--radius-sm);object-fit:cover;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Cải thảo Đà Lạt × 3kg</div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">75.000đ</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:var(--space-3);align-items:center;">
+              <img src="https://images.unsplash.com/photo-1546630392-05bcf1b2048c?w=100&h=100&fit=crop" alt="" style="width:48px;height:48px;border-radius:var(--radius-sm);object-fit:cover;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Dâu tây Mộc Châu × 1kg <span class="badge badge--seasonal" style="font-size:11px;">PO</span></div>
+                <div style="color:var(--color-text-muted);font-size:var(--fs-sm);">120.000đ</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider">
+          <div class="cart-summary__row"><span>Tạm tính</span><span>325.000đ</span></div>
+          <div class="cart-summary__row"><span>Phí giao hàng</span><span>30.000đ</span></div>
+          <div class="cart-summary__row"><span>Đặt cọc pre-order</span><span>36.000đ</span></div>
+          <div class="cart-summary__row cart-summary__row--total">
+            <span>Cần thanh toán ngay</span>
+            <span class="price">66.000đ</span>
+          </div>
+          <div style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:var(--space-2);">Phần còn lại (319.000đ) thu khi nhận hàng.</div>
+          <a class="btn btn--primary btn--block" href="order-tracking.html" style="margin-top:var(--space-4);">
+            <span data-icon="check-circle" data-size="20"></span>
+            Xác nhận đặt hàng
+          </a>
+        </div>
+      </aside>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Điều hướng chính">
+    <a class="bottom-nav__item" href="home.html" aria-label="Trang chủ">
+      <span class="bottom-nav__item__icon" data-icon="home" data-size="22"></span>
+      <span class="bottom-nav__item__label">Trang chủ</span>
+    </a>
+    <a class="bottom-nav__item" href="search.html" aria-label="Tìm kiếm">
+      <span class="bottom-nav__item__icon" data-icon="search" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tìm kiếm</span>
+    </a>
+    <a class="bottom-nav__item" href="cart.html" aria-label="Giỏ hàng">
+      <span class="bottom-nav__item__icon">
+        <span data-icon="shopping-cart" data-size="22"></span>
+        <span class="bottom-nav__item__badge" id="bottomCartBadge">3</span>
+      </span>
+      <span class="bottom-nav__item__label">Giỏ hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="orders.html" aria-label="Đơn hàng">
+      <span class="bottom-nav__item__icon" data-icon="package" data-size="22"></span>
+      <span class="bottom-nav__item__label">Đơn hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="profile.html" aria-label="Tôi">
+      <span class="bottom-nav__item__icon" data-icon="user" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tôi</span>
+    </a>
+  </nav>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    NSV.renderIcons();
+    var btn = document.getElementById('userAvatarBtn');
+    var dd = document.getElementById('userDropdown');
+    if (btn && dd) {
+      btn.addEventListener('click', function() {
+        dd.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    }
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    window.addEventListener('scroll', function() {
+      var h = document.getElementById('appHeader');
+      if (h) h.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+    var user = NSV.auth.getUser();
+    if (user) {
+      var uname = document.getElementById('usernameText');
+      var uavatar = document.getElementById('userAvatar');
+      if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
+      if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+    }
+  });
+  </script>
+</body>
+</html>

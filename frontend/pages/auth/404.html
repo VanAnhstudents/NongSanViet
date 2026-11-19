@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Không tìm thấy trang — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/auth.css">
+</head>
+<body>
+  <main class="error-page">
+    <div class="error-page__art">
+      <svg width="180" height="140" viewBox="0 0 180 140" fill="none" role="img" aria-label="Trang không tìm thấy">
+        <!-- Mặt đất nhẹ -->
+        <ellipse cx="90" cy="120" rx="70" ry="9" fill="#eef7ee"/>
+        <!-- Thân mầm -->
+        <path d="M90 120 V68" stroke="#2e8b3d" stroke-width="4" stroke-linecap="round"/>
+        <!-- Lá trái -->
+        <path d="M90 86 C77 80 69 70 71 57 C84 59 92 70 90 86 Z" fill="#7ec67f"/>
+        <!-- Lá phải -->
+        <path d="M90 86 C103 80 111 70 109 57 C96 59 88 70 90 86 Z" fill="#52a854"/>
+        <!-- Dấu hỏi "lạc đường" -->
+        <circle cx="138" cy="40" r="26" fill="#fdf2e7" stroke="#f0a85c" stroke-width="2.5"/>
+        <text x="138" y="49" font-family="Be Vietnam Pro, Inter, sans-serif" font-size="28" font-weight="700" fill="#955115" text-anchor="middle">?</text>
+        <!-- Đường đứt nét từ dấu hỏi đến mầm -->
+        <path d="M116 44 C101 53 97 60 97 64" stroke="#c3c9bd" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 5" fill="none"/>
+      </svg>
+    </div>
+    <div class="error-page__code" id="errCode">404</div>
+    <h1 class="error-page__title" id="errTitle">Không tìm thấy trang</h1>
+    <p class="error-page__desc" id="errDesc">Trang bạn tìm có thể đã bị di chuyển hoặc không còn tồn tại. Hãy quay về trang chủ để tiếp tục.</p>
+    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;justify-content:center">
+      <a class="btn btn--primary btn--lg" href="login.html" id="homeBtn">
+        <span data-icon="home" data-size="18"></span><span>Về trang chủ</span>
+      </a>
+      <a class="btn btn--secondary btn--lg" href="javascript:history.back()" id="backBtn">
+        <span data-icon="arrow-left" data-size="18"></span><span>Quay lại</span>
+      </a>
+    </div>
+  </main>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/core/form.js"></script>
+  <script src="../../js/components.js"></script>
+  <script src="../../js/pages/404.js"></script>
+</body>
+</html>
