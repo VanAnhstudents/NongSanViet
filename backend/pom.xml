@@ -155,8 +155,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<!-- Buá»™c JVM dÃ¹ng Asia/Ho_Chi_Minh thay vÃ¬ Asia/Saigon mÃ  Windows map sang.
-					     PostgreSQL khÃ´ng nháº­n alias "Asia/Saigon" nhÆ°ng nháº­n "Asia/Ho_Chi_Minh". -->
 					<jvmArguments>-Duser.timezone=Asia/Ho_Chi_Minh</jvmArguments>
 				</configuration>
 			</plugin>
