@@ -1,6 +1,6 @@
 package com.nsv.backend.admin.repository;
 
-import com.nsv.backend.admin.entity.AuditLog;
+import com.nsv.backend.common.audit.entity.AuditLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,48 +1,336 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản trị · Người dùng - Nông Sản Việt</title>
-    <link rel="stylesheet" href="../../css/main.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản lý người dùng — Nông Sản Việt Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
 </head>
-<body data-role="admin" data-active="users">
-    <div class="app-shell">
-        <div class="brand-header" id="app-brand-header"></div>
-        <nav class="admin-nav" id="app-admin-nav"></nav>
-        <main class="content">
-            <div class="eyebrow">QUẢN TRỊ / VẬN HÀNH</div>
-            <h1 class="page-title">Quản lý người dùng</h1>
+<body>
 
-            <div class="form-group" style="margin-top:12px">
-                <label class="form-label">Tìm tài khoản</label>
-                <input class="input" type="text" placeholder="Tên, số điện thoại hoặc mã tài khoản" />
-            </div>
-
-            <div class="filter-tabs">
-                <span class="active">Chờ duyệt (6)</span>
-                <span>Hoạt động</span>
-                <span>Đã khóa</span>
-            </div>
-
-            <div class="card">
-                <div class="card-title">Nông trại Bình Minh</div>
-                <div class="meta-text">Nông dân cá thể · Hà Nội<br />Đã gửi hồ sơ và chứng nhận VietGAP<br />Đăng ký: 10/11/2026</div>
-                <div class="btn-row">
-                    <button type="button" class="btn btn-soft btn-sm" onclick="showToast('Đang mở hồ sơ VietGAP Nông trại Bình Minh')">Xem hồ sơ</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="showToast('Đã duyệt hồ sơ Nông trại Bình Minh')">Duyệt hồ sơ</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">Nguyễn Hoàng Nam</div>
-                <div class="meta-text">Người mua · 0903 456 789<br />Trạng thái: Đang hoạt động</div>
-                <button type="button" class="btn btn-soft btn-sm" style="margin-top:10px" onclick="showToast('Đã cập nhật trạng thái tài khoản')">Khóa tài khoản</button>
-            </div>
-
-            <p class="meta-text" style="margin-top:10px">Mỗi quyết định đều lưu thời gian và người xử lý.</p>
-        </main>
+<div class="admin-shell">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar__head">
+      <a class="admin-sidebar__brand" href="dashboard.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="NSV" />
+        Nông Sản Việt
+      </a>
+      <div class="admin-sidebar__label">Quản trị viên</div>
     </div>
-    <script src="../../js/app.js"></script>
+    <nav class="admin-nav">
+      <a class="admin-nav__item" href="dashboard.html"><span data-icon="bar-chart-2" data-size="20"></span>Tổng quan</a>
+      <a class="admin-nav__item" href="farmer-approval.html"><span data-icon="shield" data-size="20"></span>Duyệt Farmer</a>
+      <a class="admin-nav__item is-active" href="users.html"><span data-icon="user" data-size="20"></span>Quản lý người dùng</a>
+      <a class="admin-nav__item" href="categories.html"><span data-icon="leaf" data-size="20"></span>Danh mục sản phẩm</a>
+      <a class="admin-nav__item" href="disputes.html"><span data-icon="alert-triangle" data-size="20"></span>Khiếu nại &amp; Tranh chấp</a>
+      <a class="admin-nav__item" href="reports.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo hệ thống</a>
+      <a class="admin-nav__item" href="audit-log.html"><span data-icon="database" data-size="20"></span>Nhật ký hệ thống</a>
+    </nav>
+    <div class="admin-sidebar__foot">
+      <button class="btn btn--ghost btn--sm" id="adminLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
+        <span data-icon="log-out" data-size="18"></span>Đăng xuất
+      </button>
+    </div>
+  </aside>
+  <div class="admin-sidebar__overlay" id="sidebarOverlay"></div>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header__inner">
+        <button class="admin-header__menu-btn" id="menuToggle" aria-label="Mở menu"><span data-icon="menu" data-size="22"></span></button>
+        <h1 class="admin-header__title">Quản lý người dùng</h1>
+        <div class="admin-header__actions">
+          <a class="icon-btn" href="disputes.html" aria-label="Khiếu nại chờ xử lý">
+            <span data-icon="bell" data-size="22"></span>
+            <span class="icon-btn__badge">2</span>
+          </a>
+          <div class="dropdown" id="adminDropdown">
+            <button class="app-header__avatar-btn" type="button" id="adminAvatarBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar--sm" style="background:var(--color-role-admin);color:#fff">A</div>
+              <span class="app-header__username">Admin</span>
+              <span data-icon="chevron-down" data-size="16"></span>
+            </button>
+            <div class="dropdown__menu" id="adminMenu">
+              <button class="dropdown__item" type="button" id="adminLogout2"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-content">
+
+      <!-- Search + filter row -->
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-bottom:var(--space-5);align-items:center">
+        <div class="search-bar" style="flex:1;min-width:220px">
+          <span class="search-bar__icon"><span data-icon="search" data-size="18"></span></span>
+          <input class="input" style="padding-left:40px" type="text" placeholder="Tìm theo tên, email, số điện thoại..." />
+        </div>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="filter-tabs">
+        <button class="filter-tab is-active">Tất cả <span class="filter-tab__count">24</span></button>
+        <button class="filter-tab">Farmer <span class="filter-tab__count">9</span></button>
+        <button class="filter-tab">Buyer <span class="filter-tab__count">15</span></button>
+      </div>
+
+      <!-- Desktop table -->
+      <div class="show-desktop">
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tên</th>
+                <th>Email / SĐT</th>
+                <th>Vai trò</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:var(--space-3)">
+                    <div class="avatar avatar--sm" style="background:#e8f5e9;color:#2e7d32">B</div>
+                    <div>
+                      <div style="font-weight:var(--fw-medium)">Nguyễn Văn Bình</div>
+                      <div style="font-size:var(--fs-xs);color:var(--color-text-muted)">Nông trại Bình Minh</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span style="font-family:var(--font-family-mono);font-size:var(--fs-sm)">0912 345 678</span></td>
+                <td><span class="badge badge--success">Farmer</span></td>
+                <td><span class="badge badge--success">Hoạt động</span></td>
+                <td><span class="table__mono">05/01/2025</span></td>
+                <td>
+                  <button class="btn btn--danger btn--sm" onclick="showLockFarmerModal('Nguyễn Văn Bình')">
+                    <span data-icon="lock" data-size="14"></span> Khóa
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:var(--space-3)">
+                    <div class="avatar avatar--sm" style="background:#e3f2fd;color:#1565c0">M</div>
+                    <div style="font-weight:var(--fw-medium)">Trần Thị Mai Anh</div>
+                  </div>
+                </td>
+                <td><span style="font-family:var(--font-family-mono);font-size:var(--fs-sm)">maianh@gmail.com</span></td>
+                <td><span class="badge badge--info">Buyer</span></td>
+                <td><span class="badge badge--success">Hoạt động</span></td>
+                <td><span class="table__mono">12/02/2025</span></td>
+                <td>
+                  <button class="btn btn--secondary btn--sm" onclick="showLockModal('Trần Thị Mai Anh',false)">
+                    <span data-icon="lock" data-size="14"></span> Khóa
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:var(--space-3)">
+                    <div class="avatar avatar--sm" style="background:#fce4ec;color:#c62828">H</div>
+                    <div>
+                      <div style="font-weight:var(--fw-medium)">Lò Văn Hùng</div>
+                      <div style="font-size:var(--fs-xs);color:var(--color-text-muted)">HTX Nông nghiệp Sơn La</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span style="font-family:var(--font-family-mono);font-size:var(--fs-sm)">0978 234 567</span></td>
+                <td><span class="badge badge--success">Farmer</span></td>
+                <td><span class="badge badge--danger">Bị khóa</span></td>
+                <td><span class="table__mono">20/03/2025</span></td>
+                <td>
+                  <button class="btn btn--secondary btn--sm" onclick="alert('Đã mở khóa tài khoản Lò Văn Hùng')">
+                    <span data-icon="unlock" data-size="14"></span> Mở khóa
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:var(--space-3)">
+                    <div class="avatar avatar--sm" style="background:#f3e5f5;color:#6a1b9a">P</div>
+                    <div style="font-weight:var(--fw-medium)">Phạm Hoàng Nam</div>
+                  </div>
+                </td>
+                <td><span style="font-family:var(--font-family-mono);font-size:var(--fs-sm)">0903 456 789</span></td>
+                <td><span class="badge badge--info">Buyer</span></td>
+                <td><span class="badge badge--success">Hoạt động</span></td>
+                <td><span class="table__mono">01/04/2025</span></td>
+                <td>
+                  <button class="btn btn--secondary btn--sm" onclick="showLockModal('Phạm Hoàng Nam',false)">
+                    <span data-icon="lock" data-size="14"></span> Khóa
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:var(--space-3)">
+                    <div class="avatar avatar--sm" style="background:#e8f5e9;color:#2e7d32">H</div>
+                    <div>
+                      <div style="font-weight:var(--fw-medium)">Phạm Thị Hoa</div>
+                      <div style="font-size:var(--fs-xs);color:var(--color-text-muted)">Vườn trái cây Mekong</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span style="font-family:var(--font-family-mono);font-size:var(--fs-sm)">hoa.mekong@gmail.com</span></td>
+                <td><span class="badge badge--success">Farmer</span></td>
+                <td><span class="badge badge--success">Hoạt động</span></td>
+                <td><span class="table__mono">15/04/2025</span></td>
+                <td>
+                  <button class="btn btn--danger btn--sm" onclick="showLockFarmerModal('Phạm Thị Hoa')">
+                    <span data-icon="lock" data-size="14"></span> Khóa
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile card list -->
+      <div class="hide-desktop card-list">
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <div class="card-list__title">Nguyễn Văn Bình</div>
+              <div style="display:flex;gap:var(--space-2);margin-top:4px">
+                <span class="badge badge--success">Farmer</span>
+                <span class="badge badge--success">Hoạt động</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-list__meta">0912 345 678 · Nông trại Bình Minh · Tham gia 05/01/2025</div>
+          <div class="card-list__actions">
+            <button class="btn btn--danger btn--sm" onclick="showLockFarmerModal('Nguyễn Văn Bình')"><span data-icon="lock" data-size="14"></span> Khóa</button>
+          </div>
+        </div>
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <div class="card-list__title">Trần Thị Mai Anh</div>
+              <div style="display:flex;gap:var(--space-2);margin-top:4px">
+                <span class="badge badge--info">Buyer</span>
+                <span class="badge badge--success">Hoạt động</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-list__meta">maianh@gmail.com · Tham gia 12/02/2025</div>
+          <div class="card-list__actions">
+            <button class="btn btn--secondary btn--sm" onclick="showLockModal('Trần Thị Mai Anh',false)"><span data-icon="lock" data-size="14"></span> Khóa</button>
+          </div>
+        </div>
+        <div class="card-list__item">
+          <div class="card-list__header">
+            <div>
+              <div class="card-list__title">Lò Văn Hùng</div>
+              <div style="display:flex;gap:var(--space-2);margin-top:4px">
+                <span class="badge badge--success">Farmer</span>
+                <span class="badge badge--danger">Bị khóa</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-list__meta">0978 234 567 · HTX Nông nghiệp Sơn La · Tham gia 20/03/2025</div>
+          <div class="card-list__actions">
+            <button class="btn btn--secondary btn--sm" onclick="alert('Đã mở khóa tài khoản Lò Văn Hùng')"><span data-icon="unlock" data-size="14"></span> Mở khóa</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal: Khóa Farmer (cảnh báo gỡ sản phẩm) -->
+<div class="modal-backdrop" id="lockFarmerModal">
+  <div class="modal modal--danger">
+    <button class="modal__close" onclick="closeModal('lockFarmerModal')"><span data-icon="x" data-size="20"></span></button>
+    <div class="modal__icon"><span data-icon="alert-triangle" data-size="24"></span></div>
+    <div class="modal__title">Khóa tài khoản Farmer</div>
+    <div class="modal__body">
+      Bạn đang khóa tài khoản <strong id="lockFarmerName"></strong>.<br /><br />
+      <span style="color:var(--color-danger-text);font-weight:var(--fw-semibold)">⚠ Cảnh báo:</span> Hành động này sẽ <strong>gỡ toàn bộ sản phẩm</strong> của Farmer khỏi nền tảng và dừng tất cả đơn hàng đang chờ xử lý. Người mua đang theo dõi sản phẩm sẽ nhận thông báo.
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn--danger" onclick="confirmLockFarmer()"><span data-icon="lock" data-size="18"></span>Khóa tài khoản</button>
+      <button class="btn btn--ghost" onclick="closeModal('lockFarmerModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Khóa Buyer -->
+<div class="modal-backdrop" id="lockBuyerModal">
+  <div class="modal modal--danger">
+    <button class="modal__close" onclick="closeModal('lockBuyerModal')"><span data-icon="x" data-size="20"></span></button>
+    <div class="modal__icon"><span data-icon="lock" data-size="24"></span></div>
+    <div class="modal__title">Khóa tài khoản: <span id="lockBuyerName"></span></div>
+    <div class="modal__body">Người dùng sẽ không thể đăng nhập cho đến khi được mở khóa. Bạn có muốn tiếp tục không?</div>
+    <div class="modal__actions">
+      <button class="btn btn--danger" onclick="confirmLockBuyer()"><span data-icon="lock" data-size="18"></span>Khóa tài khoản</button>
+      <button class="btn btn--ghost" onclick="closeModal('lockBuyerModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+  var sidebar = document.getElementById('adminSidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+  if (menuBtn) menuBtn.addEventListener('click', function () { sidebar.classList.add('is-open'); });
+  if (overlay) overlay.addEventListener('click', function () { sidebar.classList.remove('is-open'); });
+  var btn = document.getElementById('adminAvatarBtn');
+  var dd = document.getElementById('adminDropdown');
+  if (btn && dd) {
+    btn.addEventListener('click', function () { dd.classList.toggle('is-open'); btn.setAttribute('aria-expanded', dd.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (dd && !dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); } });
+  }
+  function doLogout() { if (window.NSV && NSV.auth) NSV.auth.logout(); window.location.href = '../../pages/auth/login.html'; }
+  var l1 = document.getElementById('adminLogout'); if (l1) l1.addEventListener('click', doLogout);
+  var l2 = document.getElementById('adminLogout2'); if (l2) l2.addEventListener('click', doLogout);
+
+  document.querySelectorAll('.filter-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.filter-tab').forEach(function (t) { t.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+    });
+  });
+});
+
+function closeModal(id) { document.getElementById(id).classList.remove('is-open'); }
+
+function showLockFarmerModal(name) {
+  document.getElementById('lockFarmerName').textContent = name;
+  document.getElementById('lockFarmerModal').classList.add('is-open');
+}
+function showLockModal(name, isFarmer) {
+  if (isFarmer) { showLockFarmerModal(name); return; }
+  document.getElementById('lockBuyerName').textContent = name;
+  document.getElementById('lockBuyerModal').classList.add('is-open');
+}
+function confirmLockFarmer() {
+  closeModal('lockFarmerModal');
+  alert('Đã khóa tài khoản Farmer. Toàn bộ sản phẩm đã được gỡ khỏi nền tảng.');
+}
+function confirmLockBuyer() {
+  closeModal('lockBuyerModal');
+  alert('Đã khóa tài khoản người dùng.');
+}
+</script>
 </body>
 </html>
