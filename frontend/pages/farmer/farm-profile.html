@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hồ sơ trang trại - Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/farm-profile.css" />
+</head>
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button type="button" class="menu-toggle" id="menuToggle" aria-label="Mở menu">☰</button>
+      <div class="brand">
+        <span class="brand-icon">🌱</span>
+        <span>Nông Sản Việt</span>
+      </div>
+    </div>
+    <div class="topbar__channel">Kênh nông dân</div>
+    <div class="topbar-right" id="topbarFarmStatus">Vườn An · Đã xác minh</div>
+  </header>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <div class="sidebar__farm" id="sidebarFarmName">VƯỜN AN</div>
+        <nav class="nav">
+          <a href="#">Tổng quan</a>
+          <a href="./farm-profile.html" aria-current="page">Hồ sơ trang trại</a>
+          <a href="#">Sản phẩm và tồn kho</a>
+          <a href="./post-product-step1.html">Đăng bán sản phẩm</a>
+          <a href="#">Đơn hàng</a>
+          <a href="#">Nhật ký trồng trọt</a>
+          <a href="#">Khiếu nại</a>
+        </nav>
+      </div>
+      <div class="sidebar__foot">Nông Sản Việt</div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+      <div class="content-wrapper">
+        <p class="eyebrow">Quản lý tài khoản</p>
+        <h1>Hồ sơ trang trại</h1>
+
+        <div class="profile-grid">
+          <!-- CỘT TRÁI: THẺ TÓM TẮT -->
+          <div class="left-cards">
+            <div class="info-card highlight">
+              <div class="card-title" id="cardFarmName">
+                Vườn An <span class="verified-badge">✓ Đã xác minh</span>
+              </div>
+              <div class="card-meta">Nông dân cá thể · Lâm Đồng</div>
+              <div class="card-meta">★ 4,9 · 128 đánh giá</div>
+            </div>
+
+            <div class="info-card">
+              <div class="card-title">Chứng nhận chất lượng</div>
+              <div class="card-meta" id="cardCertStatus">
+                VietGAP · Đã được quản trị xác minh
+              </div>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cert-link"
+                id="cardCertLink"
+                hidden
+              >
+                Xem đường dẫn chứng nhận ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- CỘT PHẢI: FORM THÔNG TIN -->
+          <div class="card card--form">
+            <form id="farmProfileForm" novalidate>
+              <!-- Thông tin cơ bản -->
+              <div class="field">
+                <label for="farmName">Tên trang trại</label>
+                <input
+                  type="text"
+                  id="farmName"
+                  name="farmName"
+                />
+                <div class="field__error" id="errorFarmName" hidden>Tên trang trại không được để trống.</div>
+              </div>
+
+              <div class="field">
+                <label for="farmAddress">Địa chỉ vùng trồng</label>
+                <input
+                  type="text"
+                  id="farmAddress"
+                  name="farmAddress"
+                />
+                <div class="field__error" id="errorFarmAddress" hidden>Địa chỉ không được để trống.</div>
+              </div>
+
+              <div class="field">
+                <label for="farmPhone">Số điện thoại liên hệ</label>
+                <input
+                  type="tel"
+                  id="farmPhone"
+                  name="farmPhone"
+                />
+                <div class="field__error" id="errorFarmPhone" hidden>Số điện thoại không được để trống.</div>
+              </div>
+
+              <!-- PBI-11: Thông tin mở rộng (Tùy chọn) -->
+              <hr class="divider" />
+              <div class="section-subhead">Thông tin mở rộng (Tùy chọn)</div>
+
+              <div class="field">
+                <label for="certificateUrl">
+                  <span>Đường dẫn tài liệu chứng nhận (URL)</span>
+                  <span class="opt">Không bắt buộc · Tối đa 500 ký tự</span>
+                </label>
+                <input
+                  type="url"
+                  id="certificateUrl"
+                  name="certificateUrl"
+                  maxlength="500"
+                />
+                <div class="field__hint">
+                  <span>Có thể bỏ trống nếu chưa có.</span>
+                  <span id="charCount">0/500</span>
+                </div>
+                <div class="field__error" id="errorCertUrl" hidden>Đường dẫn không được vượt quá 500 ký tự.</div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn--primary" id="btnSaveProfile">
+                  Lưu thông tin trang trại
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Thông báo -->
+  <div class="toast" id="toast" hidden></div>
+
+  <script type="module" src="../../js/pages/farm-profile.js"></script>
+</body>
+</html>
