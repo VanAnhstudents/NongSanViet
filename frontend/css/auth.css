@@ -3,87 +3,46 @@
    Nạp sau tokens + base + components
    ============================================ */
 
-/* ---------- Body chung cho mọi trang auth ---------- */
-body {
-  margin: 0;
-  padding: 0;
-  background: var(--color-neutral-50);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ---------- Topbar ---------- */
-.auth-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--space-8);
-  height: 56px;
-  background: var(--color-bg-surface);
-  border-bottom: 1px solid var(--color-neutral-100);
-  flex-shrink: 0;
-}
-
-.auth-topbar__logo {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  text-decoration: none;
-  font-family: var(--font-family-heading);
-  font-weight: var(--fw-bold);
-  font-size: var(--fs-lg);
-  color: var(--color-primary-700);
-}
-
-.auth-topbar__logo img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.auth-topbar__tagline {
-  font-size: var(--fs-sm);
-  color: var(--color-text-muted);
-}
-
-/* ---------- Layout chính: 2 cột (visual trái + form phải) ---------- */
+/* ---------- Layout chính: 2 cột (visual trái + form phải) lấp đầy ---------- */
 .auth-wrap {
-  flex: 1;
+  min-height: 100vh;
   display: flex;
   align-items: stretch;
   justify-content: center;
-  padding: var(--space-8) var(--space-6);
-  gap: var(--space-10);
+  gap: var(--space-8);
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding: var(--space-6) var(--container-padding-mobile);
 }
 
 @media (min-width: 1024px) {
   .auth-wrap {
-    padding: var(--space-10) var(--space-12);
+    padding: var(--space-8) var(--container-padding-desktop);
   }
 }
 
 /* ---------- Cột trái: hình ảnh & slogan (chỉ desktop) ---------- */
 .auth-visual {
   display: none;
-  flex-shrink: 0;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 @media (min-width: 1024px) {
   .auth-visual {
     display: flex;
     flex-direction: column;
-    width: 420px;
   }
 }
 
 .auth-visual__inner {
   background: var(--color-primary-50);
   border-radius: var(--radius-lg);
-  padding: var(--space-8);
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
   flex: 1;
 }
 
@@ -120,17 +79,18 @@ body {
 
 /* ---------- Cột phải: form ---------- */
 .auth-form-side {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex: 1;
-  max-width: 520px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 440px;
-  padding: var(--space-8);
+  max-width: 480px;
+  margin-block: auto;
+  padding: var(--space-6);
   background: var(--color-bg-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -138,7 +98,11 @@ body {
   flex-direction: column;
 }
 
-/* Mobile logo — ẩn trên desktop */
+@media (min-width: 1024px) {
+  .auth-card { padding: var(--space-8); }
+}
+
+/* Logo trong card — hiện mọi kích thước (thay thế topbar) */
 .auth-card__mobile-logo {
   display: inline-flex;
   align-items: center;
@@ -148,14 +112,10 @@ body {
   color: var(--color-primary-700);
   font-size: var(--fs-md);
   text-decoration: none;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 
 .auth-card__mobile-logo img { width: 28px; height: 28px; }
-
-@media (min-width: 1024px) {
-  .auth-card__mobile-logo { display: none; }
-}
 
 /* Tiêu đề form */
 .auth-card__eyebrow {
@@ -163,7 +123,7 @@ body {
   font-weight: var(--fw-semibold);
   letter-spacing: 0.08em;
   color: var(--color-primary-600);
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-1);
   text-transform: uppercase;
 }
 
@@ -172,13 +132,13 @@ body {
   font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
   color: var(--color-text-heading);
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-1);
 }
 
 .auth-card__subtitle {
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-4);
 }
 
 /* ---------- Link quên mật khẩu ---------- */
@@ -186,7 +146,7 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-top: calc(var(--space-1) * -1);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .auth-card__forgot a {
@@ -198,15 +158,10 @@ body {
 
 .auth-card__forgot a:hover { text-decoration: underline; }
 
-/* ---------- Nút phụ bên dưới form ---------- */
-.auth-card__secondary-btn {
-  margin-top: var(--space-3);
-}
-
 /* ---------- Link footer (Đã có tài khoản? / Chưa có tài khoản?) ---------- */
 .auth-card__footer-link {
   text-align: center;
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
   font-size: var(--fs-sm);
   color: var(--color-text-muted);
 }
@@ -215,31 +170,35 @@ body {
   font-weight: var(--fw-semibold);
   color: var(--color-primary-700);
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .auth-card__footer-link a:hover { text-decoration: underline; }
 
-/* ---------- Chọn vai trò khi đăng ký ---------- */
+/* ---------- Chọn vai trò khi đăng ký (compact) ---------- */
 .role-chooser {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
-  margin-bottom: var(--space-5);
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .role-chooser__option {
   border: 1.5px solid var(--color-border-default);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
+  padding: var(--space-2) var(--space-3);
   cursor: pointer;
   text-align: center;
   background: var(--color-bg-surface);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
+.role-chooser__option .icon { width: 22px; height: 22px; color: var(--color-primary-500); }
 .role-chooser__option:hover { border-color: var(--color-primary-400); }
 
 .role-chooser__option.is-active {
@@ -247,7 +206,8 @@ body {
   background: var(--color-primary-50);
 }
 
-.role-chooser__name { font-weight: var(--fw-semibold); color: var(--color-text-heading); }
+.role-chooser__option.is-active .icon { color: var(--color-primary-700); }
+.role-chooser__name { font-weight: var(--fw-semibold); color: var(--color-text-heading); font-size: var(--fs-base); }
 .role-chooser__desc { font-size: var(--fs-xs); color: var(--color-text-muted); }
 
 /* ---------- Auth steps (quên / đặt lại mật khẩu) ---------- */
@@ -255,7 +215,7 @@ body {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 
 .auth-steps__num {
@@ -272,11 +232,7 @@ body {
   flex-shrink: 0;
 }
 
-.auth-steps__num.is-done {
-  background: var(--color-primary-500);
-  color: var(--color-neutral-0);
-}
-
+.auth-steps__num.is-done,
 .auth-steps__num.is-active {
   background: var(--color-primary-500);
   color: var(--color-neutral-0);
@@ -319,9 +275,10 @@ body {
   .otp-inputs input { width: 40px; height: 48px; font-size: var(--fs-lg); }
 }
 
-/* ---------- Căn form trong card ---------- */
-.auth-card .form-field { margin-bottom: var(--space-4); }
-.auth-card .check-row { margin-bottom: var(--space-3); }
+/* ---------- Căn form trong card (compact để tránh scroll) ---------- */
+.auth-card .form-field { margin-bottom: var(--space-3); gap: var(--space-1); }
+.auth-card .form-field__helper { margin-top: 0; }
+.auth-card .check-row { margin-bottom: var(--space-2); }
 
 /* ---------- Error / 404 page ---------- */
 .error-page {
