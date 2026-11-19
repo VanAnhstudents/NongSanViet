@@ -65,10 +65,10 @@ public class OrderServiceImpl implements OrderService {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "INVALID_CART_ITEMS", "Một số sản phẩm trong giỏ hàng không hợp lệ");
         }
 
-        Address address = addressRepository.findByIdAndUserId(request.addressId(), buyerId)
+        Address address = addressRepository.findByIdAndUser(request.addressId(), buyerId)
             .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "ADDRESS_NOT_FOUND", "Không tìm thấy địa chỉ nhận hàng"));
 
-        String provinceName = resolveProvinceName(address.getProvinceId());
+        String provinceName = resolveProvinceName(address.getProvince().getId());
 
         List<Long> sortedBatchIds = targetItems.stream()
             .map(CartItem::getBatchId)

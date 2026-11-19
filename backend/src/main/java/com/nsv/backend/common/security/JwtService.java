@@ -1,10 +1,10 @@
 package com.nsv.backend.common.security;
 
-import com.nsv.backend.common.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -23,13 +23,16 @@ public class JwtService {
     private final SecretKey key;
     private final Duration expiration;
 
-    public JwtService(JwtProperties properties) {
-        byte[] secret = properties.secret() == null ? new byte[0] : properties.secret().getBytes(StandardCharsets.UTF_8);
-        if (secret.length < 32) {
-            throw new IllegalStateException("app.jwt.secret phải dài tối thiểu 32 ký tự (256 bit)");
+    public JwtService(
+            @Value("${app.security.jwt.secret}") String secret,
+            @Value("${app.security.jwt.expiration-ms:86400000}") long expirationMs
+    ) {
+        byte[] secretBytes = secret == null ? new byte[0] : secret.getBytes(StandardCharsets.UTF_8);
+        if (secretBytes.length < 32) {
+            throw new IllegalStateException("app.security.jwt.secret phải dài tối thiểu 32 ký tự (256 bit)");
         }
-        this.key = Keys.hmacShaKeyFor(secret);
-        this.expiration = Duration.ofMinutes(properties.expirationMinutes());
+        this.key = Keys.hmacShaKeyFor(secretBytes);
+        this.expiration = Duration.ofMillis(expirationMs);
     }
 
     public String generateToken(Long userId, String role) {

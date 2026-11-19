@@ -52,7 +52,7 @@ class UserServiceTest {
             return u;
         });
 
-        UserDto dto = userService.createUser(" Nguyễn Văn A ", "+84912345678", "Matkhau123", Role.FARMER);
+        UserDto dto = userService.createUser(" Nguyễn Văn A ", null, "+84912345678", "Matkhau123", Role.FARMER);
 
         assertThat(dto.id()).isEqualTo(1L);
         assertThat(dto.phone()).isEqualTo("0912345678");
@@ -71,7 +71,7 @@ class UserServiceTest {
     void createUser_duplicatePhone_throwsConflictWithFieldError() {
         when(userRepository.existsByPhone("0912345678")).thenReturn(true);
 
-        assertThatThrownBy(() -> userService.createUser("A", "0912345678", "Matkhau123", Role.BUYER))
+        assertThatThrownBy(() -> userService.createUser("A", null, "0912345678", "Matkhau123", Role.BUYER))
                 .isInstanceOfSatisfying(ApiException.class, ex -> {
                     assertThat(ex.getStatus()).isEqualTo(HttpStatus.CONFLICT);
                     assertThat(ex.getFieldErrors()).extracting("field").containsExactly("phone");
@@ -81,7 +81,7 @@ class UserServiceTest {
 
     @Test
     void createUser_blankPhone_throwsBadRequest() {
-        assertThatThrownBy(() -> userService.createUser("A", "  ", "Matkhau123", Role.BUYER))
+        assertThatThrownBy(() -> userService.createUser("A", null, "  ", "Matkhau123", Role.BUYER))
                 .isInstanceOfSatisfying(ApiException.class,
                         ex -> assertThat(ex.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST));
     }
@@ -145,9 +145,9 @@ class UserServiceTest {
 
     @Test
     void ensureAdmin_createsAdminWhenAbsent() {
-        when(userRepository.existsByPhone("0900000000")).thenReturn(false);
+        when(userRepository.existsByEmail("admin@nsv.vn")).thenReturn(false);
 
-        assertThat(userService.ensureAdmin("0900000000", "Admin12345", "Quản trị viên")).isTrue();
+        assertThat(userService.ensureAdmin("admin@nsv.vn", "Admin12345", "Quản trị viên")).isTrue();
 
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(captor.capture());
@@ -155,10 +155,10 @@ class UserServiceTest {
     }
 
     @Test
-    void ensureAdmin_skipsWhenPhoneExists() {
-        when(userRepository.existsByPhone("0900000000")).thenReturn(true);
+    void ensureAdmin_skipsWhenEmailExists() {
+        when(userRepository.existsByEmail("admin@nsv.vn")).thenReturn(true);
 
-        assertThat(userService.ensureAdmin("0900000000", "Admin12345", "Quản trị viên")).isFalse();
+        assertThat(userService.ensureAdmin("admin@nsv.vn", "Admin12345", "Quản trị viên")).isFalse();
         verify(userRepository, never()).save(any());
     }
 }

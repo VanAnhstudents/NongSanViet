@@ -3,7 +3,6 @@ package com.nsv.backend.user.service;
 import com.nsv.backend.common.exception.ApiException;
 import com.nsv.backend.user.dto.FarmExtendedInfoRequest;
 import com.nsv.backend.user.dto.FarmExtendedInfoResponse;
-import com.nsv.backend.user.entity.CertificateStatus;
 import com.nsv.backend.user.entity.Farm;
 import com.nsv.backend.user.repository.FarmRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +32,10 @@ public class FarmExtendedInfoService {
         String newUrl = request == null ? null : normalize(request.certificateUrl());
 
         if (newUrl == null) {
-            farm.setCertificateStatus(CertificateStatus.NONE);
+            farm.setCertificateStatus("NONE");
         } else if (!Objects.equals(newUrl, farm.getCertificateUrl())
-                || farm.getCertificateStatus() == CertificateStatus.NONE) {
-            farm.setCertificateStatus(CertificateStatus.PENDING);
+                || "NONE".equals(farm.getCertificateStatus())) {
+            farm.setCertificateStatus("PENDING");
         }
         farm.setCertificateUrl(newUrl);
 

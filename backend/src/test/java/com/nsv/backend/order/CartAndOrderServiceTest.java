@@ -12,6 +12,7 @@ import com.nsv.backend.order.service.OrderServiceImpl;
 import com.nsv.backend.product.entity.Product;
 import com.nsv.backend.product.repository.ProductRepository;
 import com.nsv.backend.user.entity.Address;
+import com.nsv.backend.user.entity.Province;
 import com.nsv.backend.user.repository.AddressRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -122,12 +123,12 @@ class CartAndOrderServiceTest {
         Product p2 = Product.builder().id(2L).name("Dâu tây Mộc Châu").unit("hộp").build();
 
         Address address = Address.builder()
-            .id(5L).userId(buyerId).provinceId(30L)
+            .id(5L).userId(buyerId).province(new Province(30L, "Hải Phòng"))
             .receiverName("Nguyễn Thế Quyền").receiverPhone("0987654321")
             .addressLine("Kim Thành, Hải Phòng").build();
 
         when(cartItemRepository.findAllByUserIdOrderByIdAsc(buyerId)).thenReturn(List.of(item1, item2));
-        when(addressRepository.findByIdAndUserId(5L, buyerId)).thenReturn(Optional.of(address));
+        when(addressRepository.findByIdAndUser(5L, buyerId)).thenReturn(Optional.of(address));
         when(jdbcTemplate.queryForObject(anyString(), eq(String.class), eq(30L))).thenReturn("Hải Phòng");
         when(batchRepository.findAllByIdInOrderByIdAscForUpdate(List.of(101L, 102L)))
             .thenReturn(List.of(batch1, batch2));
