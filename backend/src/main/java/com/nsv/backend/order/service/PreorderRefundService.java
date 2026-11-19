@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +38,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PreorderRefundService {
 
-    private static final Set<OrderStatus> CANCELLABLE = Set.of(OrderStatus.PENDING, OrderStatus.CONFIRMED);
+    private static final Set<String> CANCELLABLE = Set.of(OrderStatus.PENDING.name(), OrderStatus.CONFIRMED.name());
     private static final String REASON_PREFIX = "Người bán báo thiếu hàng Pre-order: ";
 
     private final OrderRepository orderRepository;
@@ -75,14 +76,14 @@ public class PreorderRefundService {
                     .createdAt(now)
                     .processedAt(now)
                     .build());
-            payment.setStatus(PaymentStatus.REFUNDED);
+            payment.setStatus(PaymentStatus.REFUNDED.name());
             paymentRepository.save(payment);
             items.add(new RefundItem(refund.getId(), payment.getId(), refund.getAmount(), refund.getStatus()));
             total = total.add(payment.getAmount());
         }
 
-        order.setStatus(OrderStatus.CANCELLED);
-        order.setUpdatedAt(now);
+        order.setStatus(OrderStatus.CANCELLED.name());
+        order.setUpdatedAt(now.atOffset(ZoneOffset.UTC));
         orderRepository.save(order);
 
         buyerNotifier.notifyBuyer(order.getBuyerId(), message(orderId, total));

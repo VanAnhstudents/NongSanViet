@@ -17,6 +17,7 @@ import com.nsv.backend.order.entity.Order;
 import com.nsv.backend.order.entity.OrderItem;
 import com.nsv.backend.order.entity.Payment;
 import com.nsv.backend.order.entity.Refund;
+import com.nsv.backend.order.entity.RefundStatus;
 import com.nsv.backend.order.repository.OrderCoInspectionRepository;
 import com.nsv.backend.order.repository.OrderRepository;
 import com.nsv.backend.order.repository.PaymentRepository;
@@ -71,7 +72,7 @@ public class DisputeServiceImpl implements DisputeService {
     private Clock clock = Clock.systemDefaultZone();
 
     // Cho phép unit test tiêm Clock cố định để kiểm thử chính xác mốc biên 24h
-    void setClock(Clock clock) {
+    public void setClock(Clock clock) {
         this.clock = Objects.requireNonNull(clock);
     }
 
@@ -576,7 +577,7 @@ public class DisputeServiceImpl implements DisputeService {
         Map<Long, BigDecimal> alreadyRefundedByPayment = refundRepository
             .findAllByPaymentIdInOrderByCreatedAtAsc(paidIds)
             .stream()
-            .filter(r -> "COMPLETED".equals(r.getStatus()) || "PENDING".equals(r.getStatus()))
+            .filter(r -> r.getStatus() == RefundStatus.COMPLETED || r.getStatus() == RefundStatus.PENDING)
             .collect(Collectors.groupingBy(
                 Refund::getPaymentId,
                 Collectors.reducing(ZERO_MONEY, Refund::getAmount, BigDecimal::add)

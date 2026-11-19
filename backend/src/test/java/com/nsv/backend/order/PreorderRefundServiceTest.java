@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +76,7 @@ class PreorderRefundServiceTest {
         order = new Order();
         order.setId(ORDER_ID);
         order.setBuyerId(BUYER_ID);
-        order.setStatus(OrderStatus.CONFIRMED);
+        order.setStatus(OrderStatus.CONFIRMED.name());
 
         when(orderRepository.findById(ORDER_ID)).thenReturn(Optional.of(order));
         when(orderRepository.save(any(Order.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -91,8 +92,8 @@ class PreorderRefundServiceTest {
     }
 
     private Payment paidDeposit() {
-        return Payment.builder().id(7L).orderId(ORDER_ID).paymentType(PaymentType.DEPOSIT)
-                .amount(new BigDecimal("60000.00")).status(PaymentStatus.PAID).createdAt(NOW).build();
+        return Payment.builder().id(7L).orderId(ORDER_ID).paymentType(PaymentType.DEPOSIT.name())
+                .amount(new BigDecimal("60000.00")).status(PaymentStatus.PAID.name()).createdAt(NOW.atOffset(ZoneOffset.UTC)).build();
     }
 
     @Test
@@ -110,7 +111,7 @@ class PreorderRefundServiceTest {
         assertThat(saved.getValue().getStatus()).isEqualTo(RefundStatus.COMPLETED);
         assertThat(saved.getValue().getComplaintId()).isNull();
         assertThat(saved.getValue().getReason()).contains("Mất mùa do bão");
-        assertThat(deposit.getStatus()).isEqualTo(PaymentStatus.REFUNDED);
+        assertThat(deposit.getStatus()).isEqualTo(PaymentStatus.REFUNDED.name());
         assertThat(result.totalRefunded()).isEqualByComparingTo("60000");
         assertThat(result.refunds()).hasSize(1);
     }
@@ -122,8 +123,8 @@ class PreorderRefundServiceTest {
 
         ShortageRefundResponse result = service.reportShortage(FARMER_ID, ORDER_ID, "Mất mùa do bão");
 
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
-        assertThat(order.getUpdatedAt()).isEqualTo(NOW);
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED.name());
+        assertThat(order.getUpdatedAt()).isEqualTo(NOW.atOffset(ZoneOffset.UTC));
         assertThat(result.orderStatus()).isEqualTo(OrderStatus.CANCELLED);
         verify(buyerNotifier).notifyBuyer(eq(BUYER_ID), contains("đã được hoàn lại"));
     }
@@ -137,7 +138,7 @@ class PreorderRefundServiceTest {
 
         verify(refundRepository, never()).save(any(Refund.class));
         assertThat(result.totalRefunded()).isEqualByComparingTo("0");
-        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED.name());
         verify(buyerNotifier).notifyBuyer(eq(BUYER_ID), anyString());
     }
 }

@@ -6,6 +6,7 @@ import com.nsv.backend.order.entity.Order;
 import com.nsv.backend.order.entity.OrderItem;
 import com.nsv.backend.order.entity.Payment;
 import com.nsv.backend.order.entity.Refund;
+import com.nsv.backend.order.entity.RefundStatus;
 import com.nsv.backend.order.repository.OrderRepository;
 import com.nsv.backend.order.repository.PaymentRepository;
 import com.nsv.backend.order.repository.RefundRepository;
@@ -115,7 +116,7 @@ public class FinancialTransactionServiceImpl implements FinancialTransactionServ
         // 2. Tính tổng tiền đã hoàn / đang chờ hoàn trên giao dịch này
         List<Refund> existingRefunds = refundRepository.findAllByPaymentIdOrderByCreatedAtAsc(payment.getId());
         BigDecimal alreadyRefunded = existingRefunds.stream()
-            .filter(r -> "COMPLETED".equals(r.getStatus()) || "PENDING".equals(r.getStatus()))
+            .filter(r -> r.getStatus() == RefundStatus.COMPLETED || r.getStatus() == RefundStatus.PENDING)
             .map(Refund::getAmount)
             .reduce(ZERO_MONEY, BigDecimal::add)
             .setScale(2, RoundingMode.HALF_UP);
@@ -143,8 +144,7 @@ public class FinancialTransactionServiceImpl implements FinancialTransactionServ
             .complaintId(request.complaintId())
             .amount(refundAmount)
             .reason(request.reason().trim())
-            .status("COMPLETED")
-            .processedAt(now)
+            .status(RefundStatus.COMPLETED)
             .build();
 
         Refund savedRefund = refundRepository.save(refund);
@@ -200,7 +200,7 @@ public class FinancialTransactionServiceImpl implements FinancialTransactionServ
             : refundRepository.findAllByPaymentIdInOrderByCreatedAtAsc(paymentIds);
 
         BigDecimal totalRefunded = refunds.stream()
-            .filter(r -> "COMPLETED".equals(r.getStatus()))
+            .filter(r -> r.getStatus() == RefundStatus.COMPLETED)
             .map(Refund::getAmount)
             .reduce(ZERO_MONEY, BigDecimal::add)
             .setScale(2, RoundingMode.HALF_UP);

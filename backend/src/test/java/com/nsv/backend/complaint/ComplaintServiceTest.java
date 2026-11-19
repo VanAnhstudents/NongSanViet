@@ -61,8 +61,6 @@ class ComplaintServiceTest {
     }
 
     private Complaint complaintCreatedHoursAgo(long hours) {
-        return Complaint.builder().id(1L).orderId(100L).reason("Cà chua bị dập").status("OPEN")
-                .createdAt(NOW_AT.minusHours(hours)).build();
         return Complaint.builder()
                 .id(1L)
                 .orderId(100L)
@@ -108,7 +106,6 @@ class ComplaintServiceTest {
         OffsetDateTime deadline = NOW_ODT.atZoneSameInstant(ZoneId.of("Asia/Ho_Chi_Minh"))
                 .toOffsetDateTime().minusHours(24);
         when(complaintRepository.findByFarmerResponseIsNullAndAdminDecisionIsNullAndCreatedAtLessThanEqual(
-                eq(NOW_AT.minusHours(24)))).thenReturn(List.of(complaintCreatedHoursAgo(25)));
                 eq(deadline))).thenReturn(List.of(complaintCreatedHoursAgo(25)));
         when(auditLogService.exists("COMPLAINT_ESCALATED", "COMPLAINT", 1L)).thenReturn(false);
 

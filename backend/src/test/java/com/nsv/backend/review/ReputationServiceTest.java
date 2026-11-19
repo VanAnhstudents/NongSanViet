@@ -41,7 +41,7 @@ class ReputationServiceTest {
 
     private void givenFarmer() {
         when(userLookupService.findActiveById(FARMER_ID))
-                .thenReturn(Optional.of(new UserDto(FARMER_ID, "Bác Ba", "0912345678", Role.FARMER)));
+                .thenReturn(Optional.of(new UserDto(FARMER_ID, "Bác Ba", "bacba@example.com", "0912345678", Role.FARMER)));
     }
 
     @Test
@@ -94,7 +94,7 @@ class ReputationServiceTest {
     @DisplayName("TC-REP-01: Tài khoản không phải Farmer -> không có chỉ số uy tín")
     void tc01_notAFarmer() {
         when(userLookupService.findActiveById(5L))
-                .thenReturn(Optional.of(new UserDto(5L, "Cô Lan", "0988888888", Role.BUYER)));
+                .thenReturn(Optional.of(new UserDto(5L, "Cô Lan", "colan@example.com", "0988888888", Role.BUYER)));
 
         assertThatThrownBy(() -> service.getReputation(5L)).isInstanceOf(ApiException.class);
     }
