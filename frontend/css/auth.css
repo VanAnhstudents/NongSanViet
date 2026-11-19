@@ -9,8 +9,8 @@
 /* Cột bên trái (chỉ desktop) — brand panel */
 .auth__brand { display: none; background: var(--color-primary-700); color: #fff; padding: var(--space-12); position: relative; overflow: hidden; }
 @media (min-width: 1024px) { .auth__brand { display: flex; flex-direction: column; justify-content: space-between; } }
-.auth__brand-logo { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-family-heading); font-weight: var(--fw-bold); font-size: var(--fs-xl); }
-.auth__brand-logo img { width: 36px; height: 36px; }
+.auth__brand-logo { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-family-heading); font-weight: var(--fw-bold); font-size: var(--fs-2xl); color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+.auth__brand-logo img { width: 40px; height: 40px; }
 .auth__brand-tagline h1 { font-size: var(--fs-4xl); color: #fff; margin-bottom: var(--space-4); max-width: 460px; }
 .auth__brand-tagline p { font-size: var(--fs-md); color: rgba(255,255,255,.9); max-width: 440px; margin: 0; }
 .auth__brand-features { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -20,22 +20,26 @@
 .auth__brand-feature span { font-size: var(--fs-sm); color: rgba(255,255,255,.85); }
 
 /* Cột bên phải — form */
-.auth__form-side { display: flex; align-items: center; justify-content: center; padding: var(--space-6) var(--container-padding-mobile); background: var(--color-bg-page); }
-@media (min-width: 1024px) { .auth__form-side { padding: var(--space-12) var(--container-padding-desktop); } }
+.auth__form-side { display: flex; align-items: center; justify-content: center; padding: var(--space-4) var(--container-padding-mobile); background: var(--color-bg-page); }
+@media (min-width: 1024px) { .auth__form-side { padding: var(--space-8) var(--container-padding-desktop); } }
 .auth__card { width: 100%; max-width: 440px; }
-.auth__mobile-logo { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-family-heading); font-weight: var(--fw-bold); color: var(--color-primary-700); font-size: var(--fs-md); margin-bottom: var(--space-6); }
-.auth__mobile-logo img { width: 28px; height: 28px; }
+.auth__mobile-logo { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-family-heading); font-weight: var(--fw-bold); color: var(--color-primary-600); font-size: var(--fs-lg); margin-bottom: var(--space-4); }
+.auth__mobile-logo img { width: 30px; height: 30px; }
 @media (min-width: 1024px) { .auth__mobile-logo { display: none; } }
-.auth__head { margin-bottom: var(--space-6); }
-.auth__head h1 { font-size: var(--fs-3xl); font-weight: var(--fw-bold); color: var(--color-text-heading); margin-bottom: var(--space-2); }
-.auth__head p { color: var(--color-text-muted); margin: 0; }
-.auth__footer-link { text-align: center; margin-top: var(--space-5); font-size: var(--fs-sm); color: var(--color-text-muted); }
+.auth__head { margin-bottom: var(--space-4); }
+.auth__head h1 { font-size: var(--fs-2xl); font-weight: var(--fw-bold); color: var(--color-text-heading); margin-bottom: var(--space-1); }
+.auth__head p { color: var(--color-text-muted); margin: 0; font-size: var(--fs-sm); }
+.auth__footer-link { text-align: center; margin-top: var(--space-4); font-size: var(--fs-sm); color: var(--color-text-muted); }
 .auth__footer-link a { font-weight: var(--fw-semibold); color: var(--color-primary-700); }
-.auth__divider { display: flex; align-items: center; gap: var(--space-3); color: var(--color-text-muted); font-size: var(--fs-sm); margin: var(--space-6) 0; }
+.auth__divider { display: flex; align-items: center; gap: var(--space-3); color: var(--color-text-muted); font-size: var(--fs-sm); margin: var(--space-4) 0; }
 .auth__divider::before, .auth__divider::after { content: ''; flex: 1; height: 1px; background: var(--color-border-default); }
 
+/* Compact form spacing cho register */
+.auth__card .form-field { margin-bottom: var(--space-3); }
+.auth__card .check-row { margin-bottom: var(--space-2); }
+
 /* role chooser */
-.role-chooser { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-5); }
+.role-chooser { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4); }
 .role-chooser__option { border: 1.5px solid var(--color-border-default); border-radius: var(--radius-md); padding: var(--space-4); cursor: pointer; text-align: center; background: var(--color-bg-surface); transition: all var(--duration-base); display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
 .role-chooser__option:hover { border-color: var(--color-primary-400); }
 .role-chooser__option.is-active { border-color: var(--color-primary-500); background: var(--color-primary-50); }

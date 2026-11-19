@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đơn hàng của tôi — Nông Sản Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+</head>
+<body class="app">
+
+  <!-- Header -->
+  <header class="app-header" id="appHeader">
+    <div class="app-header__inner">
+      <a class="app-header__brand" href="home.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="" width="32" height="32">
+        Nông Sản Việt
+      </a>
+      <div class="app-header__search">
+        <span class="app-header__search__icon" data-icon="search" data-size="18"></span>
+        <input class="form-field__input" type="search" placeholder="Tìm rau củ, trái cây, trang trại..." aria-label="Tìm kiếm sản phẩm">
+        <button class="app-header__search__btn" type="button">Tìm</button>
+      </div>
+      <div class="app-header__actions">
+        <a class="icon-btn" href="cart.html" aria-label="Giỏ hàng">
+          <span data-icon="shopping-cart" data-size="22"></span>
+          <span class="icon-btn__badge" id="cartBadge" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="notifications.html" aria-label="Thông báo">
+          <span data-icon="bell" data-size="22"></span>
+          <span class="icon-btn__badge" id="notifBadge" hidden>3</span>
+        </a>
+        <div class="dropdown" id="userDropdown">
+          <button class="app-header__avatar-btn" type="button" aria-haspopup="true" aria-expanded="false" id="userAvatarBtn">
+            <div class="avatar avatar--sm" id="userAvatar">N</div>
+            <span class="app-header__username" id="usernameText">Tài khoản</span>
+            <span data-icon="chevron-down" data-size="16"></span>
+          </button>
+          <div class="dropdown__menu" id="userMenu" role="menu">
+            <a class="dropdown__item" href="profile.html" role="menuitem"><span data-icon="user" data-size="18"></span>Hồ sơ cá nhân</a>
+            <a class="dropdown__item" href="orders.html" role="menuitem"><span data-icon="package" data-size="18"></span>Đơn hàng của tôi</a>
+            <button class="dropdown__item" type="button" id="logoutBtn" role="menuitem"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category bar -->
+  <nav class="category-bar" aria-label="Danh mục sản phẩm">
+    <div class="category-bar__inner">
+      <a class="category-bar__link" href="search.html?cat=rau-cu"><span data-icon="leaf" data-size="16"></span>Rau củ</a>
+      <a class="category-bar__link" href="search.html?cat=trai-cay"><span data-icon="shopping-bag" data-size="16"></span>Trái cây</a>
+      <a class="category-bar__link" href="search.html?type=preorder"><span data-icon="calendar" data-size="16"></span>Pre-order theo mùa</a>
+      <a class="category-bar__link" href="search.html?type=combo"><span data-icon="package" data-size="16"></span>Combo</a>
+      <a class="category-bar__link" href="search.html?filter=region"><span data-icon="map-pin" data-size="16"></span>Theo khu vực</a>
+    </div>
+  </nav>
+
+  <main class="app__main">
+
+    <div class="page-head">
+      <h1 class="page-head__title">Đơn hàng của tôi</h1>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs" role="tablist" aria-label="Lọc theo trạng thái đơn hàng">
+      <button class="filter-tabs__item is-active" role="tab" aria-selected="true" type="button">Tất cả</button>
+      <button class="filter-tabs__item" role="tab" aria-selected="false" type="button">Chờ xác nhận</button>
+      <button class="filter-tabs__item" role="tab" aria-selected="false" type="button">Đang giao</button>
+      <button class="filter-tabs__item" role="tab" aria-selected="false" type="button">Đã giao</button>
+      <button class="filter-tabs__item" role="tab" aria-selected="false" type="button">Đã hủy</button>
+    </div>
+
+    <!-- Order list -->
+    <div id="orderList">
+
+      <!-- Order 1: Chờ xác nhận -->
+      <div class="order-card">
+        <div class="order-card__head">
+          <div>
+            <div class="order-card__id">#ORD-20250612-001</div>
+            <div style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:2px;">12/06/2025 · 3 sản phẩm</div>
+          </div>
+          <span class="badge badge--warning">Chờ xác nhận</span>
+        </div>
+        <div class="order-card__items">
+          <div class="order-card__item">
+            <img src="https://images.unsplash.com/photo-1587334207128-eadba5b80e56?w=100&h=100&fit=crop" alt="Xoài cát Hòa Lộc">
+            <div>
+              <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Xoài cát Hòa Lộc</div>
+              <div style="font-size:var(--fs-xs);color:var(--color-text-muted);">2kg · 130.000đ</div>
+            </div>
+          </div>
+          <div class="order-card__item">
+            <img src="https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=100&h=100&fit=crop" alt="Cải thảo Đà Lạt">
+            <div>
+              <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Cải thảo Đà Lạt</div>
+              <div style="font-size:var(--fs-xs);color:var(--color-text-muted);">3kg · 75.000đ</div>
+            </div>
+          </div>
+        </div>
+        <div class="order-card__footer">
+          <span style="font-weight:var(--fw-semibold);">Tổng: <span class="price price--sm">355.000đ</span></span>
+          <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+            <a class="btn btn--secondary btn--sm" href="order-detail.html">Xem chi tiết</a>
+            <button class="btn btn--ghost btn--sm" type="button" style="color:var(--color-danger-text);">Hủy đơn</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order 2: Đang giao -->
+      <div class="order-card">
+        <div class="order-card__head">
+          <div>
+            <div class="order-card__id">#ORD-20250605-008</div>
+            <div style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:2px;">05/06/2025 · 1 sản phẩm</div>
+          </div>
+          <span class="badge badge--info">Đang giao</span>
+        </div>
+        <div class="order-card__items">
+          <div class="order-card__item">
+            <img src="https://images.unsplash.com/photo-1598635675205-7a9d87a37f41?w=100&h=100&fit=crop" alt="Thanh long ruột đỏ">
+            <div>
+              <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Thanh long ruột đỏ</div>
+              <div style="font-size:var(--fs-xs);color:var(--color-text-muted);">2kg · 90.000đ</div>
+            </div>
+          </div>
+        </div>
+        <div class="order-card__footer">
+          <span style="font-weight:var(--fw-semibold);">Tổng: <span class="price price--sm">120.000đ</span></span>
+          <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+            <a class="btn btn--secondary btn--sm" href="order-detail.html">Xem chi tiết</a>
+            <a class="btn btn--primary btn--sm" href="order-tracking.html">Theo dõi</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order 3: Đã giao -->
+      <div class="order-card">
+        <div class="order-card__head">
+          <div>
+            <div class="order-card__id">#ORD-20250528-003</div>
+            <div style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:2px;">28/05/2025 · 2 sản phẩm</div>
+          </div>
+          <span class="badge badge--success">Đã giao</span>
+        </div>
+        <div class="order-card__items">
+          <div class="order-card__item">
+            <img src="https://images.unsplash.com/photo-1518977822534-7049a61ee0c2?w=100&h=100&fit=crop" alt="Khoai lang mật">
+            <div>
+              <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Khoai lang mật Đà Lạt</div>
+              <div style="font-size:var(--fs-xs);color:var(--color-text-muted);">5kg · 150.000đ</div>
+            </div>
+          </div>
+        </div>
+        <div class="order-card__footer">
+          <span style="font-weight:var(--fw-semibold);">Tổng: <span class="price price--sm">180.000đ</span></span>
+          <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;">
+            <a class="btn btn--secondary btn--sm" href="order-detail.html">Xem chi tiết</a>
+            <a class="btn btn--primary btn--sm" href="review.html">Đánh giá</a>
+            <a class="btn btn--ghost btn--sm" href="complaint.html" style="color:var(--color-danger-text);">Khiếu nại</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order 4: Đã hủy -->
+      <div class="order-card">
+        <div class="order-card__head">
+          <div>
+            <div class="order-card__id">#ORD-20250510-012</div>
+            <div style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:2px;">10/05/2025 · 1 sản phẩm</div>
+          </div>
+          <span class="badge badge--danger">Đã hủy</span>
+        </div>
+        <div class="order-card__items">
+          <div class="order-card__item">
+            <img src="https://images.unsplash.com/photo-1546630392-05bcf1b2048c?w=100&h=100&fit=crop" alt="Dâu tây Mộc Châu">
+            <div>
+              <div style="font-weight:var(--fw-medium);font-size:var(--fs-sm);">Dâu tây Mộc Châu (Pre-order)</div>
+              <div style="font-size:var(--fs-xs);color:var(--color-text-muted);">1kg · 120.000đ</div>
+            </div>
+          </div>
+        </div>
+        <div class="order-card__footer">
+          <span style="font-weight:var(--fw-semibold);">Tổng: <span class="price price--sm">150.000đ</span></span>
+          <div style="display:flex;gap:var(--space-2);">
+            <a class="btn btn--secondary btn--sm" href="order-detail.html">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state (ẩn mặc định) -->
+    <div class="state hidden" id="emptyOrders">
+      <span class="state__icon" data-icon="package" data-size="48"></span>
+      <p class="state__title">Chưa có đơn hàng</p>
+      <p class="state__desc">Bắt đầu mua sắm để có đơn hàng đầu tiên.</p>
+      <a class="btn btn--primary" href="search.html">Mua sắm ngay</a>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav" aria-label="Điều hướng chính">
+    <a class="bottom-nav__item" href="home.html" aria-label="Trang chủ">
+      <span class="bottom-nav__item__icon" data-icon="home" data-size="22"></span>
+      <span class="bottom-nav__item__label">Trang chủ</span>
+    </a>
+    <a class="bottom-nav__item" href="search.html" aria-label="Tìm kiếm">
+      <span class="bottom-nav__item__icon" data-icon="search" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tìm kiếm</span>
+    </a>
+    <a class="bottom-nav__item" href="cart.html" aria-label="Giỏ hàng">
+      <span class="bottom-nav__item__icon">
+        <span data-icon="shopping-cart" data-size="22"></span>
+        <span class="bottom-nav__item__badge" id="bottomCartBadge" hidden>0</span>
+      </span>
+      <span class="bottom-nav__item__label">Giỏ hàng</span>
+    </a>
+    <a class="bottom-nav__item is-active" href="orders.html" aria-label="Đơn hàng">
+      <span class="bottom-nav__item__icon" data-icon="package" data-size="22"></span>
+      <span class="bottom-nav__item__label">Đơn hàng</span>
+    </a>
+    <a class="bottom-nav__item" href="profile.html" aria-label="Tôi">
+      <span class="bottom-nav__item__icon" data-icon="user" data-size="22"></span>
+      <span class="bottom-nav__item__label">Tôi</span>
+    </a>
+  </nav>
+
+  <script src="../../js/config.js"></script>
+  <script src="../../js/icons.js"></script>
+  <script src="../../js/core/api.js"></script>
+  <script src="../../js/core/auth.js"></script>
+  <script src="../../js/core/format.js"></script>
+  <script src="../../js/components.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    NSV.renderIcons();
+    var btn = document.getElementById('userAvatarBtn');
+    var dd = document.getElementById('userDropdown');
+    if (btn && dd) {
+      btn.addEventListener('click', function() {
+        dd.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', dd.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); }
+      });
+    }
+    var logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', function() {
+      NSV.auth.logout(); window.location.href='../../pages/auth/login.html';
+    });
+    window.addEventListener('scroll', function() {
+      var h = document.getElementById('appHeader');
+      if (h) h.classList.toggle('is-scrolled', window.scrollY > 10);
+    });
+    var user = NSV.auth.getUser();
+    if (user) {
+      var uname = document.getElementById('usernameText');
+      var uavatar = document.getElementById('userAvatar');
+      if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
+      if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
+    }
+    document.querySelectorAll('.filter-tabs__item').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tabs__item').forEach(function(t) {
+          t.classList.remove('is-active'); t.setAttribute('aria-selected','false');
+        });
+        this.classList.add('is-active'); this.setAttribute('aria-selected','true');
+      });
+    });
+  });
+  </script>
+</body>
+</html>

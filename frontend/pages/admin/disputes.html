@@ -1,43 +1,333 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản trị · Tranh chấp - Nông Sản Việt</title>
-    <link rel="stylesheet" href="../../css/main.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khiếu nại &amp; Tranh chấp — Nông Sản Việt Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
 </head>
-<body data-role="admin" data-active="disputes">
-    <div class="app-shell">
-        <div class="brand-header" id="app-brand-header"></div>
-        <nav class="admin-nav" id="app-admin-nav"></nav>
-        <main class="content">
-            <div class="eyebrow">QUẢN TRỊ / HỒ SƠ #KN008</div>
-            <h1 class="page-title">Phân xử tranh chấp</h1>
+<body>
 
-            <div class="card" style="margin-top:12px">
-                <div class="card-title">Đơn #NN1018 · Cam vàng</div>
-                <div class="meta-text">Người mua: Mai Anh · Người bán: Vườn An<br />Số tiền đề nghị hoàn: 45.000đ</div>
-            </div>
-
-            <div class="card-green">
-                <div class="card-title">Minh chứng được lưu</div>
-                <div class="meta-text">2 ảnh · Gửi 11/11, 14:00<br />Đồng kiểm đạt ngoại quan; lỗi báo: lỗi ẩn.</div>
-            </div>
-
-            <div class="form-label" style="margin:12px 0 8px">Quyết định xử lý</div>
-            <label class="radio-row"><input type="radio" name="verdict" checked /><span>Hoàn tiền một phần · 45.000đ</span></label>
-            <label class="radio-row"><input type="radio" name="verdict" /><span>Không chấp nhận khiếu nại</span></label>
-
-            <div class="card" style="margin-top:10px">
-                <div class="meta-text" style="color:var(--text-main)">
-                    Minh chứng cho thấy 1 kg cam bị hỏng bên trong. Lỗi ẩn được tiếp nhận trong 24 giờ kể từ khi đã giao.
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-primary" onclick="showToast('Đã xác nhận phân xử và hoàn 45.000đ')">Xác nhận phân xử và hoàn tiền</button>
-            <p class="meta-text" style="margin-top:8px">Hoàn qua cổng thanh toán · Mô phỏng</p>
-        </main>
+<div class="admin-shell">
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar__head">
+      <a class="admin-sidebar__brand" href="dashboard.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="NSV" />
+        Nông Sản Việt
+      </a>
+      <div class="admin-sidebar__label">Quản trị viên</div>
     </div>
-    <script src="../../js/app.js"></script>
+    <nav class="admin-nav">
+      <a class="admin-nav__item" href="dashboard.html"><span data-icon="bar-chart-2" data-size="20"></span>Tổng quan</a>
+      <a class="admin-nav__item" href="farmer-approval.html"><span data-icon="shield" data-size="20"></span>Duyệt Farmer</a>
+      <a class="admin-nav__item" href="users.html"><span data-icon="user" data-size="20"></span>Quản lý người dùng</a>
+      <a class="admin-nav__item" href="categories.html"><span data-icon="leaf" data-size="20"></span>Danh mục sản phẩm</a>
+      <a class="admin-nav__item is-active" href="disputes.html"><span data-icon="alert-triangle" data-size="20"></span>Khiếu nại &amp; Tranh chấp</a>
+      <a class="admin-nav__item" href="reports.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo hệ thống</a>
+      <a class="admin-nav__item" href="audit-log.html"><span data-icon="database" data-size="20"></span>Nhật ký hệ thống</a>
+    </nav>
+    <div class="admin-sidebar__foot">
+      <button class="btn btn--ghost btn--sm" id="adminLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
+        <span data-icon="log-out" data-size="18"></span>Đăng xuất
+      </button>
+    </div>
+  </aside>
+  <div class="admin-sidebar__overlay" id="sidebarOverlay"></div>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header__inner">
+        <button class="admin-header__menu-btn" id="menuToggle" aria-label="Mở menu"><span data-icon="menu" data-size="22"></span></button>
+        <h1 class="admin-header__title">Khiếu nại &amp; Tranh chấp</h1>
+        <div class="admin-header__actions">
+          <a class="icon-btn" href="disputes.html" aria-label="Khiếu nại chờ xử lý">
+            <span data-icon="bell" data-size="22"></span>
+            <span class="icon-btn__badge">2</span>
+          </a>
+          <div class="dropdown" id="adminDropdown">
+            <button class="app-header__avatar-btn" type="button" id="adminAvatarBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar--sm" style="background:var(--color-role-admin);color:#fff">A</div>
+              <span class="app-header__username">Admin</span>
+              <span data-icon="chevron-down" data-size="16"></span>
+            </button>
+            <div class="dropdown__menu" id="adminMenu">
+              <button class="dropdown__item" type="button" id="adminLogout2"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-content">
+
+      <!-- Filter tabs + sort -->
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-5)">
+        <div class="filter-tabs" style="margin-bottom:0">
+          <button class="filter-tab is-active">Mở (SLA) <span class="filter-tab__count">2</span></button>
+          <button class="filter-tab">Đang xử lý <span class="filter-tab__count">1</span></button>
+          <button class="filter-tab">Đã giải quyết</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--fs-sm);color:var(--color-text-muted)">
+          <span data-icon="arrow-up" data-size="14"></span> Ưu tiên hết SLA
+        </div>
+      </div>
+
+      <!-- Dispute card 1 — URGENT SLA -->
+      <div class="approval-card" style="border-color:var(--color-danger-border)" id="dispute-1">
+        <div class="approval-card__head">
+          <div>
+            <div class="approval-card__name">#KN-004 · Đơn #NN1042</div>
+            <div class="approval-card__meta">Buyer: Trần Minh Châu &nbsp;·&nbsp; Farmer: Vườn Xanh An Giang</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-1)">
+            <span class="badge badge--danger">Mở</span>
+            <span class="sla-countdown sla-countdown--urgent"><span data-icon="clock" data-size="14"></span> 1g 42p</span>
+          </div>
+        </div>
+        <p style="font-size:var(--fs-sm);color:var(--color-text-muted);margin:0 0 var(--space-3);line-height:1.6">
+          <strong>Lý do:</strong> Rau muống bị dập nát, không đúng tiêu chuẩn VietGAP như mô tả. Yêu cầu hoàn tiền 55.000đ cho 2 bó rau.
+        </p>
+        <div class="evidence-thumbs">
+          <div class="evidence-thumb"><span data-icon="image" data-size="20"></span></div>
+          <div class="evidence-thumb"><span data-icon="image" data-size="20"></span></div>
+        </div>
+        <div style="margin-top:var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-2)">
+          <button class="btn btn--secondary btn--sm" onclick="toggleDetail('detail-1',this)">
+            <span data-icon="eye" data-size="14"></span> Xem chi tiết
+          </button>
+          <button class="btn btn--danger btn--sm" onclick="showRefundModal('KN-004','55.000đ')">
+            Hoàn tiền cho Buyer
+          </button>
+          <button class="btn btn--secondary btn--sm" onclick="showNoRefundModal('KN-004')">
+            Không hoàn tiền
+          </button>
+        </div>
+        <!-- Detail section (timeline) -->
+        <div class="dispute-detail" id="detail-1">
+          <div style="font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--color-text-heading);margin-bottom:var(--space-3)">Lịch sử khiếu nại</div>
+          <div class="timeline">
+            <div class="timeline__item">
+              <div class="timeline__dot timeline__dot--buyer"><span data-icon="user" data-size="14"></span></div>
+              <div class="timeline__bubble">
+                <div class="timeline__meta">Trần Minh Châu (Buyer) · 12/06/2025 08:30</div>
+                <div class="timeline__text">Đã nhận hàng nhưng rau bị dập, màu vàng. Không đúng như ảnh minh họa. Tôi muốn hoàn tiền 55.000đ.</div>
+                <div class="evidence-thumbs" style="margin-top:var(--space-2)">
+                  <div class="evidence-thumb"><span data-icon="image" data-size="16"></span></div>
+                  <div class="evidence-thumb"><span data-icon="image" data-size="16"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__dot timeline__dot--farmer"><span data-icon="home" data-size="14"></span></div>
+              <div class="timeline__bubble">
+                <div class="timeline__meta">Vườn Xanh An Giang (Farmer) · 12/06/2025 10:15</div>
+                <div class="timeline__text">Chúng tôi đã đóng gói rau đúng quy trình. Rau tươi khi xuất kho. Có thể do vận chuyển bị ảnh hưởng.</div>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__dot timeline__dot--admin"><span data-icon="shield" data-size="14"></span></div>
+              <div class="timeline__bubble">
+                <div class="timeline__meta">Admin · 12/06/2025 11:00</div>
+                <div class="timeline__text">Đang xem xét bằng chứng từ cả hai bên. SLA hết hạn lúc 14:00.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dispute card 2 — OK SLA -->
+      <div class="approval-card" id="dispute-2">
+        <div class="approval-card__head">
+          <div>
+            <div class="approval-card__name">#KN-005 · Đơn #NN1038</div>
+            <div class="approval-card__meta">Buyer: Lê Thanh Hà &nbsp;·&nbsp; Farmer: Nông trại Bình Minh</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-1)">
+            <span class="badge badge--warning">Mở</span>
+            <span class="sla-countdown sla-countdown--ok"><span data-icon="clock" data-size="14"></span> 18g 20p</span>
+          </div>
+        </div>
+        <p style="font-size:var(--fs-sm);color:var(--color-text-muted);margin:0 0 var(--space-3);line-height:1.6">
+          <strong>Lý do:</strong> Cam vàng bị hỏng bên trong, có mùi lên men. Buyer nhận được 1kg cam trong 3kg đặt, số còn lại thiếu.
+        </p>
+        <div class="evidence-thumbs">
+          <div class="evidence-thumb"><span data-icon="image" data-size="20"></span></div>
+        </div>
+        <div style="margin-top:var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-2)">
+          <button class="btn btn--secondary btn--sm" onclick="toggleDetail('detail-2',this)">
+            <span data-icon="eye" data-size="14"></span> Xem chi tiết
+          </button>
+          <button class="btn btn--danger btn--sm" onclick="showRefundModal('KN-005','45.000đ')">
+            Hoàn tiền cho Buyer
+          </button>
+          <button class="btn btn--secondary btn--sm" onclick="showNoRefundModal('KN-005')">
+            Không hoàn tiền
+          </button>
+        </div>
+        <div class="dispute-detail" id="detail-2">
+          <div style="font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--color-text-heading);margin-bottom:var(--space-3)">Lịch sử khiếu nại</div>
+          <div class="timeline">
+            <div class="timeline__item">
+              <div class="timeline__dot timeline__dot--buyer"><span data-icon="user" data-size="14"></span></div>
+              <div class="timeline__bubble">
+                <div class="timeline__meta">Lê Thanh Hà (Buyer) · 12/06/2025 06:45</div>
+                <div class="timeline__text">Cam trong hộp bị hư, có mùi. Chỉ nhận được 1kg thay vì 3kg đã đặt. Yêu cầu hoàn toàn bộ 45.000đ.</div>
+                <div class="evidence-thumbs" style="margin-top:var(--space-2)">
+                  <div class="evidence-thumb"><span data-icon="image" data-size="16"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="timeline__item">
+              <div class="timeline__dot timeline__dot--farmer"><span data-icon="home" data-size="14"></span></div>
+              <div class="timeline__bubble">
+                <div class="timeline__meta">Nông trại Bình Minh (Farmer) · 12/06/2025 09:00</div>
+                <div class="timeline__text">Chúng tôi đã giao đủ 3kg. Có thể do shipper để nhầm kiện hàng. Chúng tôi có biên lai xuất kho.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dispute card 3 — Đang xử lý -->
+      <div class="approval-card" id="dispute-3" style="opacity:.7">
+        <div class="approval-card__head">
+          <div>
+            <div class="approval-card__name">#KN-003 · Đơn #NN1030</div>
+            <div class="approval-card__meta">Buyer: Phạm Quang Huy &nbsp;·&nbsp; Farmer: HTX Mộc Châu</div>
+          </div>
+          <span class="badge badge--info">Đang xử lý</span>
+        </div>
+        <p style="font-size:var(--fs-sm);color:var(--color-text-muted);margin:0 0 var(--space-3)">
+          Táo Mộc Châu bị dập khi giao. Đã liên hệ shipper đang chờ phản hồi.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+          <button class="btn btn--secondary btn--sm" onclick="toggleDetail('detail-3',this)">
+            <span data-icon="eye" data-size="14"></span> Xem chi tiết
+          </button>
+        </div>
+        <div class="dispute-detail" id="detail-3">
+          <div class="timeline">
+            <div class="timeline__item">
+              <div class="timeline__dot timeline__dot--admin"><span data-icon="shield" data-size="14"></span></div>
+              <div class="timeline__bubble">
+                <div class="timeline__meta">Admin · 11/06/2025 15:30</div>
+                <div class="timeline__text">Đã yêu cầu đơn vị vận chuyển cung cấp hình ảnh kiện hàng lúc giao. Chờ phản hồi trong 24h.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal: Hoàn tiền -->
+<div class="modal-backdrop" id="refundModal">
+  <div class="modal modal--danger">
+    <button class="modal__close" onclick="closeModal('refundModal')"><span data-icon="x" data-size="20"></span></button>
+    <div class="modal__icon"><span data-icon="dollar-sign" data-size="24"></span></div>
+    <div class="modal__title">Xác nhận hoàn tiền — #<span id="refundCode"></span></div>
+    <div class="modal__body">
+      Hoàn <strong id="refundAmount"></strong> cho Buyer qua cổng thanh toán. Farmer sẽ bị trừ khoản này từ doanh thu. Hành động này không thể hoàn tác.
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn--danger" onclick="confirmRefund()"><span data-icon="check" data-size="18"></span>Xác nhận hoàn tiền</button>
+      <button class="btn btn--ghost" onclick="closeModal('refundModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Không hoàn tiền -->
+<div class="modal-backdrop" id="noRefundModal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeModal('noRefundModal')"><span data-icon="x" data-size="20"></span></button>
+    <div class="modal__icon" style="background:var(--color-neutral-100);color:var(--color-text-muted)"><span data-icon="x-circle" data-size="24"></span></div>
+    <div class="modal__title">Từ chối hoàn tiền — #<span id="noRefundCode"></span></div>
+    <div class="modal__body">
+      <div class="form-group">
+        <label class="form-label" for="noRefundReason">Lý do từ chối (bắt buộc)</label>
+        <textarea class="input" id="noRefundReason" rows="3" placeholder="VD: Bằng chứng không đủ, hàng đạt chất lượng..."></textarea>
+      </div>
+      Quyết định này sẽ được thông báo đến Buyer và lưu vào nhật ký.
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn--secondary" onclick="confirmNoRefund()">Xác nhận không hoàn tiền</button>
+      <button class="btn btn--ghost" onclick="closeModal('noRefundModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+  var sidebar = document.getElementById('adminSidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+  if (menuBtn) menuBtn.addEventListener('click', function () { sidebar.classList.add('is-open'); });
+  if (overlay) overlay.addEventListener('click', function () { sidebar.classList.remove('is-open'); });
+  var btn = document.getElementById('adminAvatarBtn');
+  var dd = document.getElementById('adminDropdown');
+  if (btn && dd) {
+    btn.addEventListener('click', function () { dd.classList.toggle('is-open'); btn.setAttribute('aria-expanded', dd.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (dd && !dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); } });
+  }
+  function doLogout() { if (window.NSV && NSV.auth) NSV.auth.logout(); window.location.href = '../../pages/auth/login.html'; }
+  var l1 = document.getElementById('adminLogout'); if (l1) l1.addEventListener('click', doLogout);
+  var l2 = document.getElementById('adminLogout2'); if (l2) l2.addEventListener('click', doLogout);
+
+  document.querySelectorAll('.filter-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.filter-tab').forEach(function (t) { t.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+    });
+  });
+});
+
+function toggleDetail(id, btn) {
+  var el = document.getElementById(id);
+  var open = el.classList.toggle('is-open');
+  btn.innerHTML = open
+    ? '<span data-icon="eye-off" data-size="14"></span> Ẩn chi tiết'
+    : '<span data-icon="eye" data-size="14"></span> Xem chi tiết';
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('is-open'); }
+
+function showRefundModal(code, amount) {
+  document.getElementById('refundCode').textContent = code;
+  document.getElementById('refundAmount').textContent = amount;
+  document.getElementById('refundModal').classList.add('is-open');
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+}
+function showNoRefundModal(code) {
+  document.getElementById('noRefundCode').textContent = code;
+  document.getElementById('noRefundModal').classList.add('is-open');
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+}
+function confirmRefund() {
+  closeModal('refundModal');
+  alert('Đã xử lý hoàn tiền thành công. Buyer sẽ nhận tiền trong 1–3 ngày làm việc.');
+}
+function confirmNoRefund() {
+  var reason = document.getElementById('noRefundReason').value.trim();
+  if (!reason) { alert('Vui lòng nhập lý do từ chối.'); return; }
+  closeModal('noRefundModal');
+  alert('Đã lưu quyết định không hoàn tiền. Thông báo đã gửi đến Buyer.');
+}
+</script>
 </body>
 </html>

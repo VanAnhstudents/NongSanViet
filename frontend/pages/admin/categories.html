@@ -1,56 +1,312 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản trị · Danh mục - Nông Sản Việt</title>
-    <link rel="stylesheet" href="../../css/main.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh mục sản phẩm — Nông Sản Việt Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/tokens.css" />
+  <link rel="stylesheet" href="../../css/base.css" />
+  <link rel="stylesheet" href="../../css/components.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
 </head>
-<body data-role="admin" data-active="categories">
-    <div class="app-shell">
-        <div class="brand-header" id="app-brand-header"></div>
-        <nav class="admin-nav" id="app-admin-nav"></nav>
-        <main class="content">
-            <div class="eyebrow">QUẢN TRỊ / VẬN HÀNH</div>
-            <h1 class="page-title">Quản lý danh mục</h1>
+<body>
 
-            <button type="button" class="btn btn-primary" style="margin:12px 0 14px" onclick="showToast('Mở biểu mẫu thêm danh mục mới')">+ Thêm danh mục</button>
-
-            <div class="card row-between">
-                <div>
-                    <div class="card-title">Rau củ quả</div>
-                    <div class="meta-text">24 sản phẩm · Đang hiển thị</div>
-                </div>
-                <button type="button" class="link-btn" onclick="showToast('Chỉnh sửa danh mục Rau củ quả')">Sửa</button>
-            </div>
-
-            <div class="card row-between">
-                <div>
-                    <div class="card-title">Trái cây</div>
-                    <div class="meta-text">18 sản phẩm · Đang hiển thị</div>
-                </div>
-                <button type="button" class="link-btn" onclick="showToast('Chỉnh sửa danh mục Trái cây')">Sửa</button>
-            </div>
-
-            <div class="card row-between">
-                <div>
-                    <div class="card-title">Đặc sản vùng miền</div>
-                    <div class="meta-text">08 sản phẩm · Đang hiển thị</div>
-                </div>
-                <button type="button" class="link-btn" onclick="showToast('Chỉnh sửa danh mục Đặc sản vùng miền')">Sửa</button>
-            </div>
-
-            <div class="card row-between">
-                <div>
-                    <div class="card-title">Combo nông sản</div>
-                    <div class="meta-text">06 sản phẩm · Đang hiển thị</div>
-                </div>
-                <button type="button" class="link-btn" onclick="showToast('Chỉnh sửa danh mục Combo nông sản')">Sửa</button>
-            </div>
-
-            <p class="meta-text" style="margin-top:12px">Tên và thứ tự hiển thị được dùng chung trong bộ lọc tìm kiếm và form đăng bán.</p>
-        </main>
+<div class="admin-shell">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar__head">
+      <a class="admin-sidebar__brand" href="dashboard.html">
+        <img src="../../assets/images/logocnpm 1.png" alt="NSV" />
+        Nông Sản Việt
+      </a>
+      <div class="admin-sidebar__label">Quản trị viên</div>
     </div>
-    <script src="../../js/app.js"></script>
+    <nav class="admin-nav">
+      <a class="admin-nav__item" href="dashboard.html"><span data-icon="bar-chart-2" data-size="20"></span>Tổng quan</a>
+      <a class="admin-nav__item" href="farmer-approval.html"><span data-icon="shield" data-size="20"></span>Duyệt Farmer</a>
+      <a class="admin-nav__item" href="users.html"><span data-icon="user" data-size="20"></span>Quản lý người dùng</a>
+      <a class="admin-nav__item is-active" href="categories.html"><span data-icon="leaf" data-size="20"></span>Danh mục sản phẩm</a>
+      <a class="admin-nav__item" href="disputes.html"><span data-icon="alert-triangle" data-size="20"></span>Khiếu nại &amp; Tranh chấp</a>
+      <a class="admin-nav__item" href="reports.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo hệ thống</a>
+      <a class="admin-nav__item" href="audit-log.html"><span data-icon="database" data-size="20"></span>Nhật ký hệ thống</a>
+    </nav>
+    <div class="admin-sidebar__foot">
+      <button class="btn btn--ghost btn--sm" id="adminLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
+        <span data-icon="log-out" data-size="18"></span>Đăng xuất
+      </button>
+    </div>
+  </aside>
+  <div class="admin-sidebar__overlay" id="sidebarOverlay"></div>
+
+  <div class="admin-main">
+    <header class="admin-header">
+      <div class="admin-header__inner">
+        <button class="admin-header__menu-btn" id="menuToggle" aria-label="Mở menu"><span data-icon="menu" data-size="22"></span></button>
+        <h1 class="admin-header__title">Danh mục sản phẩm</h1>
+        <div class="admin-header__actions">
+          <a class="icon-btn" href="disputes.html" aria-label="Khiếu nại chờ xử lý">
+            <span data-icon="bell" data-size="22"></span>
+            <span class="icon-btn__badge">2</span>
+          </a>
+          <div class="dropdown" id="adminDropdown">
+            <button class="app-header__avatar-btn" type="button" id="adminAvatarBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar--sm" style="background:var(--color-role-admin);color:#fff">A</div>
+              <span class="app-header__username">Admin</span>
+              <span data-icon="chevron-down" data-size="16"></span>
+            </button>
+            <div class="dropdown__menu" id="adminMenu">
+              <button class="dropdown__item" type="button" id="adminLogout2"><span data-icon="log-out" data-size="18"></span>Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-content">
+
+      <!-- Toolbar -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-5);flex-wrap:wrap;gap:var(--space-3)">
+        <div>
+          <div style="font-size:var(--fs-sm);color:var(--color-text-muted)">Tổng cộng <strong>7</strong> danh mục đang hiển thị</div>
+        </div>
+        <button class="btn btn--primary btn--sm" onclick="openAddForm()">
+          <span data-icon="plus" data-size="18"></span> Thêm danh mục
+        </button>
+      </div>
+
+      <!-- Inline add/edit form (hidden by default) -->
+      <div class="inline-form" id="catForm" style="display:none">
+        <div class="inline-form__title" id="catFormTitle">Thêm danh mục mới</div>
+        <div class="form-row form-row--2">
+          <div class="form-group">
+            <label class="form-label" for="catName">Tên danh mục *</label>
+            <input class="input" id="catName" type="text" placeholder="VD: Rau củ quả" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="catSlug">Slug (URL)</label>
+            <input class="input" id="catSlug" type="text" placeholder="rau-cu-qua" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="catDesc">Mô tả</label>
+          <input class="input" id="catDesc" type="text" placeholder="Mô tả ngắn về danh mục..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Icon danh mục</label>
+          <div class="icon-select" id="iconSelect">
+            <button class="icon-select__opt is-selected" data-icon-name="leaf" title="leaf" onclick="selectIcon(this,'leaf')"><span data-icon="leaf" data-size="20"></span></button>
+            <button class="icon-select__opt" data-icon-name="apple" title="apple" onclick="selectIcon(this,'apple')"><span data-icon="shopping-bag" data-size="20"></span></button>
+            <button class="icon-select__opt" data-icon-name="package" title="package" onclick="selectIcon(this,'package')"><span data-icon="package" data-size="20"></span></button>
+            <button class="icon-select__opt" data-icon-name="droplet" title="droplet" onclick="selectIcon(this,'droplet')"><span data-icon="droplet" data-size="20"></span></button>
+            <button class="icon-select__opt" data-icon-name="sun" title="sun" onclick="selectIcon(this,'sun')"><span data-icon="sun" data-size="20"></span></button>
+            <button class="icon-select__opt" data-icon-name="zap" title="zap" onclick="selectIcon(this,'zap')"><span data-icon="zap" data-size="20"></span></button>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--space-3)">
+          <button class="btn btn--primary btn--sm" onclick="saveCategory()"><span data-icon="save" data-size="16"></span> Lưu danh mục</button>
+          <button class="btn btn--ghost btn--sm" onclick="closeForm()">Hủy</button>
+        </div>
+      </div>
+
+      <!-- Category list -->
+      <div id="catList">
+        <!-- Cat 1 -->
+        <div class="cat-card" id="cat-1">
+          <div class="cat-card__icon"><span data-icon="leaf" data-size="24"></span></div>
+          <div class="cat-card__info">
+            <div class="cat-card__name">Rau củ quả</div>
+            <div class="cat-card__meta">24 sản phẩm · Đang hiển thị</div>
+          </div>
+          <div class="cat-card__actions">
+            <button class="btn btn--secondary btn--sm" onclick="openEditForm('cat-1','Rau củ quả','Rau xanh, củ, quả tươi từ các nông trại VietGAP','rau-cu-qua')">
+              <span data-icon="edit-2" data-size="14"></span> Sửa
+            </button>
+            <button class="btn btn--danger btn--sm" onclick="showDeleteModal('cat-1','Rau củ quả')">
+              <span data-icon="trash-2" data-size="14"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cat 2 -->
+        <div class="cat-card" id="cat-2">
+          <div class="cat-card__icon"><span data-icon="shopping-bag" data-size="24"></span></div>
+          <div class="cat-card__info">
+            <div class="cat-card__name">Trái cây</div>
+            <div class="cat-card__meta">18 sản phẩm · Đang hiển thị</div>
+          </div>
+          <div class="cat-card__actions">
+            <button class="btn btn--secondary btn--sm" onclick="openEditForm('cat-2','Trái cây','Trái cây nhiệt đới, đặc sản các vùng','trai-cay')">
+              <span data-icon="edit-2" data-size="14"></span> Sửa
+            </button>
+            <button class="btn btn--danger btn--sm" onclick="showDeleteModal('cat-2','Trái cây')">
+              <span data-icon="trash-2" data-size="14"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cat 3 -->
+        <div class="cat-card" id="cat-3">
+          <div class="cat-card__icon"><span data-icon="sun" data-size="24"></span></div>
+          <div class="cat-card__info">
+            <div class="cat-card__name">Đặc sản vùng miền</div>
+            <div class="cat-card__meta">8 sản phẩm · Đang hiển thị</div>
+          </div>
+          <div class="cat-card__actions">
+            <button class="btn btn--secondary btn--sm" onclick="openEditForm('cat-3','Đặc sản vùng miền','Sản phẩm đặc trưng của từng vùng văn hóa','dac-san-vung-mien')">
+              <span data-icon="edit-2" data-size="14"></span> Sửa
+            </button>
+            <button class="btn btn--danger btn--sm" onclick="showDeleteModal('cat-3','Đặc sản vùng miền')">
+              <span data-icon="trash-2" data-size="14"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cat 4 -->
+        <div class="cat-card" id="cat-4">
+          <div class="cat-card__icon"><span data-icon="package" data-size="24"></span></div>
+          <div class="cat-card__info">
+            <div class="cat-card__name">Combo nông sản</div>
+            <div class="cat-card__meta">6 sản phẩm · Đang hiển thị</div>
+          </div>
+          <div class="cat-card__actions">
+            <button class="btn btn--secondary btn--sm" onclick="openEditForm('cat-4','Combo nông sản','Các combo tiết kiệm cho gia đình','combo-nong-san')">
+              <span data-icon="edit-2" data-size="14"></span> Sửa
+            </button>
+            <button class="btn btn--danger btn--sm" onclick="showDeleteModal('cat-4','Combo nông sản')">
+              <span data-icon="trash-2" data-size="14"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cat 5 -->
+        <div class="cat-card" id="cat-5">
+          <div class="cat-card__icon"><span data-icon="droplet" data-size="24"></span></div>
+          <div class="cat-card__info">
+            <div class="cat-card__name">Nông sản hữu cơ</div>
+            <div class="cat-card__meta">12 sản phẩm · Đang hiển thị</div>
+          </div>
+          <div class="cat-card__actions">
+            <button class="btn btn--secondary btn--sm" onclick="openEditForm('cat-5','Nông sản hữu cơ','Sản phẩm canh tác hữu cơ, không hóa chất','nong-san-huu-co')">
+              <span data-icon="edit-2" data-size="14"></span> Sửa
+            </button>
+            <button class="btn btn--danger btn--sm" onclick="showDeleteModal('cat-5','Nông sản hữu cơ')">
+              <span data-icon="trash-2" data-size="14"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal xác nhận xóa -->
+<div class="modal-backdrop" id="deleteModal">
+  <div class="modal modal--danger">
+    <button class="modal__close" onclick="closeModal('deleteModal')"><span data-icon="x" data-size="20"></span></button>
+    <div class="modal__icon"><span data-icon="trash-2" data-size="24"></span></div>
+    <div class="modal__title">Xóa danh mục: <span id="deleteCatName"></span></div>
+    <div class="modal__body">
+      Bạn chắc chắn muốn xóa danh mục này? <strong>Tất cả sản phẩm thuộc danh mục sẽ trở về "Chưa phân loại"</strong>. Hành động này không thể hoàn tác.
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn--danger" onclick="confirmDelete()"><span data-icon="trash-2" data-size="18"></span>Xóa danh mục</button>
+      <button class="btn btn--ghost" onclick="closeModal('deleteModal')">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/components.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+  var sidebar = document.getElementById('adminSidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuToggle');
+  if (menuBtn) menuBtn.addEventListener('click', function () { sidebar.classList.add('is-open'); });
+  if (overlay) overlay.addEventListener('click', function () { sidebar.classList.remove('is-open'); });
+  var btn = document.getElementById('adminAvatarBtn');
+  var dd = document.getElementById('adminDropdown');
+  if (btn && dd) {
+    btn.addEventListener('click', function () { dd.classList.toggle('is-open'); btn.setAttribute('aria-expanded', dd.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (dd && !dd.contains(e.target)) { dd.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); } });
+  }
+  function doLogout() { if (window.NSV && NSV.auth) NSV.auth.logout(); window.location.href = '../../pages/auth/login.html'; }
+  var l1 = document.getElementById('adminLogout'); if (l1) l1.addEventListener('click', doLogout);
+  var l2 = document.getElementById('adminLogout2'); if (l2) l2.addEventListener('click', doLogout);
+});
+
+var editingCatId = null;
+var deletingCatId = null;
+var selectedIcon = 'leaf';
+
+function openAddForm() {
+  editingCatId = null;
+  document.getElementById('catFormTitle').textContent = 'Thêm danh mục mới';
+  document.getElementById('catName').value = '';
+  document.getElementById('catSlug').value = '';
+  document.getElementById('catDesc').value = '';
+  document.getElementById('catForm').style.display = 'block';
+  document.getElementById('catName').focus();
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+}
+
+function openEditForm(id, name, desc, slug) {
+  editingCatId = id;
+  document.getElementById('catFormTitle').textContent = 'Sửa danh mục: ' + name;
+  document.getElementById('catName').value = name;
+  document.getElementById('catSlug').value = slug || '';
+  document.getElementById('catDesc').value = desc || '';
+  document.getElementById('catForm').style.display = 'block';
+  document.getElementById('catName').focus();
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+}
+
+function closeForm() {
+  document.getElementById('catForm').style.display = 'none';
+  editingCatId = null;
+}
+
+function saveCategory() {
+  var name = document.getElementById('catName').value.trim();
+  if (!name) { alert('Vui lòng nhập tên danh mục.'); return; }
+  closeForm();
+  alert(editingCatId ? 'Đã cập nhật danh mục "' + name + '".' : 'Đã thêm danh mục "' + name + '".');
+}
+
+function selectIcon(el, iconName) {
+  selectedIcon = iconName;
+  document.querySelectorAll('.icon-select__opt').forEach(function (o) { o.classList.remove('is-selected'); });
+  el.classList.add('is-selected');
+}
+
+function showDeleteModal(id, name) {
+  deletingCatId = id;
+  document.getElementById('deleteCatName').textContent = name;
+  document.getElementById('deleteModal').classList.add('is-open');
+  if (window.NSV && NSV.renderIcons) NSV.renderIcons();
+}
+
+function confirmDelete() {
+  closeModal('deleteModal');
+  if (deletingCatId) {
+    var el = document.getElementById(deletingCatId);
+    if (el) el.remove();
+  }
+  alert('Đã xóa danh mục. Sản phẩm đã chuyển về "Chưa phân loại".');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('is-open');
+}
+</script>
 </body>
 </html>
