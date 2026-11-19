@@ -7,7 +7,7 @@
 @media (min-width: 1024px) { .auth { grid-template-columns: 1.1fr 1fr; } }
 
 /* Cột bên trái (chỉ desktop) — brand panel */
-.auth__brand { display: none; background: linear-gradient(150deg, var(--color-primary-600), var(--color-primary-800)); color: #fff; padding: var(--space-12); position: relative; overflow: hidden; }
+.auth__brand { display: none; background: var(--color-primary-700); color: #fff; padding: var(--space-12); position: relative; overflow: hidden; }
 @media (min-width: 1024px) { .auth__brand { display: flex; flex-direction: column; justify-content: space-between; } }
 .auth__brand-logo { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-family-heading); font-weight: var(--fw-bold); font-size: var(--fs-xl); }
 .auth__brand-logo img { width: 36px; height: 36px; }
@@ -18,8 +18,6 @@
 .auth__brand-feature .icon { color: rgba(255,255,255,.95); flex-shrink: 0; }
 .auth__brand-feature strong { display: block; font-size: var(--fs-base); }
 .auth__brand-feature span { font-size: var(--fs-sm); color: rgba(255,255,255,.85); }
-.auth__brand-deco { position: absolute; right: -60px; bottom: -60px; width: 280px; height: 280px; border-radius: var(--radius-circle); background: rgba(255,255,255,.08); }
-.auth__brand-deco--2 { right: 60px; bottom: 120px; width: 140px; height: 140px; background: rgba(255,255,255,.06); }
 
 /* Cột bên phải — form */
 .auth__form-side { display: flex; align-items: center; justify-content: center; padding: var(--space-6) var(--container-padding-mobile); background: var(--color-bg-page); }
@@ -45,6 +43,22 @@
 .role-chooser__option.is-active .icon { color: var(--color-primary-700); }
 .role-chooser__name { font-weight: var(--fw-semibold); color: var(--color-text-heading); }
 .role-chooser__desc { font-size: var(--fs-xs); color: var(--color-text-muted); }
+
+/* ---------- Auth steps (quên / đặt lại mật khẩu) ---------- */
+.auth-steps { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-5); color: var(--color-text-muted); font-size: var(--fs-sm); }
+.auth-steps__num { width: 28px; height: 28px; border-radius: var(--radius-circle); display: grid; place-items: center; background: var(--color-primary-500); color: #fff; font-weight: var(--fw-semibold); font-family: var(--font-family-mono); flex-shrink: 0; }
+.auth-steps__sep { width: 32px; height: 2px; background: var(--color-border-default); }
+.auth-steps__done .auth-steps__num { background: var(--color-success-text); }
+
+/* ---------- Ô nhập OTP ---------- */
+.otp-inputs { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.otp-inputs input {
+  width: 48px; height: 56px; text-align: center; font-size: var(--fs-xl); font-family: var(--font-family-mono);
+  border: 1.5px solid var(--color-border-default); border-radius: var(--radius-md); background: var(--color-bg-surface); color: var(--color-text-heading);
+}
+.otp-inputs input:focus { outline: none; border-color: var(--color-focus-ring); box-shadow: var(--shadow-focus); }
+.otp-inputs input.is-invalid { border-color: var(--color-danger-text); }
+@media (max-width: 360px) { .otp-inputs input { width: 40px; height: 48px; font-size: var(--fs-lg); } }
 
 /* ---------- Error / 404 page ---------- */
 .error-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: var(--space-6); text-align: center; }
