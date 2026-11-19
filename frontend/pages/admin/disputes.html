@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản trị · Tranh chấp - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="admin" data-active="disputes">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <nav class="admin-nav" id="app-admin-nav"></nav>
+        <main class="content">
+            <div class="eyebrow">QUẢN TRỊ / HỒ SƠ #KN008</div>
+            <h1 class="page-title">Phân xử tranh chấp</h1>
+
+            <div class="card" style="margin-top:12px">
+                <div class="card-title">Đơn #NN1018 · Cam vàng</div>
+                <div class="meta-text">Người mua: Mai Anh · Người bán: Vườn An<br />Số tiền đề nghị hoàn: 45.000đ</div>
+            </div>
+
+            <div class="card-green">
+                <div class="card-title">Minh chứng được lưu</div>
+                <div class="meta-text">2 ảnh · Gửi 11/11, 14:00<br />Đồng kiểm đạt ngoại quan; lỗi báo: lỗi ẩn.</div>
+            </div>
+
+            <div class="form-label" style="margin:12px 0 8px">Quyết định xử lý</div>
+            <label class="radio-row"><input type="radio" name="verdict" checked /><span>Hoàn tiền một phần · 45.000đ</span></label>
+            <label class="radio-row"><input type="radio" name="verdict" /><span>Không chấp nhận khiếu nại</span></label>
+
+            <div class="card" style="margin-top:10px">
+                <div class="meta-text" style="color:var(--text-main)">
+                    Minh chứng cho thấy 1 kg cam bị hỏng bên trong. Lỗi ẩn được tiếp nhận trong 24 giờ kể từ khi đã giao.
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="showToast('Đã xác nhận phân xử và hoàn 45.000đ')">Xác nhận phân xử và hoàn tiền</button>
+            <p class="meta-text" style="margin-top:8px">Hoàn qua cổng thanh toán · Mô phỏng</p>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

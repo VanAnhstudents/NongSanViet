@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xác nhận giao hàng - Nông Sản Việt</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="admin">
+    <div class="app-shell">
+        <div class="brand-header" id="app-brand-header"></div>
+        <main class="content">
+            <div class="eyebrow">LIÊN KẾT MỘT LẦN / KHÔNG CẦN TÀI KHOẢN</div>
+            <h1 class="page-title">Xác nhận giao hàng</h1>
+
+            <div class="card" style="margin-top:12px">
+                <div class="card-title">Đơn #NN1025 · Hoàng Nam</div>
+                <div class="meta-text">Rau cải thìa · 2 kg<br />24 Định Công, Hà Nội</div>
+            </div>
+
+            <div class="card-green">
+                <div class="card-title">Tiền COD cần thu: 70.000đ</div>
+                <div class="meta-text">Người mua đã yêu cầu đồng kiểm.<br />Kiểm tra hàng trước khi thu tiền.</div>
+            </div>
+
+            <div class="form-label" style="margin:12px 0 8px">Kết quả đồng kiểm</div>
+            <label class="radio-row"><input type="radio" name="inspect" checked /><span>Đạt · Người mua đồng ý nhận</span></label>
+            <label class="radio-row"><input type="radio" name="inspect" /><span>Không đạt · Không thu tiền COD</span></label>
+
+            <label class="check-row" style="margin-top:12px">
+                <input type="checkbox" checked />
+                <span>Đã giao hàng và đã thu tiền COD</span>
+            </label>
+
+            <p class="meta-text" style="margin:8px 0 16px">Nếu không đạt: thêm ảnh làm căn cứ xử lý. Không xác nhận đã thu tiền.</p>
+
+            <button type="button" class="btn btn-primary" onclick="showToast('Đã xác nhận giao thành công đơn #NN1025')">Xác nhận đã giao</button>
+            <p class="meta-text" style="margin-top:10px">Liên kết chỉ sử dụng một lần.<br />Mốc "Đã giao" bắt đầu hạn khiếu nại 24h.</p>
+        </main>
+    </div>
+    <script src="../../js/app.js"></script>
+</body>
+</html>

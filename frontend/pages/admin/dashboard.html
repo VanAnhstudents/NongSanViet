@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản trị · Tổng quan - Nông Sản Việt</title>
+  <link rel="stylesheet" href="../../css/main.css" />
+</head>
+<body data-role="admin" data-active="dashboard">
+  <div class="app-shell">
+    <div class="brand-header" id="app-brand-header"></div>
+    <nav class="admin-nav" id="app-admin-nav"></nav>
+    <main class="content">
+      <div class="eyebrow">QUẢN TRỊ / TỔNG QUAN</div>
+      <h1 class="page-title">Tổng quan vận hành</h1>
+      <p class="subtitle">Tháng 11/2026 · Dữ liệu minh họa</p>
+
+      <div class="grid-2">
+        <div class="card-primary" style="margin:0">
+          <div style="font-size:24px;font-weight:700">126</div>
+          <div style="font-size:12px;opacity:0.9">Đơn hoàn tất</div>
+        </div>
+        <div class="card-primary" style="margin:0">
+          <div style="font-size:21px;font-weight:700">12,8 triệu</div>
+          <div style="font-size:12px;opacity:0.9">Giá trị giao dịch</div>
+        </div>
+        <div class="card-green" style="margin:0">
+          <div style="font-size:22px;font-weight:700;color:var(--primary)">06</div>
+          <div class="meta-text">Chờ xác minh</div>
+        </div>
+        <div class="card-green" style="margin:0">
+          <div style="font-size:22px;font-weight:700;color:var(--primary)">03</div>
+          <div class="meta-text">Tranh chấp mở</div>
+        </div>
+      </div>
+
+      <div class="card-title" style="margin:16px 0 10px">Cần xử lý</div>
+      <a href="disputes.html" class="card-amber" style="display:block">
+        <div class="card-title">03 hồ sơ tranh chấp</div>
+        <div class="meta-text">01 hồ sơ gần hết hạn xử lý →</div>
+      </a>
+      <a href="users.html" class="card" style="display:block">
+        <div class="card-title">06 tài khoản nông dân</div>
+        <div class="meta-text">Đang chờ xác minh chứng nhận →</div>
+      </a>
+
+      <button type="button" class="btn btn-soft" style="margin-top:6px" onclick="showToast('Đang xuất báo cáo giao dịch tháng 11/2026')">
+        Xem báo cáo giao dịch
+      </button>
+    </main>
+  </div>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
