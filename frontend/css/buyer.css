@@ -66,7 +66,7 @@
 .app-footer__bottom { border-top: 1px solid var(--color-neutral-700); padding: var(--space-4) var(--container-padding-desktop); text-align: center; font-size: var(--fs-sm); max-width: var(--container-max-width); margin-inline: auto; color: var(--color-neutral-400); }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; border-radius: var(--radius-xl); overflow: hidden; background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800)); color: #fff; padding: var(--space-10) var(--space-6); margin-bottom: var(--space-8); }
+.hero { position: relative; border-radius: var(--radius-xl); overflow: hidden; background: var(--color-primary-700); color: #fff; padding: var(--space-10) var(--space-6); margin-bottom: var(--space-8); }
 .hero__title { font-size: var(--fs-3xl); font-weight: var(--fw-bold); color: #fff; margin-bottom: var(--space-3); max-width: 520px; }
 .hero__desc { font-size: var(--fs-md); color: rgba(255,255,255,.9); max-width: 480px; margin-bottom: var(--space-5); }
 .hero__search { background: var(--color-bg-surface); border-radius: var(--radius-pill); padding: var(--space-2); display: flex; align-items: center; gap: var(--space-2); max-width: 520px; }
@@ -79,7 +79,7 @@
 @media (min-width: 600px) { .category-tiles { grid-template-columns: repeat(4, 1fr); } }
 @media (min-width: 1024px) { .category-tiles { grid-template-columns: repeat(5, 1fr); } }
 .category-tile { background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; color: var(--color-text-body); display: flex; flex-direction: column; align-items: center; gap: var(--space-2); transition: all var(--duration-base); }
-.category-tile:hover { border-color: var(--color-primary-300); background: var(--color-primary-50); transform: translateY(-2px); }
+.category-tile:hover { border-color: var(--color-primary-300); background: var(--color-primary-50); }
 .category-tile__icon { color: var(--color-primary-500); }
 .category-tile__name { font-weight: var(--fw-semibold); color: var(--color-text-heading); font-size: var(--fs-sm); }
 

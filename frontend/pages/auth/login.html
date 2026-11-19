@@ -12,9 +12,9 @@
   <link rel="stylesheet" href="../../css/components.css">
   <link rel="stylesheet" href="../../css/auth.css">
 </head>
-<body class="auth-page">
+<body>
 
-  <!-- Header thanh trên cùng -->
+  <!-- Topbar -->
   <header class="auth-topbar">
     <a class="auth-topbar__logo" href="login.html">
       <img src="../../assets/images/logocnpm 1.png" alt="Logo Nông Sản Việt">
@@ -26,7 +26,7 @@
   <!-- Nội dung chính -->
   <main class="auth-wrap">
 
-    <!-- Cột trái: hình ảnh & slogan -->
+    <!-- Cột trái: hình ảnh & slogan (desktop) -->
     <aside class="auth-visual">
       <div class="auth-visual__inner">
         <h2 class="auth-visual__heading">Từ vườn xanh<br>đến bữa lành.</h2>
@@ -44,39 +44,17 @@
     <!-- Cột phải: form đăng nhập -->
     <section class="auth-form-side">
       <div class="auth-card">
+
         <!-- Mobile logo -->
         <a class="auth-card__mobile-logo" href="login.html">
           <img src="../../assets/images/logocnpm 1.png" alt=""> Nông Sản Việt
         </a>
 
-        <p class="auth-card__eyebrow">TỪ NÔNG TRẠI ĐẾN BÀN ĂN</p>
+        <p class="auth-card__eyebrow">Nền tảng nông sản Việt Nam</p>
         <h1 class="auth-card__title">Chào bạn trở lại</h1>
-        <p class="auth-card__subtitle">Mua tươi từ gốc. An tâm mỗi ngày.</p>
-
-        <!-- Tab vai trò -->
-        <div class="auth-role-tabs" role="tablist" aria-label="Chọn vai trò">
-          <button
-            class="auth-role-tabs__btn is-active"
-            role="tab"
-            aria-selected="true"
-            data-role="buyer"
-            type="button"
-            id="tabBuyer"
-            aria-controls="loginForm"
-          >Người mua</button>
-          <button
-            class="auth-role-tabs__btn"
-            role="tab"
-            aria-selected="false"
-            data-role="seller"
-            type="button"
-            id="tabSeller"
-            aria-controls="loginForm"
-          >Người bán</button>
-        </div>
+        <p class="auth-card__subtitle">Đăng nhập để mua sắm hoặc quản lý trang trại.</p>
 
         <form id="loginForm" novalidate>
-          <input type="hidden" id="roleInput" name="role" value="buyer">
 
           <div class="form-field" id="fieldIdentifier">
             <label class="form-field__label" for="identifier">Số điện thoại</label>
@@ -86,6 +64,7 @@
               id="identifier"
               name="identifier"
               autocomplete="username"
+              inputmode="tel"
               placeholder="Nhập số điện thoại"
               required
             >
@@ -117,10 +96,12 @@
             <span class="btn__label">Đăng nhập</span>
           </button>
 
-          <button class="btn btn--outline btn--block btn--lg auth-card__register-btn" type="button" onclick="location.href='register.html'">
-            Tạo tài khoản mới
-          </button>
         </form>
+
+        <p class="auth-card__footer-link">
+          Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a>
+        </p>
+
       </div>
     </section>
 
@@ -134,26 +115,5 @@
   <script src="../../js/core/form.js"></script>
   <script src="../../js/components.js"></script>
   <script src="../../js/pages/login.js"></script>
-  <script>
-    // Tab vai trò
-    document.querySelectorAll('.auth-role-tabs__btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.auth-role-tabs__btn').forEach(b => {
-          b.classList.remove('is-active');
-          b.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('is-active');
-        btn.setAttribute('aria-selected', 'true');
-        document.getElementById('roleInput').value = btn.dataset.role;
-        // Cập nhật placeholder theo vai trò
-        const inp = document.getElementById('identifier');
-        if (btn.dataset.role === 'seller') {
-          inp.placeholder = 'Nhập số điện thoại / email';
-        } else {
-          inp.placeholder = 'Nhập số điện thoại';
-        }
-      });
-    });
-  </script>
 </body>
 </html>

@@ -13,44 +13,49 @@
   <link rel="stylesheet" href="../../css/auth.css">
 </head>
 <body>
-  <div class="auth">
-    <!-- Cột thương hiệu (desktop) -->
-    <aside class="auth__brand">
-      <a class="auth__brand-logo" href="login.html">
-        <img src="../../assets/images/logocnpm 1.png" alt=""> Nông Sản Việt
-      </a>
-      <div class="auth__brand-tagline">
-        <h1>Trở thành một phần của chuỗi nông sản sạch.</h1>
-        <p>Đăng ký để mua nông sản trực tiếp từ nông dân hoặc đăng bán sản phẩm từ trang trại của bạn.</p>
-      </div>
-      <div class="auth__brand-features">
-        <div class="auth__brand-feature">
-          <span data-icon="shopping-bag" data-size="24"></span>
-          <div><strong>Người mua</strong><span>Đặt hàng tươi, đặt trước theo mùa, truy xuất nguồn gốc bằng QR.</span></div>
+
+  <!-- Topbar -->
+  <header class="auth-topbar">
+    <a class="auth-topbar__logo" href="login.html">
+      <img src="../../assets/images/logocnpm 1.png" alt="Logo Nông Sản Việt">
+      <span>Nông Sản Việt</span>
+    </a>
+    <span class="auth-topbar__tagline">Từ nông trại đến bàn ăn</span>
+  </header>
+
+  <!-- Nội dung chính -->
+  <main class="auth-wrap">
+
+    <!-- Cột trái: slogan (desktop) -->
+    <aside class="auth-visual">
+      <div class="auth-visual__inner">
+        <h2 class="auth-visual__heading">Trở thành một phần của chuỗi nông sản sạch.</h2>
+        <div class="auth-visual__img-wrap">
+          <img
+            src="../../assets/images/Ảnh nông sản.png"
+            alt="Nông sản tươi ngon"
+            class="auth-visual__img"
+          >
         </div>
-        <div class="auth__brand-feature">
-          <span data-icon="tractor" data-size="24"></span>
-          <div><strong>Nông dân</strong><span>Đăng sản phẩm trong 3 bước, quản lý đơn hàng và nhật ký canh tác.</span></div>
-        </div>
-        <div class="auth__brand-feature">
-          <span data-icon="shield-check" data-size="24"></span>
-          <div><strong>Xác minh &amp; tin cậy</strong><span>Tài khoản được xác thực số điện thoại, trang trại được Admin phê duyệt.</span></div>
-        </div>
+        <p class="auth-visual__caption">Mua tươi từ gốc hoặc đăng bán nông sản của bạn.</p>
       </div>
     </aside>
 
-    <!-- Cột form -->
-    <main class="auth__form-side">
-      <div class="auth__card">
-        <a class="auth__mobile-logo" href="login.html">
+    <!-- Cột phải: form đăng ký -->
+    <section class="auth-form-side">
+      <div class="auth-card">
+
+        <!-- Mobile logo -->
+        <a class="auth-card__mobile-logo" href="login.html">
           <img src="../../assets/images/logocnpm 1.png" alt=""> Nông Sản Việt
         </a>
-        <div class="auth__head">
-          <h1>Tạo tài khoản</h1>
-          <p>Chọn vai trò và điền thông tin để bắt đầu.</p>
-        </div>
+
+        <p class="auth-card__eyebrow">Tạo tài khoản mới</p>
+        <h1 class="auth-card__title">Đăng ký</h1>
+        <p class="auth-card__subtitle">Chọn vai trò và điền thông tin để bắt đầu.</p>
 
         <form id="registerForm" novalidate>
+
           <!-- Chọn vai trò -->
           <div class="role-chooser" id="roleChooser" role="radiogroup" aria-label="Vai trò đăng ký">
             <button type="button" class="role-chooser__option is-active" data-role="BUYER" role="radio" aria-checked="true">
@@ -117,17 +122,22 @@
             <input type="checkbox" id="agreeTerms" name="agreeTerms">
             <span>Tôi đồng ý với <a href="#" id="termsLink">Điều khoản sử dụng</a> và <a href="#" id="policyLink">Chính sách bảo vệ dữ liệu cá nhân</a>.</span>
           </label>
-          <p class="form-field__error" id="errTerms" hidden style="margin-top:-8px;margin-bottom:var(--space-4)"></p>
+          <p class="form-field__error" id="errTerms" hidden style="margin-top:calc(var(--space-1)*-2);margin-bottom:var(--space-4)"></p>
 
           <button class="btn btn--primary btn--block btn--lg" type="submit" id="registerBtn">
             <span class="btn__label">Đăng ký</span>
           </button>
+
         </form>
 
-        <p class="auth__footer-link">Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+        <p class="auth-card__footer-link">
+          Đã có tài khoản? <a href="login.html">Đăng nhập</a>
+        </p>
+
       </div>
-    </main>
-  </div>
+    </section>
+
+  </main>
 
   <script src="../../js/config.js"></script>
   <script src="../../js/icons.js"></script>
