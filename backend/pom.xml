@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -130,7 +130,7 @@
 			<version>1.4.2</version>
 			<scope>test</scope>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.12.6</version>
@@ -142,7 +142,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-gson</artifactId>
 			<version>0.12.6</version>
@@ -156,8 +155,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<!-- Buộc JVM dùng Asia/Ho_Chi_Minh thay vì Asia/Saigon mà Windows map sang.
-					     PostgreSQL không nhận alias "Asia/Saigon" nhưng nhận "Asia/Ho_Chi_Minh". -->
 					<jvmArguments>-Duser.timezone=Asia/Ho_Chi_Minh</jvmArguments>
 				</configuration>
 			</plugin>
