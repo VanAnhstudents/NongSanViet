@@ -196,9 +196,14 @@
             </div>
           </div>
           <div class="product-actions">
-            <button class="btn btn--primary" type="button" style="flex:1;">
-              <span data-icon="shopping-cart" data-size="20"></span>
-              Thêm vào giỏ
+            <button
+              class="btn btn--primary"
+              type="button"
+              id="addToCartBtn"
+              style="flex:1;">
+            <span data-icon="shopping-cart" data-size="20"></span>
+              Thêm vào giỏ hàng
+
             </button>
             <button class="btn btn--secondary" type="button" style="flex:1;">
               <span data-icon="calendar" data-size="20"></span>
@@ -316,12 +321,14 @@
     </a>
   </nav>
 
-  <script src="../../js/config.js"></script>
-  <script src="../../js/icons.js"></script>
-  <script src="../../js/core/api.js"></script>
-  <script src="../../js/core/auth.js"></script>
-  <script src="../../js/core/format.js"></script>
-  <script src="../../js/components.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/api/productApi.js"></script>
+<script src="../../js/api/cartApi.js"></script>
+<script src="../../js/components.js"></script>
   <script>
   function switchImg(thumb, src) {
     document.getElementById('mainImg').src = src;
@@ -357,10 +364,83 @@
       if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
     }
     // Qty stepper
-    var qty = 1;
-    document.getElementById('qtyPlus').addEventListener('click', function() { qty++; document.getElementById('qtyVal').textContent = qty; });
-    document.getElementById('qtyMinus').addEventListener('click', function() { if (qty > 1) { qty--; document.getElementById('qtyVal').textContent = qty; } });
-  });
+    // ========================================
+// QUẢN LÝ SỐ LƯỢNG SẢN PHẨM
+// ========================================
+
+var qty = 1;
+
+var qtyVal = document.getElementById('qtyVal');
+var qtyPlus = document.getElementById('qtyPlus');
+var qtyMinus = document.getElementById('qtyMinus');
+
+qtyPlus.addEventListener('click', function() {
+    qty++;
+
+    qtyVal.textContent = qty;
+});
+
+qtyMinus.addEventListener('click', function() {
+    if (qty > 1) {
+        qty--;
+
+        qtyVal.textContent = qty;
+    }
+});
+
+// ========================================
+// THÊM SẢN PHẨM VÀO GIỎ HÀNG
+// ========================================
+
+var addToCartBtn = document.getElementById('addToCartBtn');
+
+addToCartBtn.addEventListener('click', async function() {
+
+    if (!NSV.auth.isLoggedIn()) {
+        alert('Vui lòng đăng nhập để mua hàng!');
+
+        window.location.href = '../../pages/auth/login.html';
+
+        return;
+    }
+
+    // Lấy batchId thật từ URL
+    const params = new URLSearchParams(window.location.search);
+
+    const batchId = Number(params.get('batchId'));
+
+    if (!batchId || !Number.isInteger(batchId)) {
+        alert('Không tìm thấy mã lô hàng. Vui lòng mở sản phẩm từ danh sách sản phẩm có dữ liệu.');
+        return;
+    }
+
+    try {
+        addToCartBtn.disabled = true;
+        addToCartBtn.textContent = 'Đang thêm...';
+
+        await NSV.cartApi.addItem({
+            batchId: batchId,
+            quantity: qty
+        });
+
+        alert('Đã thêm ' + qty + ' sản phẩm vào giỏ hàng!');
+
+        window.location.href = 'cart.html';
+
+    } catch (error) {
+
+        alert(error.message || 'Thêm sản phẩm thất bại!');
+
+    } finally {
+
+        addToCartBtn.disabled = false;
+        addToCartBtn.innerHTML =
+            '<span data-icon="shopping-cart" data-size="20"></span> Thêm vào giỏ hàng';
+
+        NSV.renderIcons();
+    }
+});
+});
   </script>
 </body>
 </html>

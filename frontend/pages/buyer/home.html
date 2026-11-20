@@ -340,12 +340,14 @@
     </a>
   </nav>
 
-  <script src="../../js/config.js"></script>
-  <script src="../../js/icons.js"></script>
-  <script src="../../js/core/api.js"></script>
-  <script src="../../js/core/auth.js"></script>
-  <script src="../../js/core/format.js"></script>
-  <script src="../../js/components.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/icons.js"></script>
+<script src="../../js/core/api.js"></script>
+<script src="../../js/core/auth.js"></script>
+<script src="../../js/core/format.js"></script>
+<script src="../../js/api/productApi.js"></script>
+<script src="../../js/api/cartApi.js"></script>
+<script src="../../js/components.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     NSV.renderIcons();
@@ -375,6 +377,112 @@
       if (uname) uname.textContent = user.fullName || user.phone || 'Tài khoản';
       if (uavatar) uavatar.textContent = (user.fullName || 'N')[0].toUpperCase();
     }
+    // ========================================
+// ĐỒNG BỘ SẢN PHẨM VÀ THÊM VÀO GIỎ HÀNG
+// ========================================
+
+function formatMoney(value) {
+    return new Intl.NumberFormat('vi-VN').format(value) + 'đ';
+}
+
+async function loadBuyerProducts() {
+    try {
+        const products = await NSV.productApi.getProducts();
+
+        if (!Array.isArray(products)) return;
+
+        document.querySelectorAll('.product-card').forEach(card => {
+            const title = card.querySelector('.product-card__title');
+            const addButton = card.querySelector('.product-card__footer button');
+
+            if (!title || !addButton) return;
+
+            const product = products.find(p =>
+                p.name.trim().toLowerCase() ===
+                title.textContent.trim().toLowerCase()
+            );
+
+            if (!product || !product.batchId) {
+                addButton.disabled = true;
+                addButton.title = 'Sản phẩm chưa có lô hàng khả dụng';
+                return;
+            }
+
+            addButton.dataset.batchId = product.batchId;
+            addButton.dataset.productName = product.name;
+            const detailLink = card.querySelector('.product-card__link');
+
+            if (detailLink) {
+                   detailLink.href =
+                   'product-detail.html?batchId=' +
+                    encodeURIComponent(product.batchId);
+}
+
+            addButton.disabled = false;
+
+            addButton.onclick = async function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const button = this;
+
+                if (button.dataset.loading === 'true') return;
+
+                try {
+                    if (!NSV.auth.isLoggedIn()) {
+                        alert('Vui lòng đăng nhập để mua hàng!');
+                        window.location.href = '../../pages/auth/login.html';
+                        return;
+                    }
+
+                    button.dataset.loading = 'true';
+                    button.disabled = true;
+
+                    await NSV.cartApi.addItem({
+                        batchId: Number(button.dataset.batchId),
+                        quantity: 1
+                    });
+
+                    alert('Đã thêm sản phẩm vào giỏ hàng!');
+
+                    await updateCartBadge();
+
+                } catch (error) {
+                    alert(error.message || 'Không thể thêm sản phẩm vào giỏ hàng!');
+                } finally {
+                    button.dataset.loading = 'false';
+                    button.disabled = false;
+                }
+            };
+        });
+
+    } catch (error) {
+        console.error('Lỗi tải sản phẩm:', error);
+    }
+}
+
+async function updateCartBadge() {
+    try {
+        const cart = await NSV.cartApi.getCart();
+
+        const total = cart.totalItems || 0;
+
+        ['cartBadge', 'bottomCartBadge'].forEach(id => {
+            const badge = document.getElementById(id);
+
+            if (badge) {
+                badge.textContent = total;
+                badge.hidden = total === 0;
+            }
+        });
+
+    } catch (error) {
+        console.error('Không thể cập nhật giỏ hàng:', error);
+    }
+}
+
+loadBuyerProducts();
+updateCartBadge();
   });
   </script>
 </body>
