@@ -6,7 +6,7 @@
   <title>Đăng sản phẩm · Bước 1/3 · Nông Sản Việt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/tokens.css" />
   <link rel="stylesheet" href="../../css/base.css" />
   <link rel="stylesheet" href="../../css/components.css" />
@@ -17,7 +17,7 @@
   <aside class="farmer-sidebar" id="farmerSidebar" aria-label="Menu Farmer">
     <div class="farmer-sidebar__head">
       <a class="farmer-sidebar__brand" href="dashboard.html">
-        <img src="../../assets/images/logocnpm 1.png" alt="Logo Nông Sản Việt" onerror="this.style.display='none'">
+        <img src="../../assets/images/logocnpm 1.png" alt="" onerror="this.style.display='none'">
         Nông Sản Việt
       </a>
       <div class="farmer-sidebar__farm" id="sidebarFarmName">Kênh nông dân</div>
@@ -34,7 +34,7 @@
       <a class="farmer-nav__item" href="revenue.html"><span data-icon="bar-chart-2" data-size="20"></span>Báo cáo doanh thu</a>
     </nav>
     <div class="farmer-sidebar__foot">
-      <button class="btn btn--ghost btn--sm sidebar-logout-btn" id="farmerLogout">
+      <button class="btn btn--ghost btn--sm" id="farmerLogout" style="color:var(--color-neutral-400);width:100%;justify-content:flex-start;gap:var(--space-2)">
         <span data-icon="log-out" data-size="18"></span>Đăng xuất
       </button>
     </div>
@@ -72,17 +72,17 @@
 
       <form id="stepForm" novalidate>
         <!-- Thông tin sản phẩm -->
-        <div class="profile-form-card mb-5">
-          <h3 class="form-section-title">Thông tin sản phẩm</h3>
+        <div class="profile-form-card" style="margin-bottom:var(--space-5)">
+          <h3 style="font-size:var(--fs-lg);font-weight:var(--fw-semibold);margin:0 0 var(--space-5)">Thông tin sản phẩm</h3>
 
-          <div class="form-field mb-4">
-            <label class="form-label" for="productName">Tên sản phẩm <span class="text-danger">*</span></label>
+          <div class="form-field" style="margin-bottom:var(--space-4)">
+            <label class="form-label" for="productName">Tên sản phẩm <span style="color:var(--color-danger-text)">*</span></label>
             <input class="form-input" type="text" id="productName" name="productName" maxlength="100" placeholder="Ví dụ: Cà chua bi Đà Lạt" autocomplete="off" />
             <p class="form-error" id="nameError" hidden>Tên sản phẩm không được để trống.</p>
           </div>
 
-          <div class="form-field mb-4">
-            <label class="form-label" for="category">Danh mục sản phẩm <span class="text-danger">*</span></label>
+          <div class="form-field" style="margin-bottom:var(--space-4)">
+            <label class="form-label" for="category">Danh mục sản phẩm <span style="color:var(--color-danger-text)">*</span></label>
             <select class="form-input" id="category" name="category">
               <option value="">Chọn danh mục</option>
               <option value="rau-cu-qua">Rau củ quả</option>
@@ -95,14 +95,14 @@
           </div>
 
           <!-- Upload ảnh -->
-          <div class="form-field mb-4">
+          <div class="form-field" style="margin-bottom:var(--space-4)">
             <label class="form-label" id="imageLabel">Ảnh sản phẩm</label>
-            <div class="upload-dropzone" id="imageDropzone" onclick="document.getElementById('imageFileInput').click()">
+            <div style="border:2px dashed var(--color-border-default);border-radius:var(--radius-lg);padding:var(--space-6);text-align:center;cursor:pointer;transition:border-color var(--duration-fast)" id="imageDropzone" onclick="document.getElementById('imageFileInput').click()" onmouseenter="this.style.borderColor='var(--color-primary-300)'" onmouseleave="this.style.borderColor='var(--color-border-default)'">
               <img id="imagePreview" src="" alt="Ảnh xem trước" style="display:none;max-height:160px;border-radius:var(--radius-md);margin:0 auto var(--space-3)" />
               <div id="imagePlaceholder">
-                <span data-icon="image" data-size="32" class="upload-dropzone__icon"></span>
-                <div class="upload-dropzone__label">Kéo thả hoặc nhấn để chọn ảnh</div>
-                <div class="upload-dropzone__hint">JPG, PNG, WebP · Tối đa 5 MB</div>
+                <span data-icon="image" data-size="32" style="opacity:.4;display:block;margin:0 auto var(--space-2)"></span>
+                <div style="font-size:var(--fs-sm);color:var(--color-text-muted)">Kéo thả hoặc nhấn để chọn ảnh</div>
+                <div style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:4px">JPG, PNG, WebP · Tối đa 5 MB</div>
               </div>
             </div>
             <input type="file" id="imageFileInput" class="sr-only" accept="image/jpeg,image/png,image/webp" aria-labelledby="imageLabel" />
@@ -115,20 +115,20 @@
           <div class="form-field">
             <label class="form-label" for="productDesc">Mô tả sản phẩm</label>
             <textarea class="form-input" id="productDesc" name="productDesc" rows="4" maxlength="1000" placeholder="Mô tả chi tiết về sản phẩm: giống, đặc điểm, cách trồng..."></textarea>
-            <p class="form-hint form-hint--right"><span id="descCount">0</span>/1000</p>
+            <p class="form-hint" style="text-align:right"><span id="descCount">0</span>/1000</p>
           </div>
         </div>
 
         <!-- Nguồn gốc -->
-        <div class="profile-form-card mb-5">
-          <h3 class="form-section-title">Nguồn gốc &amp; Chất lượng</h3>
+        <div class="profile-form-card" style="margin-bottom:var(--space-5)">
+          <h3 style="font-size:var(--fs-lg);font-weight:var(--fw-semibold);margin:0 0 var(--space-5)">Nguồn gốc &amp; Chất lượng</h3>
 
-          <div class="form-field mb-4">
+          <div class="form-field" style="margin-bottom:var(--space-4)">
             <label class="form-label" for="farmNameInput">Tên trang trại</label>
             <input class="form-input" type="text" id="farmNameInput" name="farmNameInput" maxlength="100" value="Vườn An" />
           </div>
 
-          <div class="form-row-2">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4)">
             <div class="form-field">
               <label class="form-label" for="district">Quận / Huyện</label>
               <input class="form-input" type="text" id="district" name="district" placeholder="Lạc Dương" maxlength="60" />
@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <div class="form-field mb-4">
+          <div class="form-field" style="margin-bottom:var(--space-4)">
             <label class="form-label" for="certification">Chứng nhận chất lượng</label>
             <select class="form-input" id="certificationSelect" name="certification">
               <option value="">Chọn chứng nhận</option>
@@ -152,14 +152,14 @@
 
           <div class="form-field">
             <label class="form-label" for="batchCode">
-              Mã lô thu hoạch <span class="hint-inline">(Không bắt buộc)</span>
+              Mã lô thu hoạch <span style="font-size:var(--fs-xs);color:var(--color-text-muted);font-weight:var(--fw-regular)">(Không bắt buộc)</span>
             </label>
             <input class="form-input" type="text" id="batchCode" name="batchCode" maxlength="30" placeholder="Ví dụ: AN-250611" autocomplete="off" />
             <p class="form-hint">Dùng để gắn sản phẩm với nhật ký trồng trọt. Mã QR truy xuất tạo khi đăng.</p>
           </div>
         </div>
 
-        <div class="form-actions">
+        <div style="display:flex;gap:var(--space-3);justify-content:space-between;flex-wrap:wrap">
           <a href="products.html" class="btn btn--ghost">Hủy</a>
           <button type="submit" class="btn btn--primary"><span data-icon="arrow-right" data-size="16"></span>Tiếp theo: Giá &amp; Sản lượng</button>
         </div>
